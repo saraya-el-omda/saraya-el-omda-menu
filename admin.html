@@ -1,0 +1,2870 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://lh3.googleusercontent.com https://drive.google.com https://*.googleusercontent.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <title>لوحة إدارة المنيو والعروض والطلبات | سرايا العمدة للمشويات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0A0A0C;
+      --surface: #141418;
+      --surface-2: #1C1C22;
+      --border: rgba(212, 175, 55, 0.25);
+      --text: #FFFFFF;
+      --muted: #B8B8C0;
+      --gold: #D4AF37;
+      --champagne: #F3E5AB;
+      --gold-grad: linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%);
+      --ok: #22C55E;
+      --danger: #EF4444;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Tajawal', 'Cairo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    h1, h2, h3, h4 { font-family: 'Cairo', sans-serif; margin: 0; }
+    .tabular { font-variant-numeric: tabular-nums; }
+    .hidden { display: none !important; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 18px; }
+
+    /* Buttons & Inputs */
+    button, .btn-link {
+      font-family: 'Cairo', sans-serif;
+      cursor: pointer;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.15s ease, opacity 0.15s ease, border-color 0.15s ease;
+    }
+    button:disabled { opacity: 0.55; cursor: not-allowed; }
+    .btn-primary { background: var(--gold-grad); color: #0A0A0C; padding: 10px 18px; font-size: 14px; font-weight: 800; }
+    .btn-primary:hover { filter: brightness(1.06); }
+    .btn-secondary { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); padding: 9px 14px; font-size: 13px; }
+    .btn-secondary:hover { border-color: var(--gold); }
+    .btn-wa { background: rgba(37,211,102,0.16); color: #86EFAC; border: 1px solid rgba(37,211,102,0.45); padding: 7px 10px; font-size: 11px; }
+    .btn-wa:hover { background: rgba(37,211,102,0.28); }
+    .btn-maps { background: rgba(212,175,55,0.16); color: var(--champagne); border: 1px solid rgba(212,175,55,0.5); padding: 7px 11px; font-size: 12px; }
+    .btn-maps:hover { background: rgba(212,175,55,0.28); }
+    .btn-danger { background: rgba(239,68,68,0.16); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.35); padding: 8px 12px; font-size: 12px; }
+    .btn-danger:hover { background: rgba(239,68,68,0.28); }
+    .btn-lock { background: rgba(212,175,55,0.18); color: var(--gold); border: 1px solid rgba(212,175,55,0.65); padding: 8px 13px; font-size: 12px; font-weight: 800; }
+    .btn-lock:hover { background: rgba(212,175,55,0.3); }
+    .pwd-wrap { position: relative; display: flex; align-items: center; }
+    .pwd-wrap input { padding-left: 44px; }
+    .pwd-toggle-btn {
+      position: absolute;
+      left: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(212,175,55,0.12);
+      color: var(--champagne);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 4px 8px;
+      font-size: 13px;
+      line-height: 1.2;
+      min-width: 34px;
+    }
+    .pwd-toggle-btn:hover { border-color: var(--gold); }
+    .vkb-box {
+      margin-top: 10px;
+      margin-bottom: 14px;
+      padding: 12px;
+      background: #0E0E11;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    .vkb-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .vkb-tabs { display: flex; gap: 5px; flex-wrap: wrap; }
+    .vkb-tab {
+      background: var(--surface-2);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+      font-size: 11px;
+      border-radius: 7px;
+    }
+    .vkb-tab.active { background: var(--gold-grad); color: #0A0A0C; border-color: var(--gold); }
+    .vkb-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      direction: ltr;
+      margin-bottom: 8px;
+    }
+    .vkb-key {
+      background: var(--surface-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 4px;
+      font-size: 14px;
+      font-weight: 800;
+      font-family: 'Cairo', monospace;
+    }
+    .vkb-key:hover { border-color: var(--gold); color: var(--gold); }
+    .vkb-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+    .vkb-actions button { flex: 1; padding: 7px 8px; font-size: 11px; }
+    .clickjack-block {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: #0A0A0C;
+      color: #FFFFFF;
+    }
+    .clickjack-card {
+      max-width: 460px;
+      width: 100%;
+      background: #141418;
+      border: 1px solid rgba(239,68,68,0.55);
+      border-radius: 18px;
+      padding: 26px;
+      text-align: center;
+    }
+    .pulse-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(239, 68, 68, 0.22);
+      color: #FCA5A5;
+      border: 1px solid rgba(239, 68, 68, 0.65);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 800;
+      animation: sarayaPulse 1.4s ease-in-out infinite;
+    }
+    @keyframes sarayaPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.65; transform: scale(0.97); }
+    }
+    .wa-quick-row { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 8px; border-top: 1px dashed var(--border); }
+
+    input, select, textarea {
+      font-family: 'Tajawal', sans-serif;
+      background: #0E0E11;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      width: 100%;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+    label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 5px; font-weight: 700; }
+
+    /* Auth Screen */
+    .auth-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .auth-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+    }
+    .auth-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .logo-frame {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: #0E0E11;
+      border: 1px solid rgba(212,175,55,0.45);
+      padding: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .logo-frame img { width: 100%; height: 100%; object-fit: contain; border-radius: 8px; }
+    .auth-card h1 { font-size: 21px; color: var(--gold); }
+    .auth-card p { margin: 0 0 18px; font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .form-group { margin-bottom: 14px; }
+    .alert {
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .alert-err { background: rgba(239,68,68,0.16); border: 1px solid rgba(239,68,68,0.4); color: #FCA5A5; }
+    .alert-ok { background: rgba(34,197,94,0.14); border: 1px solid rgba(34,197,94,0.4); color: #86EFAC; }
+
+    /* Top Bar */
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .topbar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand-row { display: flex; align-items: center; gap: 10px; }
+    .brand-title { font-size: 17px; font-weight: 900; color: var(--gold); }
+    .top-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .session-timer { font-size: 12px; color: var(--muted); }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin: 18px 0;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      background: var(--surface);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 10px 16px;
+      font-size: 13px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .tab-btn.active { background: var(--gold-grad); color: #0A0A0C; border-color: var(--gold); font-weight: 800; }
+
+    /* Cards & Panels */
+    .panel-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+    .panel-card h3 { font-size: 16px; color: var(--gold); margin-bottom: 14px; }
+
+    /* Toolbar & Grid */
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .toolbar-filters { display: flex; gap: 10px; flex-wrap: wrap; flex: 1; }
+    .toolbar-filters input { max-width: 280px; }
+    .toolbar-filters select { max-width: 220px; }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .stat-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+    .stat-label { font-size: 12px; color: var(--muted); }
+    .stat-val { font-family: 'Cairo', sans-serif; font-size: 23px; font-weight: 900; color: var(--gold); margin-top: 4px; }
+
+    /* Tables */
+    .table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow-x: auto;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 11px 12px; text-align: right; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    th { font-family: 'Cairo', sans-serif; font-size: 12px; color: var(--muted); background: rgba(0,0,0,0.25); white-space: nowrap; }
+    tr:last-child td { border-bottom: none; }
+    .row-actions { display: flex; gap: 6px; flex-wrap: nowrap; }
+    .thumb-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: #0E0E11;
+      border: 1px solid var(--border);
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .thumb-box img { width: 100%; height: 100%; object-fit: contain; border-radius: 5px; }
+
+    .status-text { font-weight: 700; font-size: 12px; }
+    .st-available { color: #86EFAC; }
+    .st-unavailable { color: #FCA5A5; }
+    .discount-tag {
+      display: inline-block;
+      background: var(--gold-grad);
+      color: #0A0A0C;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 2px 7px;
+      border-radius: 6px;
+      margin-right: 6px;
+    }
+
+    /* Image Uploader Box inside Modal */
+    .uploader-box {
+      background: #0E0E11;
+      border: 1px dashed rgba(212,175,55,0.45);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+    .preview-frame {
+      width: 100%;
+      height: 170px;
+      background: #0A0A0C;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 6px;
+      margin: 10px 0;
+    }
+    .preview-frame img { width: 100%; height: 100%; object-fit: contain; border-radius: 6px; }
+    .compress-badge { font-size: 12px; color: #86EFAC; font-weight: 700; margin-bottom: 8px; }
+
+    /* Orders Cards */
+    .orders-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; }
+    .order-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .order-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+    .order-id { font-family: 'Cairo', sans-serif; font-weight: 900; color: var(--gold); font-size: 15px; }
+    .order-meta { font-size: 12px; color: var(--muted); }
+    .order-items { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; font-size: 13px; }
+    .order-items li { display: flex; justify-content: space-between; gap: 8px; }
+    .order-foot { border-top: 1px solid var(--border); padding-top: 10px; display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      z-index: 50;
+    }
+    .modal-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      width: 100%;
+      max-width: 580px;
+      max-height: 92vh;
+      overflow-y: auto;
+      padding: 20px;
+    }
+    .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    @media (max-width: 640px) {
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ==================== 80mm THERMAL RECEIPT PRINT CSS ==================== */
+    #thermal-receipt { display: none; }
+    @media print {
+      @page { size: 80mm auto; margin: 2mm; }
+      body { background: #fff !important; color: #000 !important; width: 76mm; margin: 0; padding: 0; }
+      #auth-screen, #dashboard-screen, #item-modal { display: none !important; }
+      #thermal-receipt {
+        display: block !important;
+        width: 76mm;
+        font-family: 'Cairo', 'Tajawal', sans-serif;
+        font-size: 12px;
+        line-height: 1.45;
+        color: #000;
+      }
+      .rcp-center { text-align: center; }
+      .rcp-title { font-size: 16px; font-weight: 900; margin-bottom: 2px; }
+      .rcp-line { border-top: 1px dashed #000; margin: 6px 0; }
+      .rcp-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+      .rcp-table th, .rcp-table td { padding: 3px 2px; border-bottom: 1px dotted #444; text-align: right; color: #000; }
+      .rcp-total { font-size: 14px; font-weight: 900; display: flex; justify-content: space-between; align-items: baseline; gap: 6px; margin-top: 6px; }
+      .rcp-qr-wrap { text-align: center; margin-top: 10px; padding-top: 8px; border-top: 1px dashed #000; background: #FFFFFF !important; }
+      .rcp-qr-title { font-size: 11px; font-weight: 900; margin-bottom: 6px; color: #000000; }
+      .rcp-qr-box { display: inline-block; background: #FFFFFF !important; padding: 10px; border: 1px solid #000000; }
+      .rcp-qr-svg { width: 156px; height: 156px; display: block; margin: 0 auto; background: #FFFFFF !important; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ================= AUTH SCREEN ================= -->
+  <section id="auth-screen" class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <div class="logo-frame">
+          <img class="brand-logo-img" src="./assets/aistudio/FB_IMG_1795500140672_d0b8149e.jpg" alt="سرايا العمدة" />
+        </div>
+        <div>
+          <h1>لوحة إدارة سرايا العمدة</h1>
+          <div style="font-size:12px; color:var(--champagne);">لوحة تحكم معزولة وآمنة</div>
+        </div>
+      </div>
+      <p id="auth-subtitle">أدخل رابط Google Apps Script وكلمة مرور المدير للدخول الآمن.</p>
+      <div id="auth-alert" class="alert alert-err hidden"></div>
+
+      <form id="auth-form" autocomplete="off">
+        <div class="form-group">
+          <label for="gas-url-input">رابط Web App الخاص بـ Google Apps Script</label>
+          <input id="gas-url-input" type="url" dir="ltr" required spellcheck="false" autocapitalize="off" autocorrect="off" placeholder="https://script.google.com/macros/s/.../exec" />
+        </div>
+
+        <div class="form-group">
+          <label id="password-label" for="admin-password-input">كلمة مرور المدير</label>
+          <div class="pwd-wrap">
+            <input id="admin-password-input" type="password" required minlength="8" autocomplete="current-password" spellcheck="false" autocapitalize="off" autocorrect="off" placeholder="أدخل كلمة المرور" />
+            <button type="button" class="pwd-toggle-btn" data-pwd-target="admin-password-input" aria-label="إظهار أو إخفاء كلمة المرور" title="إظهار لمدة 5 ثوانٍ">👁️</button>
+          </div>
+        </div>
+
+        <div id="confirm-wrap" class="form-group hidden">
+          <label for="admin-password-confirm">تأكيد كلمة مرور المدير (إعداد أول مرة — 10 أحرف فأكثر بحروف وأرقام)</label>
+          <div class="pwd-wrap">
+            <input id="admin-password-confirm" type="password" minlength="10" autocomplete="off" spellcheck="false" autocapitalize="off" autocorrect="off" placeholder="أعد إدخال كلمة المرور" />
+            <button type="button" class="pwd-toggle-btn" data-pwd-target="admin-password-confirm" aria-label="إظهار أو إخفاء تأكيد كلمة المرور" title="إظهار لمدة 5 ثوانٍ">👁️</button>
+          </div>
+        </div>
+
+        <div class="form-group" style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+          <button id="toggle-vkb-btn" type="button" class="btn-secondary" style="width:100%; font-size:12px;">
+            ⌨️ لوحة مفاتيح آمنة على الشاشة (مقاومة لتسجيل الضربات)
+          </button>
+        </div>
+
+        <div id="vkb-panel" class="vkb-box hidden" aria-label="لوحة مفاتيح آمنة على الشاشة">
+          <div class="vkb-header">
+            <div class="vkb-tabs">
+              <button type="button" class="vkb-tab active" data-vkb-mode="digits">أرقام</button>
+              <button type="button" class="vkb-tab" data-vkb-mode="lower">a-z</button>
+              <button type="button" class="vkb-tab" data-vkb-mode="upper">A-Z</button>
+              <button type="button" class="vkb-tab" data-vkb-mode="symbols">رموز</button>
+            </div>
+            <span style="font-size:11px; color:var(--champagne);">مفاتيح مخلوطة عشوائياً</span>
+          </div>
+          <div id="vkb-grid" class="vkb-grid"></div>
+          <div class="vkb-actions">
+            <button id="vkb-backspace-btn" type="button" class="btn-secondary">⌫ مسح حرف</button>
+            <button id="vkb-shuffle-btn" type="button" class="btn-secondary">🔀 إعادة خلط</button>
+            <button id="vkb-clear-btn" type="button" class="btn-danger">مسح الكل</button>
+          </div>
+        </div>
+
+        <button id="auth-submit-btn" type="submit" class="btn-primary" style="width:100%; padding:12px;">
+          تسجيل الدخول الآمن
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ================= DASHBOARD SCREEN ================= -->
+  <div id="dashboard-screen" class="hidden">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand-row">
+          <div class="logo-frame" style="width:38px; height:38px;">
+            <img class="brand-logo-img" src="./assets/aistudio/FB_IMG_1795500140672_d0b8149e.jpg" alt="سرايا العمدة" />
+          </div>
+          <span class="brand-title">إدارة سرايا العمدة للمشويات</span>
+        </div>
+        <div class="top-actions">
+          <span id="session-countdown" class="session-timer tabular">الجلسة نشطة</span>
+          <button id="refresh-btn" type="button" class="btn-secondary">تحديث البيانات</button>
+          <button id="instant-lock-btn" type="button" class="btn-lock" title="قفل فوري ومسح الذاكرة">🔒 قفل فوري</button>
+          <button id="logout-btn" type="button" class="btn-danger">خروج</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div id="dash-alert" class="alert hidden"></div>
+
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-label">إجمالي الأصناف</div>
+          <div id="stat-total-items" class="stat-val tabular">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">أصناف عليها خصم</div>
+          <div id="stat-discounted-items" class="stat-val tabular">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">كوبونات فعالة</div>
+          <div id="stat-active-promos" class="stat-val tabular">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">طلبات جديدة</div>
+          <div id="stat-new-orders" class="stat-val tabular">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">إجمالي الطلبات</div>
+          <div id="stat-total-orders" class="stat-val tabular">0</div>
+        </div>
+      </div>
+
+      <!-- 4 Mobile-Friendly Navigation Tabs -->
+      <div class="tabs">
+        <button id="tab-menu" type="button" class="tab-btn active">1. إدارة الأصناف والصور</button>
+        <button id="tab-offers" type="button" class="tab-btn">2. العروض والخصومات والكوبونات</button>
+        <button id="tab-orders" type="button" class="tab-btn">3. الطلبات الحية والفواتير</button>
+        <button id="tab-settings" type="button" class="tab-btn">4. إعدادات المطعم والأمان</button>
+      </div>
+
+      <!-- TAB 1: MENU & DIRECT DRIVE IMAGE UPLOAD -->
+      <section id="panel-menu">
+        <div class="toolbar">
+          <div class="toolbar-filters">
+            <input id="menu-search" type="search" placeholder="ابحث باسم الصنف..." />
+            <select id="menu-cat-filter"></select>
+          </div>
+          <button id="open-add-modal-btn" type="button" class="btn-primary">+ إضافة صنف جديد</button>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>الصنف والصورة</th>
+                <th>القسم</th>
+                <th>التسعير والخصم</th>
+                <th>الحالة</th>
+                <th>إجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="menu-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 2: OFFERS, DISCOUNTS & PROMO CODES -->
+      <section id="panel-offers" class="hidden">
+        <!-- Quick Item Discount Editor -->
+        <div class="panel-card">
+          <h3>🔥 تحديد خصم على صنف (السعر قبل / بعد الخصم)</h3>
+          <form id="discount-form">
+            <div class="grid-3">
+              <div class="form-group">
+                <label for="disc-item-select">اختر الصنف (الأصناف ذات السعر الثابت)</label>
+                <select id="disc-item-select" required></select>
+              </div>
+              <div class="form-group">
+                <label for="disc-orig-price">السعر قبل الخصم (ج.م)</label>
+                <input id="disc-orig-price" type="number" min="1" required placeholder="مثال: 450" />
+              </div>
+              <div class="form-group">
+                <label for="disc-sale-price">السعر بعد الخصم (ج.م)</label>
+                <input id="disc-sale-price" type="number" min="1" required placeholder="مثال: 360" />
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+              <span id="disc-preview-text" style="font-size:13px; color:var(--champagne); font-weight:700;"></span>
+              <button id="save-discount-btn" type="submit" class="btn-primary">تفعيل الخصم على الصنف</button>
+            </div>
+          </form>
+          <div id="discounted-items-list" style="margin-top:16px;"></div>
+        </div>
+
+        <!-- Promo Codes CRUD -->
+        <div class="panel-card">
+          <h3>🎟️ أكواد الخصم والكوبونات (Promo Codes)</h3>
+          <form id="promo-form">
+            <div class="grid-4">
+              <div class="form-group">
+                <label for="p-code">الكود (إنجليزي)</label>
+                <input id="p-code" type="text" dir="ltr" required placeholder="OMDA15" style="text-transform:uppercase;" />
+              </div>
+              <div class="form-group">
+                <label for="p-type">نوع الخصم</label>
+                <select id="p-type">
+                  <option value="PERCENT">نسبة مئوية (%)</option>
+                  <option value="FIXED">مبلغ ثابت (ج.م)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="p-val">قيمة الخصم</label>
+                <input id="p-val" type="number" min="1" required placeholder="10" />
+              </div>
+              <div class="form-group">
+                <label for="p-min">الحد الأدنى للطلب (ج.م)</label>
+                <input id="p-min" type="number" min="0" value="0" placeholder="150" />
+              </div>
+            </div>
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="p-title">وصف مختصر للكوبون</label>
+                <input id="p-title" type="text" placeholder="مثال: خصم 15% لطلبات الويك إند" />
+              </div>
+              <div class="form-group" style="display:flex; align-items:flex-end;">
+                <button id="save-promo-btn" type="submit" class="btn-primary" style="width:100%;">+ حفظ وتفعيل الكوبون</button>
+              </div>
+            </div>
+          </form>
+          <div class="table-wrap" style="margin-top:12px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>الكود</th>
+                  <th>القيمة</th>
+                  <th>الحد الأدنى</th>
+                  <th>الحالة</th>
+                  <th>إجراء</th>
+                </tr>
+              </thead>
+              <tbody id="promos-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Promotional Announcement Banners CRUD -->
+        <div class="panel-card">
+          <h3>📢 شريط الإعلانات والعروض الترويجية (أعلى المنيو)</h3>
+          <form id="banner-form" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
+            <input id="b-title" type="text" required placeholder="مثال: 🔥 عروض يومية جديدة على صواني العمدة وطواجن الفحم" style="flex:1; min-width:220px;" />
+            <button id="save-banner-btn" type="submit" class="btn-primary">+ إضافة شريط إعلاني</button>
+          </form>
+          <div id="banners-list"></div>
+        </div>
+      </section>
+
+      <!-- TAB 3: LIVE ORDERS & 80mm THERMAL PRINT -->
+      <section id="panel-orders" class="hidden">
+        <div class="toolbar">
+          <div class="toolbar-filters">
+            <select id="order-status-filter">
+              <option value="الكل">كل الحالات</option>
+              <option value="جديد">جديد</option>
+              <option value="جاري التحضير">جاري التحضير</option>
+              <option value="خرج للتوصيل">خرج للتوصيل</option>
+              <option value="تم التسليم">تم التسليم</option>
+              <option value="ملغي">ملغي</option>
+            </select>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <button id="toggle-autopoll-btn" type="button" class="btn-secondary">
+              🟢 التحديث التلقائي (20ث): مفعّل
+            </button>
+            <button id="test-sound-btn" type="button" class="btn-secondary" title="اختبار جرس الطلب الجديد">
+              🔔 اختبار الجرس
+            </button>
+          </div>
+        </div>
+
+        <div id="orders-container" class="orders-grid"></div>
+      </section>
+
+      <!-- TAB 4: SETTINGS & SECURITY -->
+      <section id="panel-settings" class="hidden">
+        <div class="panel-card">
+          <h3>⚙️ ساعات العمل وحالة استقبال الطلبات</h3>
+          <form id="settings-form">
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="set-hours">مواعيد العمل الظاهرة للعملاء</label>
+                <input id="set-hours" type="text" placeholder="يومياً من ١٢ ظهراً حتى ٢ بعد منتصف الليل" />
+              </div>
+              <div class="form-group">
+                <label for="set-open">حالة المطعم</label>
+                <select id="set-open">
+                  <option value="true">مفتوح — يستقبل الطلبات</option>
+                  <option value="false">مغلق مؤقتاً</option>
+                </select>
+              </div>
+            </div>
+
+            <h4 style="color:var(--gold); font-size:14px; margin:16px 0 8px;">📍 موقع الفرع الجغرافي وإعدادات الدليفري (GPS مجاني)</h4>
+            <div style="margin-bottom:10px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+              <button id="capture-shop-gps-btn" type="button" class="btn-primary">
+                📍 التقاط موقع المحل الحالي الآن (GPS)
+              </button>
+              <span id="shop-gps-status" style="font-size:12px; color:var(--champagne);"></span>
+            </div>
+            <div class="grid-3">
+              <div class="form-group">
+                <label for="set-shop-lat">خط العرض للفرع (Latitude)</label>
+                <input id="set-shop-lat" type="number" step="0.000001" dir="ltr" placeholder="30.2981" />
+              </div>
+              <div class="form-group">
+                <label for="set-shop-lng">خط الطول للفرع (Longitude)</label>
+                <input id="set-shop-lng" type="number" step="0.000001" dir="ltr" placeholder="31.7417" />
+              </div>
+              <div class="form-group">
+                <label for="set-max-km">أقصى نطاق توصيل معتاد (كم)</label>
+                <input id="set-max-km" type="number" min="1" max="100" step="1" dir="ltr" placeholder="15" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="set-shop-maps-url">رابط خرائط جوجل للفرع (Google Maps URL)</label>
+              <input id="set-shop-maps-url" type="url" dir="ltr" placeholder="https://www.google.com/maps/dir/?api=1&destination=30.2981,31.7417" />
+            </div>
+
+            <h4 style="color:var(--champagne); font-size:14px; margin:14px 0 8px;">🛵 مناطق ورسوم التوصيل (العاشر من رمضان)</h4>
+            <div style="font-size:12px; color:var(--muted); margin-bottom:10px;">
+              اترك الرسوم 0 ليظهر للعميل «تُحدد حسب المنطقة عند التأكيد»، أو حدد مبلغاً ثابتاً بالجنيه لكل منطقة.
+            </div>
+            <div id="zones-editor" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:8px; margin-bottom:16px;"></div>
+
+            <div style="background:#0E0E11; border:1px solid rgba(212,175,55,0.45); border-radius:14px; padding:16px; margin-bottom:16px;">
+              <h4 style="color:var(--gold); font-size:15px; margin:0 0 12px;">💳 أرقام الدفع الإلكتروني والتحويل (تُحفظ في السحابة)</h4>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label for="set-wallet-1">رقم المحفظة الإلكترونية الأساسية (فودافون كاش / اتصالات / أورنج / WE Pay)</label>
+                  <input id="set-wallet-1" type="text" dir="ltr" maxlength="30" placeholder="01XXXXXXXXX" />
+                </div>
+                <div class="form-group">
+                  <label for="set-wallet-2">رقم محفظة إلكترونية إضافية (اختياري)</label>
+                  <input id="set-wallet-2" type="text" dir="ltr" maxlength="30" placeholder="01XXXXXXXXX" />
+                </div>
+              </div>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label for="set-instapay">حساب أو رقم إنستاباي (InstaPay — رقم الموبايل أو عنوان IPA)</label>
+                  <input id="set-instapay" type="text" dir="ltr" maxlength="80" placeholder="username@instapay أو 01XXXXXXXXX" />
+                </div>
+                <div class="form-group">
+                  <label for="set-payment-note">ملاحظة الدفع للعميل (اختياري — مثال: يرجى إرسال صورة إيصال التحويل على واتساب)</label>
+                  <input id="set-payment-note" type="text" maxlength="200" placeholder="مثال: يرجى إرسال صورة إيصال التحويل على واتساب" />
+                </div>
+              </div>
+              <div style="font-size:12px; color:var(--champagne); margin-top:2px;">
+                ℹ️ اترك أي حقل فارغاً لإخفائه من صفحة الطلبات لدى العملاء.
+              </div>
+            </div>
+
+            <button id="save-settings-btn" type="submit" class="btn-primary">حفظ إعدادات المطعم والموقع والدفع والتوصيل</button>
+          </form>
+        </div>
+
+        <div class="panel-card">
+          <h3>🔒 تغيير كلمة مرور لوحة التحكم (يُنهي جميع الجلسات النشطة فوراً)</h3>
+          <form id="password-form" autocomplete="off">
+            <div class="grid-3">
+              <div class="form-group">
+                <label for="cp-current">كلمة المرور الحالية</label>
+                <div class="pwd-wrap">
+                  <input id="cp-current" type="password" required minlength="8" autocomplete="current-password" spellcheck="false" autocapitalize="off" autocorrect="off" />
+                  <button type="button" class="pwd-toggle-btn" data-pwd-target="cp-current" aria-label="إظهار أو إخفاء كلمة المرور الحالية" title="إظهار لمدة 5 ثوانٍ">👁️</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="cp-new">كلمة المرور الجديدة (10 أحرف فأكثر بحروف وأرقام)</label>
+                <div class="pwd-wrap">
+                  <input id="cp-new" type="password" required minlength="10" autocomplete="off" spellcheck="false" autocapitalize="off" autocorrect="off" />
+                  <button type="button" class="pwd-toggle-btn" data-pwd-target="cp-new" aria-label="إظهار أو إخفاء كلمة المرور الجديدة" title="إظهار لمدة 5 ثوانٍ">👁️</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="cp-confirm">تأكيد كلمة المرور الجديدة</label>
+                <div class="pwd-wrap">
+                  <input id="cp-confirm" type="password" required minlength="10" autocomplete="off" spellcheck="false" autocapitalize="off" autocorrect="off" />
+                  <button type="button" class="pwd-toggle-btn" data-pwd-target="cp-confirm" aria-label="إظهار أو إخفاء تأكيد كلمة المرور الجديدة" title="إظهار لمدة 5 ثوانٍ">👁️</button>
+                </div>
+              </div>
+            </div>
+            <button id="save-password-btn" type="submit" class="btn-primary">تحديث كلمة المرور وإنهاء الجلسات</button>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ================= ADD / EDIT ITEM MODAL (WITH DIRECT DRIVE PHOTO UPLOAD) ================= -->
+  <div id="item-modal" class="modal-backdrop hidden">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3 id="modal-title" style="color:var(--gold);">إضافة صنف جديد</h3>
+        <button id="close-modal-btn" type="button" class="btn-secondary">إغلاق</button>
+      </div>
+
+      <form id="item-form">
+        <input id="edit-id" type="hidden" />
+        <div class="form-group">
+          <label for="f-name">اسم الصنف *</label>
+          <input id="f-name" type="text" required />
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="f-cat">القسم *</label>
+            <select id="f-cat" required></select>
+          </div>
+          <div class="form-group">
+            <label for="f-sub">القسم الفرعي (اختياري)</label>
+            <input id="f-sub" type="text" placeholder="مثال: ركن الضاني" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="f-desc">المكونات / الوصف</label>
+          <textarea id="f-desc" rows="2"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="f-pricing-mode">نوع التسعير</label>
+          <select id="f-pricing-mode">
+            <option value="fixed">سعر ثابت</option>
+            <option value="weights">أسعار بالأوزان (1/4 - 1/3 - 1/2 - 1 كيلو)</option>
+          </select>
+        </div>
+
+        <div id="fixed-price-wrap" class="grid-2">
+          <div class="form-group">
+            <label for="f-price">السعر الحالي (ج.م) *</label>
+            <input id="f-price" type="number" min="0" step="1" />
+          </div>
+          <div class="form-group">
+            <label for="f-orig-price">السعر قبل الخصم (اختياري للعروض)</label>
+            <input id="f-orig-price" type="number" min="0" step="1" placeholder="اتركه فارغاً بدون خصم" />
+          </div>
+        </div>
+
+        <div id="weights-price-wrap" class="form-group hidden">
+          <label>أسعار الأوزان (اترك الوزن غير المتوفر فارغاً)</label>
+          <div class="grid-4">
+            <div><label for="f-w14">1/4 كيلو</label><input id="f-w14" type="number" min="0" /></div>
+            <div><label for="f-w13">1/3 كيلو</label><input id="f-w13" type="number" min="0" /></div>
+            <div><label for="f-w12">1/2 كيلو</label><input id="f-w12" type="number" min="0" /></div>
+            <div><label for="f-w1">1 كيلو</label><input id="f-w1" type="number" min="0" /></div>
+          </div>
+        </div>
+
+        <!-- DIRECT MOBILE PHOTO PICKER + CANVAS AUTO-COMPRESS + GOOGLE DRIVE UPLOAD -->
+        <div class="uploader-box">
+          <label for="f-img-file" style="color:var(--gold); font-size:13px;">📸 رفع صورة الصنف مباشرة من الموبايل إلى Google Drive</label>
+          <input id="f-img-file" type="file" accept="image/*" style="margin-bottom:8px;" />
+          <div id="compress-status" class="compress-badge hidden"></div>
+          <div id="img-preview-wrap" class="preview-frame hidden">
+            <img id="img-preview-el" alt="معاينة صورة الصنف" />
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+            <button id="upload-drive-btn" type="button" class="btn-primary hidden" style="flex:1;">☁️ رفع الصورة إلى Google Drive الآن</button>
+            <button id="clear-img-btn" type="button" class="btn-secondary hidden">مسح الصورة</button>
+          </div>
+          <label for="f-img">أو رابط الصورة المباشر (يُملأ تلقائياً بعد الرفع لـ Drive)</label>
+          <input id="f-img" type="url" dir="ltr" placeholder="https://lh3.googleusercontent.com/d/..." />
+        </div>
+
+        <div class="form-group" style="display:flex; gap:16px; align-items:center;">
+          <label style="display:flex; align-items:center; gap:6px; margin:0; cursor:pointer;">
+            <input id="f-available" type="checkbox" checked style="width:auto;" />
+            <span>متاح للطلب</span>
+          </label>
+          <label style="display:flex; align-items:center; gap:6px; margin:0; cursor:pointer;">
+            <input id="f-featured" type="checkbox" style="width:auto;" />
+            <span>صنف مميز</span>
+          </label>
+        </div>
+
+        <button id="save-item-btn" type="submit" class="btn-primary" style="width:100%; padding:12px;">
+          حفظ الصنف والتغييرات
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= 80mm THERMAL RECEIPT CONTAINER ================= -->
+  <div id="thermal-receipt"></div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // ==================== ANTI-CLICKJACKING GUARD (BLOCKS IFRAME EMBEDDING) ====================
+      const ADMIN_SESSION_KEY = 'saraya_admin_session_v1';
+      let isFramedExternally = false;
+      try {
+        isFramedExternally = window.top !== window.self;
+      } catch (_) {
+        isFramedExternally = true;
+      }
+      if (isFramedExternally) {
+        try { sessionStorage.removeItem(ADMIN_SESSION_KEY); } catch (_) {}
+        ['auth-screen', 'dashboard-screen', 'item-modal', 'thermal-receipt'].forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.remove();
+        });
+        const wrap = document.createElement('div');
+        wrap.className = 'clickjack-block';
+        const card = document.createElement('div');
+        card.className = 'clickjack-card';
+        const h1 = document.createElement('h1');
+        h1.style.cssText = 'color:#FCA5A5; font-size:20px; margin-bottom:10px;';
+        h1.textContent = '🔒 تم حظر تشغيل لوحة الإدارة داخل إطار مضمّن';
+        const p = document.createElement('p');
+        p.style.cssText = 'color:#B8B8C0; font-size:14px; line-height:1.7; margin:0;';
+        p.textContent = 'لحماية بيانات الكاشير والطلبات، يجب فتح لوحة تحكم سرايا العمدة للمشويات في نافذة متصفح مستقلة مباشرة.';
+        card.append(h1, p);
+        wrap.appendChild(card);
+        document.body.appendChild(wrap);
+        return;
+      }
+
+      // Set your deployed Google Apps Script Web App URL here to pre-fill login
+      const DEFAULT_GAS_URL = '';
+
+      const CATEGORIES = [
+        'وجبات فردية', 'مشويات العمدة', 'عروض العمدة المميزة', 'صواني العمدة المميزة',
+        'وجبات عائلية', 'الطواجن', 'مطبخ العمدة', 'عروض المندي',
+        'وجبات البروست', 'وجبات أطفال', 'السندوتشات', 'السلطات'
+      ];
+
+      const ORDER_STATUSES = ['جديد', 'جاري التحضير', 'خرج للتوصيل', 'تم التسليم', 'ملغي'];
+
+      // Cashier idle auto-lock window (15 minutes)
+      const IDLE_LOCK_MS = 15 * 60 * 1000;
+      const PASSWORD_INPUT_IDS = ['admin-password-input', 'admin-password-confirm', 'cp-current', 'cp-new', 'cp-confirm'];
+
+      // Tab-scoped sessionStorage auth state (NEVER persisted to localStorage)
+      let gasApiUrl = DEFAULT_GAS_URL;
+      let sessionToken = null;
+      let sessionExpiresAt = 0;
+      let isFirstRunSetup = false;
+      let menuItems = [];
+      let orders = [];
+      let promos = [];
+      let banners = [];
+      let settings = {
+        hours: 'يومياً من ١٢ ظهراً حتى ٢ بعد منتصف الليل',
+        isOpen: true,
+        deliveryZones: [],
+        shopLat: 30.2981,
+        shopLng: 31.7417,
+        shopMapsUrl: 'https://www.google.com/maps/dir/?api=1&destination=30.2981,31.7417',
+        maxDeliveryKm: 15,
+        walletNumber: '',
+        wallet2Number: '',
+        instapayAccount: '',
+        paymentNote: ''
+      };
+      let autoRefreshHandle = null;
+      let autoPollingEnabled = true;
+      let countdownHandle = null;
+      let idleLockTimer = null;
+      let lastActivityAt = Date.now();
+      let lastMouseMoveRecord = 0;
+      let hasLoadedOrdersOnce = false;
+      const knownOrderIds = new Set();
+      const newlyArrivedOrderIds = new Set();
+      const pwdRevealTimers = new Map();
+      let activeAuthPwdId = 'admin-password-input';
+      let currentVkbMode = 'digits';
+
+      // Strict HTML escaper (& < > " ' ` /) + control character sanitizer
+      function escapeHtml_(str) {
+        return String(str === null || str === undefined ? '' : str).replace(/[&<>"'`/]/g, (ch) => {
+          switch (ch) {
+            case '&': return '&amp;';
+            case '<': return '&lt;';
+            case '>': return '&gt;';
+            case '"': return '&quot;';
+            case "'": return '&#39;';
+            case '`': return '&#96;';
+            case '/': return '&#47;';
+            default: return ch;
+          }
+        });
+      }
+
+      function sanitizeDisplayText_(val) {
+        return String(val === null || val === undefined ? '' : val).replace(/[\x00-\x1F\x7F]/g, '').trim();
+      }
+
+      function isValidLatLng(lat, lng) {
+        const nLat = Number(lat);
+        const nLng = Number(lng);
+        return (
+          Number.isFinite(nLat) &&
+          Number.isFinite(nLng) &&
+          nLat >= -90 &&
+          nLat <= 90 &&
+          nLng >= -180 &&
+          nLng <= 180 &&
+          (nLat !== 0 || nLng !== 0)
+        );
+      }
+
+      function isStrongAdminPassword(pwd) {
+        const s = String(pwd || '');
+        return s.length >= 10 && /[A-Za-z\u0600-\u06FF]/.test(s) && /\d/.test(s);
+      }
+
+      function wipeAllPasswordInputs() {
+        PASSWORD_INPUT_IDS.forEach((id) => {
+          const inp = document.getElementById(id);
+          if (inp) {
+            inp.value = '';
+            inp.type = 'password';
+          }
+          if (pwdRevealTimers.has(id)) {
+            clearTimeout(pwdRevealTimers.get(id));
+            pwdRevealTimers.delete(id);
+          }
+        });
+        document.querySelectorAll('.pwd-toggle-btn').forEach((btn) => {
+          btn.textContent = '👁️';
+        });
+      }
+
+      function wipeSensitiveDomAndMemory() {
+        menuItems = [];
+        orders = [];
+        promos = [];
+        banners = [];
+        hasLoadedOrdersOnce = false;
+        knownOrderIds.clear();
+        newlyArrivedOrderIds.clear();
+        pendingCompressedImage = null;
+        ['orders-container', 'menu-tbody', 'promos-tbody', 'banners-list', 'discounted-items-list', 'thermal-receipt'].forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = '';
+        });
+        ['stat-total-items', 'stat-discounted-items', 'stat-active-promos', 'stat-new-orders', 'stat-total-orders'].forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = '0';
+        });
+        const modal = document.getElementById('item-modal');
+        if (modal) modal.classList.add('hidden');
+        wipeAllPasswordInputs();
+      }
+
+      function saveAdminSession(url, token, expiresAt) {
+        try {
+          sessionStorage.setItem(
+            ADMIN_SESSION_KEY,
+            JSON.stringify({ gasApiUrl: url, token: token, expiresAt: expiresAt })
+          );
+        } catch (_) {}
+      }
+
+      function clearAdminSession() {
+        try {
+          sessionStorage.removeItem(ADMIN_SESSION_KEY);
+        } catch (_) {}
+      }
+
+      function isSafeHttpsUrl_(rawUrl, requireGasExec) {
+        const s = String(rawUrl || '').trim();
+        if (!s || /[\r\n\t\0]/.test(s)) return false;
+        try {
+          const parsed = new URL(s);
+          if (parsed.protocol !== 'https:') return false;
+          if (requireGasExec) {
+            if (parsed.hostname.toLowerCase() !== 'script.google.com') return false;
+            return /^\/macros\/s\/[a-zA-Z0-9_-]+\/exec$/i.test(parsed.pathname);
+          }
+          return true;
+        } catch (_) {
+          return false;
+        }
+      }
+
+      function restoreAdminSession() {
+        try {
+          const raw = sessionStorage.getItem(ADMIN_SESSION_KEY);
+          if (!raw) return false;
+          const parsed = JSON.parse(raw);
+          if (
+            parsed &&
+            typeof parsed.token === 'string' &&
+            parsed.token.length > 0 &&
+            typeof parsed.gasApiUrl === 'string' &&
+            isSafeHttpsUrl_(parsed.gasApiUrl, true) &&
+            Number(parsed.expiresAt) > Date.now()
+          ) {
+            gasApiUrl = parsed.gasApiUrl;
+            sessionToken = parsed.token;
+            sessionExpiresAt = Number(parsed.expiresAt);
+            $('gas-url-input').value = gasApiUrl;
+            return true;
+          }
+          clearAdminSession();
+        } catch (_) {
+          clearAdminSession();
+        }
+        return false;
+      }
+
+      // Pending compressed image ready for Google Drive upload
+      let pendingCompressedImage = null; // { base64, mimeType, filename, sizeKB }
+
+      const $ = (id) => document.getElementById(id);
+
+      function getDriveFallback(url) {
+        if (!url) return '';
+        const m = String(url).match(/lh3\.googleusercontent\.com\/d\/([a-zA-Z0-9_-]+)/);
+        return m ? 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w800' : '';
+      }
+
+      function initCategorySelects() {
+        const filterSel = $('menu-cat-filter');
+        const formSel = $('f-cat');
+        filterSel.textContent = '';
+        formSel.textContent = '';
+
+        const allOpt = document.createElement('option');
+        allOpt.value = 'الكل';
+        allOpt.textContent = 'كل الأقسام';
+        filterSel.appendChild(allOpt);
+
+        CATEGORIES.forEach((c) => {
+          const o1 = document.createElement('option');
+          o1.value = c;
+          o1.textContent = c;
+          filterSel.appendChild(o1);
+
+          const o2 = document.createElement('option');
+          o2.value = c;
+          o2.textContent = c;
+          formSel.appendChild(o2);
+        });
+      }
+
+      function showAuthAlert(msg, isOk) {
+        const el = $('auth-alert');
+        el.textContent = msg;
+        el.className = 'alert ' + (isOk ? 'alert-ok' : 'alert-err');
+        el.classList.remove('hidden');
+      }
+
+      function showDashAlert(msg, isOk) {
+        const el = $('dash-alert');
+        el.textContent = msg;
+        el.className = 'alert ' + (isOk ? 'alert-ok' : 'alert-err');
+        el.classList.remove('hidden');
+        setTimeout(() => el.classList.add('hidden'), 4500);
+      }
+
+      function isSafeAdminImageUrl(url) {
+        const s = String(url || '').trim();
+        if (!s) return false;
+        if (s.startsWith('/assets/') || s.startsWith('./assets/')) return true;
+        return isSafeHttpsUrl_(s, false);
+      }
+
+      async function gasPost(payload) {
+        const res = await fetch(gasApiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        const code = String((data && (data.code || data.error)) || '').trim().toUpperCase();
+        if (data && (data.unauthorized || code === 'UNAUTHORIZED' || code === 'TOKEN_IN_QUERY_FORBIDDEN')) {
+          handleLogout('انتهت الجلسة الأمنية، يرجى إعادة تسجيل الدخول.', true);
+          throw new Error('UNAUTHORIZED');
+        }
+        return data;
+      }
+
+      async function checkSetupStatus(url) {
+        try {
+          const res = await fetch(url + '?action=authStatus', { cache: 'no-store' });
+          const data = await res.json();
+          if (data && data.ok && data.configured === false) {
+            isFirstRunSetup = true;
+            $('confirm-wrap').classList.remove('hidden');
+            $('password-label').textContent = 'إنشاء كلمة مرور المدير لأول مرة (10 أحرف فأكثر بحروف وأرقام)';
+            $('auth-submit-btn').textContent = 'حفظ كلمة المرور والدخول';
+            $('auth-subtitle').textContent = 'الإعداد الأولي: قم بتعيين كلمة مرور قوية (10 أحرف على الأقل بحروف وأرقام) لحماية لوحة التحكم.';
+          } else {
+            isFirstRunSetup = false;
+            $('confirm-wrap').classList.add('hidden');
+            $('password-label').textContent = 'كلمة مرور المدير';
+            $('auth-submit-btn').textContent = 'تسجيل الدخول الآمن';
+          }
+        } catch (_) {}
+      }
+
+      $('gas-url-input').addEventListener('blur', () => {
+        const val = $('gas-url-input').value.trim();
+        if (isSafeHttpsUrl_(val, true)) checkSetupStatus(val);
+      });
+
+      $('auth-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        $('auth-alert').classList.add('hidden');
+
+        const urlVal = $('gas-url-input').value.trim();
+        const password = $('admin-password-input').value;
+        const confirmPass = $('admin-password-confirm').value;
+
+        // Immediately clear password values from DOM right after reading
+        wipeAllPasswordInputs();
+
+        if (!isSafeHttpsUrl_(urlVal, true)) {
+          showAuthAlert('يرجى إدخال رابط Google Apps Script Web App صحيح بصيغة https://script.google.com/macros/s/.../exec', false);
+          return;
+        }
+        gasApiUrl = urlVal;
+
+        if (isFirstRunSetup) {
+          if (!isStrongAdminPassword(password)) {
+            showAuthAlert('كلمة المرور يجب أن تكون 10 أحرف على الأقل وتحتوي على حروف وأرقام معاً.', false);
+            return;
+          }
+          if (password !== confirmPass) {
+            showAuthAlert('كلمتا المرور غير متطابقتين.', false);
+            return;
+          }
+        }
+
+        const btn = $('auth-submit-btn');
+        btn.disabled = true;
+        try {
+          const action = isFirstRunSetup ? 'claimAdmin' : 'adminLogin';
+          const res = await gasPost({ action, password });
+          if (res.needsSetup) {
+            isFirstRunSetup = true;
+            $('confirm-wrap').classList.remove('hidden');
+            $('password-label').textContent = 'إنشاء كلمة مرور المدير لأول مرة (10 أحرف فأكثر بحروف وأرقام)';
+            $('auth-submit-btn').textContent = 'حفظ كلمة المرور والدخول';
+            showAuthAlert('لم يتم تعيين كلمة مرور بعد — أنشئ كلمة مرور قوية (10 أحرف فأكثر بحروف وأرقام) الآن.', false);
+            return;
+          }
+          if (!res.ok || !res.token) {
+            const errCode = String(res.code || res.error || '').toUpperCase();
+            if (errCode === 'TOO_MANY_ATTEMPTS' || res.locked) {
+              showAuthAlert(res.error || 'تم إيقاف الدخول مؤقتاً لمدة 15 دقيقة بسبب تكرار المحاولات الخاطئة.', false);
+              return;
+            }
+            const extra = typeof res.remainingAttempts === 'number'
+              ? ' (المحاولات المتبقية: ' + res.remainingAttempts + ')'
+              : '';
+            showAuthAlert((res.error || 'فشل تسجيل الدخول') + extra, false);
+            return;
+          }
+
+          sessionToken = res.token;
+          sessionExpiresAt = Date.now() + (res.expiresInMs || 4 * 3600 * 1000);
+          saveAdminSession(gasApiUrl, sessionToken, sessionExpiresAt);
+          $('vkb-panel').classList.add('hidden');
+          enterDashboard();
+        } catch (err) {
+          showAuthAlert('تعذر الاتصال بالخادم: ' + err.message, false);
+        } finally {
+          wipeAllPasswordInputs();
+          btn.disabled = false;
+        }
+      });
+
+      function playNewOrderChime() {
+        try {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (!AudioCtx) return;
+          const ctx = new AudioCtx();
+          const now = ctx.currentTime;
+          const notes = [880, 1108.73, 1318.51];
+          notes.forEach((freq, idx) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now + idx * 0.14);
+            gain.gain.setValueAtTime(0.001, now + idx * 0.14);
+            gain.gain.exponentialRampToValueAtTime(0.22, now + idx * 0.14 + 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.14 + 0.35);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now + idx * 0.14);
+            osc.stop(now + idx * 0.14 + 0.36);
+          });
+        } catch (_) {}
+      }
+
+      function updateAutoPollButton() {
+        const btn = $('toggle-autopoll-btn');
+        if (!btn) return;
+        btn.textContent = autoPollingEnabled
+          ? '🟢 التحديث التلقائي (20ث): مفعّل'
+          : '⏸️ التحديث التلقائي (20ث): متوقف';
+      }
+
+      function restartAutoPolling() {
+        clearInterval(autoRefreshHandle);
+        updateAutoPollButton();
+        if (!autoPollingEnabled || !sessionToken) return;
+        autoRefreshHandle = setInterval(() => {
+          if (sessionToken && autoPollingEnabled) loadAdminData(true);
+        }, 20000);
+      }
+
+      function resetIdleLockTimer() {
+        lastActivityAt = Date.now();
+        clearTimeout(idleLockTimer);
+        if (!sessionToken) return;
+        idleLockTimer = setTimeout(() => {
+          if (sessionToken) {
+            handleLogout('🔒 تم قفل لوحة التحكم تلقائياً بعد 15 دقيقة من عدم النشاط لحماية بيانات الكاشير.', false, false);
+          }
+        }, IDLE_LOCK_MS);
+      }
+
+      function enterDashboard() {
+        $('auth-screen').classList.add('hidden');
+        $('dashboard-screen').classList.remove('hidden');
+        resetIdleLockTimer();
+        loadAdminData();
+        restartAutoPolling();
+
+        clearInterval(countdownHandle);
+        countdownHandle = setInterval(() => {
+          const now = Date.now();
+          const left = sessionExpiresAt - now;
+          if (left <= 0) {
+            handleLogout('انتهت مدة الجلسة الأمنية تلقائياً.');
+            return;
+          }
+          if (now - lastActivityAt >= IDLE_LOCK_MS) {
+            handleLogout('🔒 تم قفل لوحة التحكم تلقائياً بعد 15 دقيقة من عدم النشاط لحماية بيانات الكاشير.');
+            return;
+          }
+          const mins = Math.floor(left / 60000);
+          const idleMinsLeft = Math.max(0, Math.ceil((IDLE_LOCK_MS - (now - lastActivityAt)) / 60000));
+          $('session-countdown').textContent = 'الجلسة: ' + mins + ' د · قفل تلقائي: ' + idleMinsLeft + ' د';
+        }, 10000);
+      }
+
+      function handleLogout(reason, skipRemoteLogout, isSuccessMsg) {
+        const prevToken = sessionToken;
+        if (!skipRemoteLogout && prevToken && gasApiUrl) {
+          try {
+            fetch(gasApiUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+              keepalive: true,
+              body: JSON.stringify({ action: 'adminLogout', token: prevToken })
+            }).catch(() => {});
+          } catch (_) {}
+        }
+        sessionToken = null;
+        sessionExpiresAt = 0;
+        clearAdminSession();
+        clearInterval(autoRefreshHandle);
+        clearInterval(countdownHandle);
+        clearTimeout(idleLockTimer);
+        wipeSensitiveDomAndMemory();
+        $('dashboard-screen').classList.add('hidden');
+        $('auth-screen').classList.remove('hidden');
+        if (reason) showAuthAlert(reason, Boolean(isSuccessMsg));
+      }
+
+      $('instant-lock-btn').addEventListener('click', () => {
+        handleLogout('🔒 تم قفل لوحة التحكم فوراً ومسح البيانات من الذاكرة.', false, true);
+      });
+      $('logout-btn').addEventListener('click', () => handleLogout('تم تسجيل الخروج بنجاح.', false, true));
+      $('refresh-btn').addEventListener('click', () => loadAdminData());
+      $('toggle-autopoll-btn').addEventListener('click', () => {
+        autoPollingEnabled = !autoPollingEnabled;
+        restartAutoPolling();
+        showDashAlert(
+          autoPollingEnabled
+            ? 'تم تفعيل التحديث التلقائي للطلبات كل 20 ثانية.'
+            : 'تم إيقاف التحديث التلقائي مؤقتاً.',
+          true
+        );
+      });
+      $('test-sound-btn').addEventListener('click', () => {
+        playNewOrderChime();
+        showDashAlert('🔔 تم تشغيل صوت تنبيه الطلب الجديد بنجاح.', true);
+      });
+
+      async function loadAdminData(silent) {
+        if (!sessionToken) return;
+        try {
+          const data = await gasPost({ action: 'getAdminData', token: sessionToken });
+          if (!data.ok) {
+            if (!silent) showDashAlert(data.error || 'تعذر تحميل البيانات', false);
+            return;
+          }
+          menuItems = Array.isArray(data.items) ? data.items : [];
+          const incomingOrders = Array.isArray(data.orders) ? data.orders : [];
+
+          let newlyArrivedCount = 0;
+          incomingOrders.forEach((o) => {
+            const oid = String(o.orderId || '');
+            if (!oid) return;
+            if (hasLoadedOrdersOnce && !knownOrderIds.has(oid)) {
+              newlyArrivedOrderIds.add(oid);
+              newlyArrivedCount++;
+            }
+            knownOrderIds.add(oid);
+          });
+          hasLoadedOrdersOnce = true;
+
+          orders = incomingOrders;
+          promos = Array.isArray(data.promos) ? data.promos : [];
+          banners = Array.isArray(data.banners) ? data.banners : [];
+          if (data.settings) settings = Object.assign({}, settings, data.settings);
+
+          if (newlyArrivedCount > 0) {
+            playNewOrderChime();
+            showDashAlert('🔔 وصل ' + newlyArrivedCount + ' طلب جديد الآن!', true);
+          }
+
+          renderStats();
+          renderMenuTable();
+          renderOffersTab();
+          renderOrders();
+          renderSettingsTab();
+        } catch (err) {
+          if (!silent) showDashAlert('خطأ في الاتصال: ' + err.message, false);
+        }
+      }
+
+      function getDiscountPct(item) {
+        if (item.originalPrice && item.price && Number(item.originalPrice) > Number(item.price)) {
+          return Math.round(((item.originalPrice - item.price) / item.originalPrice) * 100);
+        }
+        return 0;
+      }
+
+      function renderStats() {
+        $('stat-total-items').textContent = String(menuItems.length);
+        $('stat-discounted-items').textContent = String(menuItems.filter((i) => getDiscountPct(i) > 0).length);
+        $('stat-active-promos').textContent = String(promos.filter((p) => p.active !== false).length);
+        $('stat-new-orders').textContent = String(orders.filter((o) => o.status === 'جديد').length);
+        $('stat-total-orders').textContent = String(orders.length);
+      }
+
+      function formatItemPrice(item) {
+        if (item.weights && Object.keys(item.weights).length > 0) {
+          return Object.entries(item.weights).map(([k, v]) => k + ': ' + v + ' ج.م').join(' | ');
+        }
+        return (item.price || 0) + ' ج.م';
+      }
+
+      // ==================== TAB 1: MENU & DIRECT IMAGE UPLOAD ====================
+      function renderMenuTable() {
+        const q = $('menu-search').value.trim().toLowerCase();
+        const cat = $('menu-cat-filter').value;
+        const tbody = $('menu-tbody');
+        tbody.textContent = '';
+
+        const filtered = menuItems.filter((item) => {
+          if (cat !== 'الكل' && item.category !== cat) return false;
+          if (q && !(item.name + ' ' + (item.description || '')).toLowerCase().includes(q)) return false;
+          return true;
+        });
+
+        filtered.forEach((item) => {
+          const tr = document.createElement('tr');
+
+          const tdName = document.createElement('td');
+          const rowFlex = document.createElement('div');
+          rowFlex.style.cssText = 'display:flex; align-items:center; gap:10px;';
+          if (item.image && isSafeAdminImageUrl(item.image)) {
+            const tb = document.createElement('div');
+            tb.className = 'thumb-box';
+            const im = document.createElement('img');
+            im.src = item.image;
+            im.alt = item.name;
+            im.loading = 'lazy';
+            im.referrerPolicy = 'no-referrer';
+            im.onerror = () => {
+              const fb = getDriveFallback(item.image);
+              if (fb && !im.dataset.fb) { im.dataset.fb = '1'; im.src = fb; }
+            };
+            tb.appendChild(im);
+            rowFlex.appendChild(tb);
+          }
+          const txtWrap = document.createElement('div');
+          const strong = document.createElement('strong');
+          strong.textContent = item.name;
+          txtWrap.appendChild(strong);
+          if (item.description) {
+            const desc = document.createElement('div');
+            desc.style.cssText = 'font-size:12px; color:var(--muted);';
+            desc.textContent = item.description;
+            txtWrap.appendChild(desc);
+          }
+          rowFlex.appendChild(txtWrap);
+          tdName.appendChild(rowFlex);
+
+          const tdCat = document.createElement('td');
+          tdCat.textContent = item.subCategory ? item.category + ' · ' + item.subCategory : item.category;
+
+          const tdPrice = document.createElement('td');
+          tdPrice.className = 'tabular';
+          const pct = getDiscountPct(item);
+          if (pct > 0) {
+            const oldSpan = document.createElement('span');
+            oldSpan.style.cssText = 'text-decoration:line-through; color:var(--muted); font-size:12px; margin-left:6px;';
+            oldSpan.textContent = item.originalPrice + ' ج.م';
+            const newSpan = document.createElement('strong');
+            newSpan.style.color = 'var(--gold)';
+            newSpan.textContent = item.price + ' ج.م';
+            const badge = document.createElement('span');
+            badge.className = 'discount-tag';
+            badge.textContent = 'خصم ' + pct + '%';
+            tdPrice.append(oldSpan, newSpan, badge);
+          } else {
+            tdPrice.style.color = 'var(--gold)';
+            tdPrice.style.fontWeight = '700';
+            tdPrice.textContent = formatItemPrice(item);
+          }
+
+          const tdStatus = document.createElement('td');
+          const statusBtn = document.createElement('button');
+          statusBtn.type = 'button';
+          statusBtn.className = 'btn-secondary status-text ' + (item.available !== false ? 'st-available' : 'st-unavailable');
+          statusBtn.textContent = item.available !== false ? 'متاح' : 'نفذت الكمية';
+          statusBtn.addEventListener('click', () => toggleAvailability(item));
+          tdStatus.appendChild(statusBtn);
+
+          const tdAct = document.createElement('td');
+          const actWrap = document.createElement('div');
+          actWrap.className = 'row-actions';
+
+          const editBtn = document.createElement('button');
+          editBtn.type = 'button';
+          editBtn.className = 'btn-secondary';
+          editBtn.textContent = 'تعديل';
+          editBtn.addEventListener('click', () => openItemModal(item));
+
+          const delBtn = document.createElement('button');
+          delBtn.type = 'button';
+          delBtn.className = 'btn-danger';
+          delBtn.textContent = 'حذف';
+          delBtn.addEventListener('click', () => deleteItem(item, delBtn));
+
+          actWrap.append(editBtn, delBtn);
+          tdAct.appendChild(actWrap);
+
+          tr.append(tdName, tdCat, tdPrice, tdStatus, tdAct);
+          tbody.appendChild(tr);
+        });
+      }
+
+      async function toggleAvailability(item) {
+        const nextVal = item.available === false;
+        const res = await gasPost({ action: 'toggleAvailability', token: sessionToken, id: item.id, available: nextVal });
+        if (res.ok) {
+          item.available = nextVal;
+          renderStats();
+          renderMenuTable();
+          showDashAlert('تم تحديث حالة «' + item.name + '»', true);
+        } else {
+          showDashAlert(res.error || 'فشل التحديث', false);
+        }
+      }
+
+      async function deleteItem(item, btnEl) {
+        if (btnEl.dataset.confirm !== '1') {
+          btnEl.dataset.confirm = '1';
+          btnEl.textContent = 'تأكيد الحذف؟';
+          setTimeout(() => {
+            if (btnEl.dataset.confirm === '1') {
+              btnEl.dataset.confirm = '';
+              btnEl.textContent = 'حذف';
+            }
+          }, 3500);
+          return;
+        }
+        const res = await gasPost({ action: 'deleteItem', token: sessionToken, id: item.id });
+        if (res.ok) {
+          menuItems = menuItems.filter((i) => i.id !== item.id);
+          renderStats();
+          renderMenuTable();
+          renderOffersTab();
+          showDashAlert('تم حذف الصنف بنجاح.', true);
+        } else {
+          showDashAlert(res.error || 'فشل الحذف', false);
+        }
+      }
+
+      // ==================== HTML5 CANVAS CLIENT-SIDE AUTO-COMPRESSION ====================
+      function compressImageFile(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onerror = () => reject(new Error('تعذر قراءة الصورة'));
+          reader.onload = () => {
+            const img = new Image();
+            img.onerror = () => reject(new Error('ملف الصورة غير صالح'));
+            img.onload = () => {
+              const MAX_DIM = 800;
+              let w = img.naturalWidth || img.width;
+              let h = img.naturalHeight || img.height;
+              if (w > MAX_DIM || h > MAX_DIM) {
+                if (w >= h) {
+                  h = Math.round((h * MAX_DIM) / w);
+                  w = MAX_DIM;
+                } else {
+                  w = Math.round((w * MAX_DIM) / h);
+                  h = MAX_DIM;
+                }
+              }
+              const canvas = document.createElement('canvas');
+              canvas.width = w;
+              canvas.height = h;
+              const ctx = canvas.getContext('2d');
+              ctx.fillStyle = '#0E0E11';
+              ctx.fillRect(0, 0, w, h);
+              ctx.drawImage(img, 0, 0, w, h);
+
+              // Prefer WebP 0.75; fallback to JPEG 0.75 on older iOS Safari
+              let mimeType = 'image/webp';
+              let dataUrl = canvas.toDataURL('image/webp', 0.75);
+              if (!dataUrl || !dataUrl.startsWith('data:image/webp')) {
+                mimeType = 'image/jpeg';
+                dataUrl = canvas.toDataURL('image/jpeg', 0.75);
+              }
+
+              const base64 = dataUrl.split(',')[1] || '';
+              const approxBytes = Math.round((base64.length * 3) / 4);
+              resolve({
+                dataUrl,
+                base64,
+                mimeType,
+                sizeKB: Math.max(1, Math.round(approxBytes / 1024)),
+                origKB: Math.max(1, Math.round(file.size / 1024)),
+                filename: (file.name || 'dish').replace(/\.[^.]+$/, '')
+              });
+            };
+            img.src = reader.result;
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      $('f-img-file').addEventListener('change', async (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        try {
+          $('compress-status').textContent = 'جاري ضغط الصورة تلقائياً...';
+          $('compress-status').classList.remove('hidden');
+          const compressed = await compressImageFile(file);
+          pendingCompressedImage = compressed;
+
+          $('img-preview-el').src = compressed.dataUrl;
+          $('img-preview-wrap').classList.remove('hidden');
+          $('compress-status').textContent = '✅ تم الضغط تلقائياً: ' + compressed.sizeKB + ' KB (بدلاً من ' + compressed.origKB + ' KB)';
+          $('upload-drive-btn').classList.remove('hidden');
+          $('clear-img-btn').classList.remove('hidden');
+        } catch (err) {
+          $('compress-status').textContent = '❌ ' + err.message;
+        }
+      });
+
+      async function uploadPendingImageToDrive(itemId) {
+        if (!pendingCompressedImage) return null;
+        const btn = $('upload-drive-btn');
+        btn.disabled = true;
+        btn.textContent = '⏳ جاري الرفع إلى Google Drive...';
+        try {
+          const res = await gasPost({
+            action: 'uploadImage',
+            token: sessionToken,
+            base64: pendingCompressedImage.base64,
+            mimeType: pendingCompressedImage.mimeType,
+            filename: pendingCompressedImage.filename,
+            itemId: itemId || ''
+          });
+          if (!res.ok || !res.url) {
+            throw new Error(res.error || 'فشل رفع الصورة إلى Google Drive');
+          }
+          $('f-img').value = res.url;
+          $('img-preview-el').src = res.url;
+          $('img-preview-el').onerror = () => {
+            if (res.fallbackUrl && !$('img-preview-el').dataset.fb) {
+              $('img-preview-el').dataset.fb = '1';
+              $('img-preview-el').src = res.fallbackUrl;
+            }
+          };
+          $('compress-status').textContent = '☁️ تم الرفع بنجاح إلى Google Drive (' + (res.sizeKB || pendingCompressedImage.sizeKB) + ' KB)';
+          pendingCompressedImage = null;
+          btn.classList.add('hidden');
+          return res.url;
+        } finally {
+          btn.disabled = false;
+          btn.textContent = '☁️ رفع الصورة إلى Google Drive الآن';
+        }
+      }
+
+      $('upload-drive-btn').addEventListener('click', async () => {
+        try {
+          const id = $('edit-id').value.trim();
+          await uploadPendingImageToDrive(id);
+          showDashAlert('تم رفع الصورة وحفظ الرابط المباشر بنجاح.', true);
+        } catch (err) {
+          showDashAlert(err.message, false);
+        }
+      });
+
+      $('clear-img-btn').addEventListener('click', () => {
+        pendingCompressedImage = null;
+        $('f-img-file').value = '';
+        $('f-img').value = '';
+        $('img-preview-wrap').classList.add('hidden');
+        $('compress-status').classList.add('hidden');
+        $('upload-drive-btn').classList.add('hidden');
+        $('clear-img-btn').classList.add('hidden');
+      });
+
+      function openItemModal(item) {
+        pendingCompressedImage = null;
+        $('f-img-file').value = '';
+        $('compress-status').classList.add('hidden');
+        $('upload-drive-btn').classList.add('hidden');
+
+        $('modal-title').textContent = item ? 'تعديل الصنف' : 'إضافة صنف جديد';
+        $('edit-id').value = item ? item.id : '';
+        $('f-name').value = item ? item.name : '';
+        $('f-cat').value = item ? item.category : CATEGORIES[0];
+        $('f-sub').value = item && item.subCategory ? item.subCategory : '';
+        $('f-desc').value = item && item.description ? item.description : '';
+        $('f-img').value = item && item.image ? item.image : '';
+        $('f-available').checked = item ? item.available !== false : true;
+        $('f-featured').checked = Boolean(item && item.featured);
+
+        if (item && item.image && isSafeAdminImageUrl(item.image)) {
+          $('img-preview-el').dataset.fb = '';
+          $('img-preview-el').src = item.image;
+          $('img-preview-wrap').classList.remove('hidden');
+          $('clear-img-btn').classList.remove('hidden');
+        } else {
+          $('img-preview-wrap').classList.add('hidden');
+          $('clear-img-btn').classList.add('hidden');
+        }
+
+        const hasWeights = Boolean(item && item.weights && Object.keys(item.weights).length > 0);
+        $('f-pricing-mode').value = hasWeights ? 'weights' : 'fixed';
+        updatePricingModeUI();
+
+        $('f-price').value = !hasWeights && item && item.price !== undefined ? item.price : '';
+        $('f-orig-price').value = !hasWeights && item && item.originalPrice !== undefined ? item.originalPrice : '';
+        $('f-w14').value = hasWeights && item.weights['1/4'] ? item.weights['1/4'] : '';
+        $('f-w13').value = hasWeights && item.weights['1/3'] ? item.weights['1/3'] : '';
+        $('f-w12').value = hasWeights && item.weights['1/2'] ? item.weights['1/2'] : '';
+        $('f-w1').value = hasWeights && item.weights['1'] ? item.weights['1'] : '';
+
+        $('item-modal').classList.remove('hidden');
+      }
+
+      function updatePricingModeUI() {
+        const mode = $('f-pricing-mode').value;
+        $('fixed-price-wrap').classList.toggle('hidden', mode === 'weights');
+        $('weights-price-wrap').classList.toggle('hidden', mode !== 'weights');
+      }
+
+      $('f-pricing-mode').addEventListener('change', updatePricingModeUI);
+      $('open-add-modal-btn').addEventListener('click', () => openItemModal(null));
+      $('close-modal-btn').addEventListener('click', () => $('item-modal').classList.add('hidden'));
+
+      $('item-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = $('edit-id').value.trim();
+        const mode = $('f-pricing-mode').value;
+
+        $('save-item-btn').disabled = true;
+        try {
+          // Auto-upload compressed mobile image to Google Drive if not yet uploaded
+          if (pendingCompressedImage) {
+            await uploadPendingImageToDrive(id);
+          }
+
+          const imgUrl = $('f-img').value.trim();
+          if (imgUrl && !isSafeAdminImageUrl(imgUrl)) {
+            showDashAlert('رابط الصورة يجب أن يكون رابطاً آمناً يبدأ بـ https://', false);
+            return;
+          }
+
+          const payloadItem = {
+            id: id || undefined,
+            name: $('f-name').value.trim(),
+            category: $('f-cat').value,
+            subCategory: $('f-sub').value.trim(),
+            description: $('f-desc').value.trim(),
+            image: imgUrl,
+            available: $('f-available').checked,
+            featured: $('f-featured').checked
+          };
+
+          if (mode === 'weights') {
+            const w = {};
+            if ($('f-w14').value) w['1/4'] = Number($('f-w14').value);
+            if ($('f-w13').value) w['1/3'] = Number($('f-w13').value);
+            if ($('f-w12').value) w['1/2'] = Number($('f-w12').value);
+            if ($('f-w1').value) w['1'] = Number($('f-w1').value);
+            payloadItem.weights = w;
+            payloadItem.price = '';
+            payloadItem.originalPrice = '';
+          } else {
+            payloadItem.price = Number($('f-price').value || 0);
+            payloadItem.originalPrice = $('f-orig-price').value ? Number($('f-orig-price').value) : '';
+            payloadItem.weights = null;
+          }
+
+          const action = id ? 'updateItem' : 'addItem';
+          const res = await gasPost({ action, token: sessionToken, item: payloadItem });
+          if (res.ok) {
+            $('item-modal').classList.add('hidden');
+            showDashAlert(id ? 'تم تعديل الصنف بنجاح.' : 'تم إضافة الصنف بنجاح.', true);
+            await loadAdminData(true);
+          } else {
+            showDashAlert(res.error || 'فشل الحفظ', false);
+          }
+        } catch (err) {
+          showDashAlert(err.message || 'حدث خطأ أثناء الحفظ', false);
+        } finally {
+          $('save-item-btn').disabled = false;
+        }
+      });
+
+      // ==================== TAB 2: OFFERS, DISCOUNTS & PROMO CODES ====================
+      function renderOffersTab() {
+        // Populate fixed-price item selector
+        const sel = $('disc-item-select');
+        const prevVal = sel.value;
+        sel.textContent = '';
+        menuItems.filter((i) => !i.weights).forEach((item) => {
+          const opt = document.createElement('option');
+          opt.value = item.id;
+          opt.textContent = item.name + ' (الحالي: ' + (item.price || 0) + ' ج.م)';
+          sel.appendChild(opt);
+        });
+        if (prevVal) sel.value = prevVal;
+
+        // Render active discounted items
+        const discWrap = $('discounted-items-list');
+        discWrap.textContent = '';
+        const discItems = menuItems.filter((i) => getDiscountPct(i) > 0);
+        if (discItems.length > 0) {
+          const title = document.createElement('div');
+          title.style.cssText = 'font-size:13px; font-weight:700; color:var(--champagne); margin-bottom:8px;';
+          title.textContent = 'الأصناف التي عليها خصم حالياً (' + discItems.length + '):';
+          discWrap.appendChild(title);
+
+          discItems.forEach((it) => {
+            const row = document.createElement('div');
+            row.style.cssText = 'display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:#0E0E11; margin-bottom:8px; flex-wrap:wrap;';
+            const info = document.createElement('div');
+            info.className = 'tabular';
+            info.textContent = it.name + ' — قبل: ' + it.originalPrice + ' ج.م | بعد: ' + it.price + ' ج.م (خصم ' + getDiscountPct(it) + '%)';
+            const clearBtn = document.createElement('button');
+            clearBtn.type = 'button';
+            clearBtn.className = 'btn-danger';
+            clearBtn.textContent = 'إلغاء الخصم وإرجاع السعر';
+            clearBtn.addEventListener('click', async () => {
+              const res = await gasPost({ action: 'updateItemDiscount', token: sessionToken, id: it.id, originalPrice: '', price: it.originalPrice });
+              if (res.ok) {
+                showDashAlert('تم إلغاء الخصم وإرجاع السعر الأصلي.', true);
+                await loadAdminData(true);
+              }
+            });
+            row.append(info, clearBtn);
+            discWrap.appendChild(row);
+          });
+        }
+
+        // Render Promo Codes table
+        const pTbody = $('promos-tbody');
+        pTbody.textContent = '';
+        if (promos.length === 0) {
+          const tr = document.createElement('tr');
+          const td = document.createElement('td');
+          td.colSpan = 5;
+          td.style.color = 'var(--muted)';
+          td.textContent = 'لا توجد كوبونات خصم مسجلة بعد.';
+          tr.appendChild(td);
+          pTbody.appendChild(tr);
+        } else {
+          promos.forEach((p) => {
+            const tr = document.createElement('tr');
+            const tdCode = document.createElement('td');
+            const strong = document.createElement('strong');
+            strong.style.color = 'var(--gold)';
+            strong.textContent = p.code;
+            tdCode.appendChild(strong);
+            if (p.title) {
+              const sm = document.createElement('div');
+              sm.style.cssText = 'font-size:11px; color:var(--muted);';
+              sm.textContent = p.title;
+              tdCode.appendChild(sm);
+            }
+
+            const tdVal = document.createElement('td');
+            tdVal.className = 'tabular';
+            tdVal.textContent = p.discountType === 'PERCENT' ? p.value + '%' : p.value + ' ج.م';
+
+            const tdMin = document.createElement('td');
+            tdMin.className = 'tabular';
+            tdMin.textContent = p.minOrder > 0 ? p.minOrder + ' ج.م' : 'بدون حد';
+
+            const tdActive = document.createElement('td');
+            const tBtn = document.createElement('button');
+            tBtn.type = 'button';
+            tBtn.className = 'btn-secondary status-text ' + (p.active !== false ? 'st-available' : 'st-unavailable');
+            tBtn.textContent = p.active !== false ? 'مفعّل' : 'متوقف';
+            tBtn.addEventListener('click', async () => {
+              const res = await gasPost({ action: 'togglePromo', token: sessionToken, id: p.id, active: p.active === false });
+              if (res.ok) await loadAdminData(true);
+            });
+            tdActive.appendChild(tBtn);
+
+            const tdDel = document.createElement('td');
+            const dBtn = document.createElement('button');
+            dBtn.type = 'button';
+            dBtn.className = 'btn-danger';
+            dBtn.textContent = 'حذف';
+            dBtn.addEventListener('click', async () => {
+              const res = await gasPost({ action: 'deletePromo', token: sessionToken, id: p.id });
+              if (res.ok) {
+                showDashAlert('تم حذف الكوبون.', true);
+                await loadAdminData(true);
+              }
+            });
+            tdDel.appendChild(dBtn);
+
+            tr.append(tdCode, tdVal, tdMin, tdActive, tdDel);
+            pTbody.appendChild(tr);
+          });
+        }
+
+        // Render Banners list
+        const bList = $('banners-list');
+        bList.textContent = '';
+        banners.forEach((b) => {
+          const row = document.createElement('div');
+          row.style.cssText = 'display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:#0E0E11; margin-bottom:8px; flex-wrap:wrap;';
+          const txt = document.createElement('span');
+          txt.style.color = 'var(--champagne)';
+          txt.textContent = b.title;
+          const actions = document.createElement('div');
+          actions.style.cssText = 'display:flex; gap:6px;';
+
+          const tog = document.createElement('button');
+          tog.type = 'button';
+          tog.className = 'btn-secondary status-text ' + (b.active !== false ? 'st-available' : 'st-unavailable');
+          tog.textContent = b.active !== false ? 'ظاهر' : 'مخفي';
+          tog.addEventListener('click', async () => {
+            const res = await gasPost({ action: 'togglePromo', token: sessionToken, id: b.id, active: b.active === false });
+            if (res.ok) await loadAdminData(true);
+          });
+
+          const del = document.createElement('button');
+          del.type = 'button';
+          del.className = 'btn-danger';
+          del.textContent = 'حذف';
+          del.addEventListener('click', async () => {
+            const res = await gasPost({ action: 'deletePromo', token: sessionToken, id: b.id });
+            if (res.ok) await loadAdminData(true);
+          });
+
+          actions.append(tog, del);
+          row.append(txt, actions);
+          bList.appendChild(row);
+        });
+      }
+
+      function updateDiscountPreview() {
+        const orig = Number($('disc-orig-price').value || 0);
+        const sale = Number($('disc-sale-price').value || 0);
+        if (orig > sale && sale > 0) {
+          const pct = Math.round(((orig - sale) / orig) * 100);
+          $('disc-preview-text').textContent = 'شارة العرض: خصم ' + pct + '% (توفير ' + (orig - sale) + ' ج.م)';
+        } else {
+          $('disc-preview-text').textContent = '';
+        }
+      }
+
+      $('disc-orig-price').addEventListener('input', updateDiscountPreview);
+      $('disc-sale-price').addEventListener('input', updateDiscountPreview);
+      $('disc-item-select').addEventListener('change', () => {
+        const it = menuItems.find((m) => m.id === $('disc-item-select').value);
+        if (it) {
+          $('disc-orig-price').value = it.originalPrice || it.price || '';
+          $('disc-sale-price').value = it.price || '';
+          updateDiscountPreview();
+        }
+      });
+
+      $('discount-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = $('disc-item-select').value;
+        const orig = Number($('disc-orig-price').value);
+        const sale = Number($('disc-sale-price').value);
+        if (!id || !(orig > sale && sale > 0)) {
+          showDashAlert('السعر قبل الخصم يجب أن يكون أكبر من السعر بعد الخصم.', false);
+          return;
+        }
+        $('save-discount-btn').disabled = true;
+        try {
+          const res = await gasPost({ action: 'updateItemDiscount', token: sessionToken, id, originalPrice: orig, price: sale });
+          if (res.ok) {
+            showDashAlert('تم تفعيل الخصم على الصنف بنجاح.', true);
+            await loadAdminData(true);
+          } else {
+            showDashAlert(res.error || 'فشل حفظ الخصم', false);
+          }
+        } finally {
+          $('save-discount-btn').disabled = false;
+        }
+      });
+
+      $('promo-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        $('save-promo-btn').disabled = true;
+        try {
+          const res = await gasPost({
+            action: 'savePromo',
+            token: sessionToken,
+            promo: {
+              type: 'PROMO',
+              code: $('p-code').value.trim().toUpperCase(),
+              discountType: $('p-type').value,
+              value: Number($('p-val').value),
+              minOrder: Number($('p-min').value || 0),
+              title: $('p-title').value.trim(),
+              active: true
+            }
+          });
+          if (res.ok) {
+            $('p-code').value = '';
+            $('p-val').value = '';
+            $('p-title').value = '';
+            showDashAlert('تم إضافة كوبون الخصم بنجاح.', true);
+            await loadAdminData(true);
+          } else {
+            showDashAlert(res.error || 'فشل إضافة الكوبون', false);
+          }
+        } finally {
+          $('save-promo-btn').disabled = false;
+        }
+      });
+
+      $('banner-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        $('save-banner-btn').disabled = true;
+        try {
+          const res = await gasPost({
+            action: 'savePromo',
+            token: sessionToken,
+            promo: { type: 'BANNER', title: $('b-title').value.trim(), active: true }
+          });
+          if (res.ok) {
+            $('b-title').value = '';
+            showDashAlert('تم إضافة الشريط الإعلاني بنجاح.', true);
+            await loadAdminData(true);
+          } else {
+            showDashAlert(res.error || 'فشل الإضافة', false);
+          }
+        } finally {
+          $('save-banner-btn').disabled = false;
+        }
+      });
+
+      // ==================== STANDARD CERTIFIED LOCAL QR CODE GENERATOR (qrcode-generator v2.0.4, MIT, ECC M, ZERO EXTERNAL URLS) ====================
+      const SarayaQrGenerator = (function () {
+        var __qrLib=(()=>{var or=(L,T)=>()=>(T||L((T={exports:{}}).exports,T),T.exports);var vr=or((W,V)=>{var $=(function(){var L=function(x,w){var g=236,l=17,n=x,s=O[w],t=null,r=0,h=null,i=[],v={},_=function(a,f){r=n*4+17,t=(function(e){for(var u=new Array(e),o=0;o<e;o+=1){u[o]=new Array(e);for(var d=0;d<e;d+=1)u[o][d]=null}return u})(r),B(0,0),B(r-7,0),B(0,r-7),E(),C(),m(a,f),n>=7&&N(a),h==null&&(h=ir(n,s,i)),U(h,f)},B=function(a,f){for(var e=-1;e<=7;e+=1)if(!(a+e<=-1||r<=a+e))for(var u=-1;u<=7;u+=1)f+u<=-1||r<=f+u||(0<=e&&e<=6&&(u==0||u==6)||0<=u&&u<=6&&(e==0||e==6)||2<=e&&e<=4&&2<=u&&u<=4?t[a+e][f+u]=!0:t[a+e][f+u]=!1)},y=function(){for(var a=0,f=0,e=0;e<8;e+=1){_(!0,e);var u=P.getLostPoint(v);(e==0||a>u)&&(a=u,f=e)}return f},C=function(){for(var a=8;a<r-8;a+=1)t[a][6]==null&&(t[a][6]=a%2==0);for(var f=8;f<r-8;f+=1)t[6][f]==null&&(t[6][f]=f%2==0)},E=function(){for(var a=P.getPatternPosition(n),f=0;f<a.length;f+=1)for(var e=0;e<a.length;e+=1){var u=a[f],o=a[e];if(t[u][o]==null)for(var d=-2;d<=2;d+=1)for(var c=-2;c<=2;c+=1)d==-2||d==2||c==-2||c==2||d==0&&c==0?t[u+d][o+c]=!0:t[u+d][o+c]=!1}},N=function(a){for(var f=P.getBCHTypeNumber(n),e=0;e<18;e+=1){var u=!a&&(f>>e&1)==1;t[Math.floor(e/3)][e%3+r-8-3]=u}for(var e=0;e<18;e+=1){var u=!a&&(f>>e&1)==1;t[e%3+r-8-3][Math.floor(e/3)]=u}},m=function(a,f){for(var e=s<<3|f,u=P.getBCHTypeInfo(e),o=0;o<15;o+=1){var d=!a&&(u>>o&1)==1;o<6?t[o][8]=d:o<8?t[o+1][8]=d:t[r-15+o][8]=d}for(var o=0;o<15;o+=1){var d=!a&&(u>>o&1)==1;o<8?t[8][r-o-1]=d:o<9?t[8][15-o-1+1]=d:t[8][15-o-1]=d}t[r-8][8]=!a},U=function(a,f){for(var e=-1,u=r-1,o=7,d=0,c=P.getMaskFunction(f),p=r-1;p>0;p-=2)for(p==6&&(p-=1);;){for(var b=0;b<2;b+=1)if(t[u][p-b]==null){var D=!1;d<a.length&&(D=(a[d]>>>o&1)==1);var A=c(u,p-b);A&&(D=!D),t[u][p-b]=D,o-=1,o==-1&&(d+=1,o=7)}if(u+=e,u<0||r<=u){u-=e,e=-e;break}}},H=function(a,f){for(var e=0,u=0,o=0,d=new Array(f.length),c=new Array(f.length),p=0;p<f.length;p+=1){var b=f[p].dataCount,D=f[p].totalCount-b;u=Math.max(u,b),o=Math.max(o,D),d[p]=new Array(b);for(var A=0;A<d[p].length;A+=1)d[p][A]=255&a.getBuffer()[A+e];e+=b;var R=P.getErrorCorrectPolynomial(D),I=K(d[p],R.getLength()-1),S=I.mod(R);c[p]=new Array(R.getLength()-1);for(var A=0;A<c[p].length;A+=1){var X=A+S.getLength()-c[p].length;c[p][A]=X>=0?S.getAt(X):0}}for(var Z=0,A=0;A<f.length;A+=1)Z+=f[A].totalCount;for(var J=new Array(Z),Q=0,A=0;A<u;A+=1)for(var p=0;p<f.length;p+=1)A<d[p].length&&(J[Q]=d[p][A],Q+=1);for(var A=0;A<o;A+=1)for(var p=0;p<f.length;p+=1)A<c[p].length&&(J[Q]=c[p][A],Q+=1);return J},ir=function(a,f,e){for(var u=Y.getRSBlocks(a,f),o=G(),d=0;d<e.length;d+=1){var c=e[d];o.put(c.getMode(),4),o.put(c.getLength(),P.getLengthInBits(c.getMode(),a)),c.write(o)}for(var p=0,d=0;d<u.length;d+=1)p+=u[d].dataCount;if(o.getLengthInBits()>p*8)throw"code length overflow. ("+o.getLengthInBits()+">"+p*8+")";for(o.getLengthInBits()+4<=p*8&&o.put(0,4);o.getLengthInBits()%8!=0;)o.putBit(!1);for(;!(o.getLengthInBits()>=p*8||(o.put(g,8),o.getLengthInBits()>=p*8));)o.put(l,8);return H(o,u)};v.addData=function(a,f){f=f||"Byte";var e=null;switch(f){case"Numeric":e=q(a);break;case"Alphanumeric":e=z(a);break;case"Byte":e=rr(a);break;case"Kanji":e=tr(a);break;default:throw"mode:"+f}i.push(e),h=null},v.isDark=function(a,f){if(a<0||r<=a||f<0||r<=f)throw a+","+f;return t[a][f]},v.getModuleCount=function(){return r},v.make=function(){if(n<1){for(var a=1;a<40;a++){for(var f=Y.getRSBlocks(a,s),e=G(),u=0;u<i.length;u++){var o=i[u];e.put(o.getMode(),4),e.put(o.getLength(),P.getLengthInBits(o.getMode(),a)),o.write(e)}for(var d=0,u=0;u<f.length;u++)d+=f[u].dataCount;if(e.getLengthInBits()<=d*8)break}n=a}_(!1,y())},v.createTableTag=function(a,f){a=a||2,f=typeof f>"u"?a*4:f;var e="";e+='<table style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: "+f+"px;",e+='">',e+="<tbody>";for(var u=0;u<v.getModuleCount();u+=1){e+="<tr>";for(var o=0;o<v.getModuleCount();o+=1)e+='<td style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: 0px;",e+=" width: "+a+"px;",e+=" height: "+a+"px;",e+=" background-color: ",e+=v.isDark(u,o)?"#000000":"#ffffff",e+=";",e+='"/>';e+="</tr>"}return e+="</tbody>",e+="</table>",e},v.createSvgTag=function(a,f,e,u){var o={};typeof arguments[0]=="object"&&(o=arguments[0],a=o.cellSize,f=o.margin,e=o.alt,u=o.title),a=a||2,f=typeof f>"u"?a*4:f,e=typeof e=="string"?{text:e}:e||{},e.text=e.text||null,e.id=e.text?e.id||"qrcode-description":null,u=typeof u=="string"?{text:u}:u||{},u.text=u.text||null,u.id=u.text?u.id||"qrcode-title":null;var d=v.getModuleCount()*a+f*2,c,p,b,D,A="",R;for(R="l"+a+",0 0,"+a+" -"+a+",0 0,-"+a+"z ",A+='<svg version="1.1" xmlns="http://www.w3.org/2000/svg"',A+=o.scalable?"":' width="'+d+'px" height="'+d+'px"',A+=' viewBox="0 0 '+d+" "+d+'" ',A+=' preserveAspectRatio="xMinYMin meet"',A+=u.text||e.text?' role="img" aria-labelledby="'+F([u.id,e.id].join(" ").trim())+'"':"",A+=">",A+=u.text?'<title id="'+F(u.id)+'">'+F(u.text)+"</title>":"",A+=e.text?'<description id="'+F(e.id)+'">'+F(e.text)+"</description>":"",A+='<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>',A+='<path d="',b=0;b<v.getModuleCount();b+=1)for(D=b*a+f,c=0;c<v.getModuleCount();c+=1)v.isDark(b,c)&&(p=c*a+f,A+="M"+p+","+D+R);return A+='" stroke="transparent" fill="black"/>',A+="</svg>",A},v.createDataURL=function(a,f){a=a||2,f=typeof f>"u"?a*4:f;var e=v.getModuleCount()*a+f*2,u=f,o=e-f;return fr(e,e,function(d,c){if(u<=d&&d<o&&u<=c&&c<o){var p=Math.floor((d-u)/a),b=Math.floor((c-u)/a);return v.isDark(b,p)?0:1}else return 1})},v.createImgTag=function(a,f,e){a=a||2,f=typeof f>"u"?a*4:f;var u=v.getModuleCount()*a+f*2,o="";return o+="<img",o+=' src="',o+=v.createDataURL(a,f),o+='"',o+=' width="',o+=u,o+='"',o+=' height="',o+=u,o+='"',e&&(o+=' alt="',o+=F(e),o+='"'),o+="/>",o};var F=function(a){for(var f="",e=0;e<a.length;e+=1){var u=a.charAt(e);switch(u){case"<":f+="&lt;";break;case">":f+="&gt;";break;case"&":f+="&amp;";break;case'"':f+="&quot;";break;default:f+=u;break}}return f},ur=function(a){var f=1;a=typeof a>"u"?f*2:a;var e=v.getModuleCount()*f+a*2,u=a,o=e-a,d,c,p,b,D,A={"\u2588\u2588":"\u2588","\u2588 ":"\u2580"," \u2588":"\u2584","  ":" "},R={"\u2588\u2588":"\u2580","\u2588 ":"\u2580"," \u2588":" ","  ":" "},I="";for(d=0;d<e;d+=2){for(p=Math.floor((d-u)/f),b=Math.floor((d+1-u)/f),c=0;c<e;c+=1)D="\u2588",u<=c&&c<o&&u<=d&&d<o&&v.isDark(p,Math.floor((c-u)/f))&&(D=" "),u<=c&&c<o&&u<=d+1&&d+1<o&&v.isDark(b,Math.floor((c-u)/f))?D+=" ":D+="\u2588",I+=a<1&&d+1>=o?R[D]:A[D];I+=`
+`}return e%2&&a>0?I.substring(0,I.length-e-1)+Array(e+1).join("\u2580"):I.substring(0,I.length-1)};return v.createASCII=function(a,f){if(a=a||1,a<2)return ur(f);a-=1,f=typeof f>"u"?a*2:f;var e=v.getModuleCount()*a+f*2,u=f,o=e-f,d,c,p,b,D=Array(a+1).join("\u2588\u2588"),A=Array(a+1).join("  "),R="",I="";for(d=0;d<e;d+=1){for(p=Math.floor((d-u)/a),I="",c=0;c<e;c+=1)b=1,u<=c&&c<o&&u<=d&&d<o&&v.isDark(p,Math.floor((c-u)/a))&&(b=0),I+=b?D:A;for(p=0;p<a;p+=1)R+=I+`
+`}return R.substring(0,R.length-1)},v.renderTo2dContext=function(a,f){f=f||2;for(var e=v.getModuleCount(),u=0;u<e;u++)for(var o=0;o<e;o++)a.fillStyle=v.isDark(u,o)?"black":"white",a.fillRect(o*f,u*f,f,f)},v};L.stringToBytesFuncs={default:function(x){for(var w=[],g=0;g<x.length;g+=1){var l=x.charCodeAt(g);w.push(l&255)}return w}},L.stringToBytes=L.stringToBytesFuncs.default,L.createStringToBytes=function(x,w){var g=(function(){for(var n=nr(x),s=function(){var C=n.read();if(C==-1)throw"eof";return C},t=0,r={};;){var h=n.read();if(h==-1)break;var i=s(),v=s(),_=s(),B=String.fromCharCode(h<<8|i),y=v<<8|_;r[B]=y,t+=1}if(t!=w)throw t+" != "+w;return r})(),l=63;return function(n){for(var s=[],t=0;t<n.length;t+=1){var r=n.charCodeAt(t);if(r<128)s.push(r);else{var h=g[n.charAt(t)];typeof h=="number"?(h&255)==h?s.push(h):(s.push(h>>>8),s.push(h&255)):s.push(l)}}return s}};var T={MODE_NUMBER:1,MODE_ALPHA_NUM:2,MODE_8BIT_BYTE:4,MODE_KANJI:8},O={L:1,M:0,Q:3,H:2},k={PATTERN000:0,PATTERN001:1,PATTERN010:2,PATTERN011:3,PATTERN100:4,PATTERN101:5,PATTERN110:6,PATTERN111:7},P=(function(){var x=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],w=1335,g=7973,l=21522,n={},s=function(t){for(var r=0;t!=0;)r+=1,t>>>=1;return r};return n.getBCHTypeInfo=function(t){for(var r=t<<10;s(r)-s(w)>=0;)r^=w<<s(r)-s(w);return(t<<10|r)^l},n.getBCHTypeNumber=function(t){for(var r=t<<12;s(r)-s(g)>=0;)r^=g<<s(r)-s(g);return t<<12|r},n.getPatternPosition=function(t){return x[t-1]},n.getMaskFunction=function(t){switch(t){case k.PATTERN000:return function(r,h){return(r+h)%2==0};case k.PATTERN001:return function(r,h){return r%2==0};case k.PATTERN010:return function(r,h){return h%3==0};case k.PATTERN011:return function(r,h){return(r+h)%3==0};case k.PATTERN100:return function(r,h){return(Math.floor(r/2)+Math.floor(h/3))%2==0};case k.PATTERN101:return function(r,h){return r*h%2+r*h%3==0};case k.PATTERN110:return function(r,h){return(r*h%2+r*h%3)%2==0};case k.PATTERN111:return function(r,h){return(r*h%3+(r+h)%2)%2==0};default:throw"bad maskPattern:"+t}},n.getErrorCorrectPolynomial=function(t){for(var r=K([1],0),h=0;h<t;h+=1)r=r.multiply(K([1,M.gexp(h)],0));return r},n.getLengthInBits=function(t,r){if(1<=r&&r<10)switch(t){case T.MODE_NUMBER:return 10;case T.MODE_ALPHA_NUM:return 9;case T.MODE_8BIT_BYTE:return 8;case T.MODE_KANJI:return 8;default:throw"mode:"+t}else if(r<27)switch(t){case T.MODE_NUMBER:return 12;case T.MODE_ALPHA_NUM:return 11;case T.MODE_8BIT_BYTE:return 16;case T.MODE_KANJI:return 10;default:throw"mode:"+t}else if(r<41)switch(t){case T.MODE_NUMBER:return 14;case T.MODE_ALPHA_NUM:return 13;case T.MODE_8BIT_BYTE:return 16;case T.MODE_KANJI:return 12;default:throw"mode:"+t}else throw"type:"+r},n.getLostPoint=function(t){for(var r=t.getModuleCount(),h=0,i=0;i<r;i+=1)for(var v=0;v<r;v+=1){for(var _=0,B=t.isDark(i,v),y=-1;y<=1;y+=1)if(!(i+y<0||r<=i+y))for(var C=-1;C<=1;C+=1)v+C<0||r<=v+C||y==0&&C==0||B==t.isDark(i+y,v+C)&&(_+=1);_>5&&(h+=3+_-5)}for(var i=0;i<r-1;i+=1)for(var v=0;v<r-1;v+=1){var E=0;t.isDark(i,v)&&(E+=1),t.isDark(i+1,v)&&(E+=1),t.isDark(i,v+1)&&(E+=1),t.isDark(i+1,v+1)&&(E+=1),(E==0||E==4)&&(h+=3)}for(var i=0;i<r;i+=1)for(var v=0;v<r-6;v+=1)t.isDark(i,v)&&!t.isDark(i,v+1)&&t.isDark(i,v+2)&&t.isDark(i,v+3)&&t.isDark(i,v+4)&&!t.isDark(i,v+5)&&t.isDark(i,v+6)&&(h+=40);for(var v=0;v<r;v+=1)for(var i=0;i<r-6;i+=1)t.isDark(i,v)&&!t.isDark(i+1,v)&&t.isDark(i+2,v)&&t.isDark(i+3,v)&&t.isDark(i+4,v)&&!t.isDark(i+5,v)&&t.isDark(i+6,v)&&(h+=40);for(var N=0,v=0;v<r;v+=1)for(var i=0;i<r;i+=1)t.isDark(i,v)&&(N+=1);var m=Math.abs(100*N/r/r-50)/5;return h+=m*10,h},n})(),M=(function(){for(var x=new Array(256),w=new Array(256),g=0;g<8;g+=1)x[g]=1<<g;for(var g=8;g<256;g+=1)x[g]=x[g-4]^x[g-5]^x[g-6]^x[g-8];for(var g=0;g<255;g+=1)w[x[g]]=g;var l={};return l.glog=function(n){if(n<1)throw"glog("+n+")";return w[n]},l.gexp=function(n){for(;n<0;)n+=255;for(;n>=256;)n-=255;return x[n]},l})();function K(x,w){if(typeof x.length>"u")throw x.length+"/"+w;var g=(function(){for(var n=0;n<x.length&&x[n]==0;)n+=1;for(var s=new Array(x.length-n+w),t=0;t<x.length-n;t+=1)s[t]=x[t+n];return s})(),l={};return l.getAt=function(n){return g[n]},l.getLength=function(){return g.length},l.multiply=function(n){for(var s=new Array(l.getLength()+n.getLength()-1),t=0;t<l.getLength();t+=1)for(var r=0;r<n.getLength();r+=1)s[t+r]^=M.gexp(M.glog(l.getAt(t))+M.glog(n.getAt(r)));return K(s,0)},l.mod=function(n){if(l.getLength()-n.getLength()<0)return l;for(var s=M.glog(l.getAt(0))-M.glog(n.getAt(0)),t=new Array(l.getLength()),r=0;r<l.getLength();r+=1)t[r]=l.getAt(r);for(var r=0;r<n.getLength();r+=1)t[r]^=M.gexp(M.glog(n.getAt(r))+s);return K(t,0).mod(n)},l}var Y=(function(){var x=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12,7,37,13],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],w=function(n,s){var t={};return t.totalCount=n,t.dataCount=s,t},g={},l=function(n,s){switch(s){case O.L:return x[(n-1)*4+0];case O.M:return x[(n-1)*4+1];case O.Q:return x[(n-1)*4+2];case O.H:return x[(n-1)*4+3];default:return}};return g.getRSBlocks=function(n,s){var t=l(n,s);if(typeof t>"u")throw"bad rs block @ typeNumber:"+n+"/errorCorrectionLevel:"+s;for(var r=t.length/3,h=[],i=0;i<r;i+=1)for(var v=t[i*3+0],_=t[i*3+1],B=t[i*3+2],y=0;y<v;y+=1)h.push(w(_,B));return h},g})(),G=function(){var x=[],w=0,g={};return g.getBuffer=function(){return x},g.getAt=function(l){var n=Math.floor(l/8);return(x[n]>>>7-l%8&1)==1},g.put=function(l,n){for(var s=0;s<n;s+=1)g.putBit((l>>>n-s-1&1)==1)},g.getLengthInBits=function(){return w},g.putBit=function(l){var n=Math.floor(w/8);x.length<=n&&x.push(0),l&&(x[n]|=128>>>w%8),w+=1},g},q=function(x){var w=T.MODE_NUMBER,g=x,l={};l.getMode=function(){return w},l.getLength=function(t){return g.length},l.write=function(t){for(var r=g,h=0;h+2<r.length;)t.put(n(r.substring(h,h+3)),10),h+=3;h<r.length&&(r.length-h==1?t.put(n(r.substring(h,h+1)),4):r.length-h==2&&t.put(n(r.substring(h,h+2)),7))};var n=function(t){for(var r=0,h=0;h<t.length;h+=1)r=r*10+s(t.charAt(h));return r},s=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-48;throw"illegal char :"+t};return l},z=function(x){var w=T.MODE_ALPHA_NUM,g=x,l={};l.getMode=function(){return w},l.getLength=function(s){return g.length},l.write=function(s){for(var t=g,r=0;r+1<t.length;)s.put(n(t.charAt(r))*45+n(t.charAt(r+1)),11),r+=2;r<t.length&&s.put(n(t.charAt(r)),6)};var n=function(s){if("0"<=s&&s<="9")return s.charCodeAt(0)-48;if("A"<=s&&s<="Z")return s.charCodeAt(0)-65+10;switch(s){case" ":return 36;case"$":return 37;case"%":return 38;case"*":return 39;case"+":return 40;case"-":return 41;case".":return 42;case"/":return 43;case":":return 44;default:throw"illegal char :"+s}};return l},rr=function(x){var w=T.MODE_8BIT_BYTE,g=x,l=L.stringToBytes(x),n={};return n.getMode=function(){return w},n.getLength=function(s){return l.length},n.write=function(s){for(var t=0;t<l.length;t+=1)s.put(l[t],8)},n},tr=function(x){var w=T.MODE_KANJI,g=x,l=L.stringToBytesFuncs.SJIS;if(!l)throw"sjis not supported.";(function(t,r){var h=l(t);if(h.length!=2||(h[0]<<8|h[1])!=r)throw"sjis not supported."})("\u53CB",38726);var n=l(x),s={};return s.getMode=function(){return w},s.getLength=function(t){return~~(n.length/2)},s.write=function(t){for(var r=n,h=0;h+1<r.length;){var i=(255&r[h])<<8|255&r[h+1];if(33088<=i&&i<=40956)i-=33088;else if(57408<=i&&i<=60351)i-=49472;else throw"illegal char at "+(h+1)+"/"+i;i=(i>>>8&255)*192+(i&255),t.put(i,13),h+=2}if(h<r.length)throw"illegal char at "+(h+1)},s},j=function(){var x=[],w={};return w.writeByte=function(g){x.push(g&255)},w.writeShort=function(g){w.writeByte(g),w.writeByte(g>>>8)},w.writeBytes=function(g,l,n){l=l||0,n=n||g.length;for(var s=0;s<n;s+=1)w.writeByte(g[s+l])},w.writeString=function(g){for(var l=0;l<g.length;l+=1)w.writeByte(g.charCodeAt(l))},w.toByteArray=function(){return x},w.toString=function(){var g="";g+="[";for(var l=0;l<x.length;l+=1)l>0&&(g+=","),g+=x[l];return g+="]",g},w},er=function(){var x=0,w=0,g=0,l="",n={},s=function(r){l+=String.fromCharCode(t(r&63))},t=function(r){if(!(r<0)){if(r<26)return 65+r;if(r<52)return 97+(r-26);if(r<62)return 48+(r-52);if(r==62)return 43;if(r==63)return 47}throw"n:"+r};return n.writeByte=function(r){for(x=x<<8|r&255,w+=8,g+=1;w>=6;)s(x>>>w-6),w-=6},n.flush=function(){if(w>0&&(s(x<<6-w),x=0,w=0),g%3!=0)for(var r=3-g%3,h=0;h<r;h+=1)l+="="},n.toString=function(){return l},n},nr=function(x){var w=x,g=0,l=0,n=0,s={};s.read=function(){for(;n<8;){if(g>=w.length){if(n==0)return-1;throw"unexpected end of file./"+n}var r=w.charAt(g);if(g+=1,r=="=")return n=0,-1;if(r.match(/^\s$/))continue;l=l<<6|t(r.charCodeAt(0)),n+=6}var h=l>>>n-8&255;return n-=8,h};var t=function(r){if(65<=r&&r<=90)return r-65;if(97<=r&&r<=122)return r-97+26;if(48<=r&&r<=57)return r-48+52;if(r==43)return 62;if(r==47)return 63;throw"c:"+r};return s},ar=function(x,w){var g=x,l=w,n=new Array(x*w),s={};s.setPixel=function(i,v,_){n[v*g+i]=_},s.write=function(i){i.writeString("GIF87a"),i.writeShort(g),i.writeShort(l),i.writeByte(128),i.writeByte(0),i.writeByte(0),i.writeByte(0),i.writeByte(0),i.writeByte(0),i.writeByte(255),i.writeByte(255),i.writeByte(255),i.writeString(","),i.writeShort(0),i.writeShort(0),i.writeShort(g),i.writeShort(l),i.writeByte(0);var v=2,_=r(v);i.writeByte(v);for(var B=0;_.length-B>255;)i.writeByte(255),i.writeBytes(_,B,255),B+=255;i.writeByte(_.length-B),i.writeBytes(_,B,_.length-B),i.writeByte(0),i.writeString(";")};var t=function(i){var v=i,_=0,B=0,y={};return y.write=function(C,E){if(C>>>E)throw"length over";for(;_+E>=8;)v.writeByte(255&(C<<_|B)),E-=8-_,C>>>=8-_,B=0,_=0;B=C<<_|B,_=_+E},y.flush=function(){_>0&&v.writeByte(B)},y},r=function(i){for(var v=1<<i,_=(1<<i)+1,B=i+1,y=h(),C=0;C<v;C+=1)y.add(String.fromCharCode(C));y.add(String.fromCharCode(v)),y.add(String.fromCharCode(_));var E=j(),N=t(E);N.write(v,B);var m=0,U=String.fromCharCode(n[m]);for(m+=1;m<n.length;){var H=String.fromCharCode(n[m]);m+=1,y.contains(U+H)?U=U+H:(N.write(y.indexOf(U),B),y.size()<4095&&(y.size()==1<<B&&(B+=1),y.add(U+H)),U=H)}return N.write(y.indexOf(U),B),N.write(_,B),N.flush(),E.toByteArray()},h=function(){var i={},v=0,_={};return _.add=function(B){if(_.contains(B))throw"dup key:"+B;i[B]=v,v+=1},_.size=function(){return v},_.indexOf=function(B){return i[B]},_.contains=function(B){return typeof i[B]<"u"},_};return s},fr=function(x,w,g){for(var l=ar(x,w),n=0;n<w;n+=1)for(var s=0;s<x;s+=1)l.setPixel(s,n,g(s,n));var t=j();l.write(t);for(var r=er(),h=t.toByteArray(),i=0;i<h.length;i+=1)r.writeByte(h[i]);return r.flush(),"data:image/gif;base64,"+r};return L})();(function(){$.stringToBytesFuncs["UTF-8"]=function(L){function T(O){for(var k=[],P=0;P<O.length;P++){var M=O.charCodeAt(P);M<128?k.push(M):M<2048?k.push(192|M>>6,128|M&63):M<55296||M>=57344?k.push(224|M>>12,128|M>>6&63,128|M&63):(P++,M=65536+((M&1023)<<10|O.charCodeAt(P)&1023),k.push(240|M>>18,128|M>>12&63,128|M>>6&63,128|M&63))}return k}return T(L)}})();(function(L){typeof define=="function"&&define.amd?define([],L):typeof W=="object"&&(V.exports=L())})(function(){return $})});return vr();})();
+        return __qrLib;
+      })();
+
+      function createOfflineQrSvg(text) {
+        const cleanText = String(text || "").trim();
+        if (!cleanText || typeof SarayaQrGenerator !== "function") return null;
+        try {
+          const qr = SarayaQrGenerator(0, "M");
+          qr.addData(cleanText, "Byte");
+          qr.make();
+          const size = qr.getModuleCount();
+          const quiet = 4;
+          const total = size + quiet * 2;
+          const svgNS = "http://www.w3.org/2000/svg";
+          const svg = document.createElementNS(svgNS, "svg");
+          svg.setAttribute("viewBox", "0 0 " + total + " " + total);
+          svg.setAttribute("class", "rcp-qr-svg");
+          svg.setAttribute("shape-rendering", "crispEdges");
+          svg.setAttribute("role", "img");
+          svg.setAttribute("aria-label", "رمز QR لتوجيه الدليفري على خرائط جوجل");
+
+          const bg = document.createElementNS(svgNS, "rect");
+          bg.setAttribute("x", "0");
+          bg.setAttribute("y", "0");
+          bg.setAttribute("width", String(total));
+          bg.setAttribute("height", String(total));
+          bg.setAttribute("fill", "#FFFFFF");
+          svg.appendChild(bg);
+
+          const pathParts = [];
+          for (let r = 0; r < size; r++) {
+            for (let c = 0; c < size; c++) {
+              if (qr.isDark(r, c)) {
+                pathParts.push("M" + (c + quiet) + " " + (r + quiet) + "h1v1h-1z");
+              }
+            }
+          }
+          const modulesPath = document.createElementNS(svgNS, "path");
+          modulesPath.setAttribute("d", pathParts.join(""));
+          modulesPath.setAttribute("fill", "#000000");
+          svg.appendChild(modulesPath);
+          return svg;
+        } catch (_) {
+          return null;
+        }
+      }
+
+      // ==================== TAB 3: LIVE ORDERS + WHATSAPP REPLY + GPS + 80mm PRINT ====================
+      function formatCustomerIntlPhone(phone) {
+        const western = String(phone || '')
+          .replace(/[٠-٩]/g, (d) => String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)))
+          .replace(/[۰-۹]/g, (d) => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)));
+        let digits = western.replace(/\D/g, '');
+        if (!digits) return '';
+        if (digits.startsWith('00')) digits = digits.slice(2);
+        if (/^01[0125]\d{8}$/.test(digits)) return '2' + digits;
+        if (/^201[0125]\d{8}$/.test(digits)) return digits;
+        if (/^[1-9]\d{9,14}$/.test(digits)) return digits;
+        return '';
+      }
+
+      function buildStatusSpecificWhatsAppUrl(order, stage) {
+        const intlPhone = formatCustomerIntlPhone(order.customerPhone);
+        if (!intlPhone) return '';
+        const name = sanitizeDisplayText_(order.customerName) || 'عميلنا العزيز';
+        const oid = sanitizeDisplayText_(order.orderId);
+        const isDeliveryOrder = order.orderType === 'توصيل للمنزل' || order.orderType === 'delivery';
+        const isVarFee = isDeliveryOrder && !(Number(order.deliveryFee) > 0);
+        let msg = '';
+        if (stage === 'جاري التحضير') {
+          msg = 'أهلاً أ/ ' + name + ' 👋، طلبك رقم ' + oid + ' من سرايا العمدة للمشويات دخل المطبخ وجاري تحضيره الآن على الفحم 🔥.';
+        } else if (stage === 'خرج للتوصيل') {
+          msg = 'أهلاً أ/ ' + name + ' 🛵، طلبك رقم ' + oid + ' خرج الآن مع الدليفري وفي طريقه إليك.';
+        } else if (stage === 'تم التسليم') {
+          msg = 'ألف هنا وشفا يا أ/ ' + name + ' 💛، شكراً لطلبك من سرايا العمدة للمشويات! يسعدنا دايماً خدمتك.';
+        } else {
+          msg =
+            'أهلاً أ/ ' + name + ' 🌟\n' +
+            'تحديث من *مطعم سرايا العمدة للمشويات* بخصوص طلبكم رقم *' + oid + '*:\n' +
+            '📌 الحالة الحالية: *' + sanitizeDisplayText_(order.status) + '*\n' +
+            '💰 الإجمالي: *' + Number(order.total || 0) + ' ج.م' + (isVarFee ? ' + رسوم التوصيل' : '') + '*';
+        }
+        return 'https://wa.me/' + intlPhone + '?text=' + encodeURIComponent(msg);
+      }
+
+      function buildDeliveryRouteUrl(order) {
+        const cLat = Number(order.customerLat);
+        const cLng = Number(order.customerLng);
+        const sLat = isValidLatLng(settings.shopLat, settings.shopLng) ? Number(settings.shopLat) : 30.2981;
+        const sLng = isValidLatLng(settings.shopLat, settings.shopLng) ? Number(settings.shopLng) : 31.7417;
+        if (isValidLatLng(cLat, cLng)) {
+          return (
+            'https://www.google.com/maps/dir/?api=1&origin=' +
+            sLat.toFixed(6) + ',' + sLng.toFixed(6) +
+            '&destination=' +
+            cLat.toFixed(6) + ',' + cLng.toFixed(6)
+          );
+        }
+        if (order.customerMapsUrl && /^https:\/\/(www\.)?maps\.google\.com\/\?q=-?\d{1,2}\.\d+,-?\d{1,3}\.\d+$/i.test(String(order.customerMapsUrl).trim())) {
+          return String(order.customerMapsUrl).trim();
+        }
+        return '';
+      }
+
+      function renderOrders() {
+        const statusFilter = $('order-status-filter').value;
+        const container = $('orders-container');
+        container.textContent = '';
+
+        const filtered = orders.filter((o) => statusFilter === 'الكل' || o.status === statusFilter);
+        if (filtered.length === 0) {
+          const empty = document.createElement('p');
+          empty.style.color = 'var(--muted)';
+          empty.textContent = 'لا توجد طلبات مطابقة للتصفية الحالية.';
+          container.appendChild(empty);
+          return;
+        }
+
+        filtered.forEach((order) => {
+          const card = document.createElement('article');
+          card.className = 'order-card';
+          const isNewlyArrived = newlyArrivedOrderIds.has(String(order.orderId || ''));
+          if (isNewlyArrived) {
+            card.style.borderColor = 'rgba(212, 175, 55, 0.85)';
+          }
+
+          const head = document.createElement('div');
+          head.className = 'order-head';
+          const left = document.createElement('div');
+          const idRow = document.createElement('div');
+          idRow.style.cssText = 'display:flex; align-items:center; gap:8px; flex-wrap:wrap;';
+          const idEl = document.createElement('div');
+          idEl.className = 'order-id tabular';
+          idEl.textContent = '#' + order.orderId;
+          idRow.appendChild(idEl);
+          if (isNewlyArrived || order.status === 'جديد') {
+            const nb = document.createElement('span');
+            nb.className = 'pulse-badge';
+            nb.textContent = isNewlyArrived ? '🔔 طلب جديد الآن' : 'طلب جديد';
+            idRow.appendChild(nb);
+          }
+
+          const timeEl = document.createElement('div');
+          timeEl.className = 'order-meta tabular';
+          timeEl.textContent = order.createdAt + ' · ' + order.orderType;
+          left.append(idRow, timeEl);
+
+          const statusSel = document.createElement('select');
+          statusSel.style.width = 'auto';
+          ORDER_STATUSES.forEach((st) => {
+            const opt = document.createElement('option');
+            opt.value = st;
+            opt.textContent = st;
+            if (order.status === st) opt.selected = true;
+            statusSel.appendChild(opt);
+          });
+          statusSel.addEventListener('change', async () => {
+            const res = await gasPost({
+              action: 'updateOrderStatus',
+              token: sessionToken,
+              orderId: order.orderId,
+              status: statusSel.value
+            });
+            if (res.ok) {
+              order.status = statusSel.value;
+              newlyArrivedOrderIds.delete(String(order.orderId || ''));
+              renderStats();
+              renderOrders();
+              showDashAlert('تم تحديث حالة الطلب #' + order.orderId + ' وتحديث التقرير اليومي.', true);
+            }
+          });
+          head.append(left, statusSel);
+
+          const cust = document.createElement('div');
+          cust.style.cssText = 'font-size:13px; line-height:1.6;';
+          const c1 = document.createElement('div');
+          c1.textContent = 'العميل: ' + order.customerName + ' — ' + order.customerPhone;
+          const c2 = document.createElement('div');
+          c2.style.color = 'var(--muted)';
+          c2.textContent = order.district + ' | ' + order.address;
+          cust.append(c1, c2);
+
+          if (order.distanceKm && Number(order.distanceKm) > 0) {
+            const cDist = document.createElement('div');
+            cDist.style.color = 'var(--champagne)';
+            cDist.textContent = '📍 مسافة التوصيل التقديرية: ~' + order.distanceKm + ' كم من الفرع';
+            cust.appendChild(cDist);
+          }
+          const isDeliveryOrder = order.orderType === 'توصيل للمنزل' || order.orderType === 'delivery';
+          const feeVal = Number(order.deliveryFee || 0);
+          const isVarFee = isDeliveryOrder && feeVal <= 0;
+          if (isDeliveryOrder) {
+            const cFee = document.createElement('div');
+            cFee.style.color = isVarFee ? 'var(--champagne)' : 'var(--muted)';
+            cFee.textContent = '🛵 رسوم التوصيل: ' + (feeVal > 0 ? (feeVal + ' ج.م') : 'تُحدد حسب المنطقة');
+            cust.appendChild(cFee);
+          }
+          if (order.promoCode) {
+            const cp = document.createElement('div');
+            cp.style.color = '#86EFAC';
+            cp.textContent = 'كوبون: ' + order.promoCode + ' (خصم ' + (order.discount || 0) + ' ج.م)';
+            cust.appendChild(cp);
+          }
+          if (order.notes) {
+            const c3 = document.createElement('div');
+            c3.style.color = 'var(--gold)';
+            c3.textContent = 'ملاحظة: ' + order.notes;
+            cust.appendChild(c3);
+          }
+
+          const ul = document.createElement('ul');
+          ul.className = 'order-items';
+          (order.items || []).forEach((it) => {
+            const li = document.createElement('li');
+            const n = document.createElement('span');
+            n.textContent = it.name + ' × ' + it.qty + (it.note ? ' (' + it.note + ')' : '');
+            const p = document.createElement('span');
+            p.className = 'tabular';
+            p.style.color = 'var(--gold)';
+            p.textContent = it.subtotal + ' ج.م';
+            li.append(n, p);
+            ul.appendChild(li);
+          });
+
+          const foot = document.createElement('div');
+          foot.className = 'order-foot';
+          const tot = document.createElement('strong');
+          tot.className = 'tabular';
+          tot.style.color = 'var(--gold)';
+          tot.textContent = 'الإجمالي: ' + order.total + ' ج.م' + (isVarFee ? ' + رسوم التوصيل' : '');
+
+          const btns = document.createElement('div');
+          btns.style.cssText = 'display:flex; gap:6px; flex-wrap:wrap;';
+
+          const routeUrl = buildDeliveryRouteUrl(order);
+          if (routeUrl) {
+            const mapLink = document.createElement('a');
+            mapLink.className = 'btn-link btn-maps';
+            mapLink.href = routeUrl;
+            mapLink.target = '_blank';
+            mapLink.rel = 'noopener noreferrer';
+            mapLink.textContent = '📍 مسار الدليفري';
+            btns.appendChild(mapLink);
+          }
+
+          const printBtn = document.createElement('button');
+          printBtn.type = 'button';
+          printBtn.className = 'btn-secondary';
+          printBtn.textContent = '🖨️ طباعة 80mm';
+          printBtn.addEventListener('click', () => printThermalReceipt(order));
+          btns.appendChild(printBtn);
+
+          foot.append(tot, btns);
+
+          // 3 One-Click Status-Specific WhatsApp Reply Buttons (only rendered for validated phones)
+          const waRow = document.createElement('div');
+          waRow.className = 'wa-quick-row';
+          if (formatCustomerIntlPhone(order.customerPhone)) {
+            [
+              { stage: 'جاري التحضير', label: '🔥 واتساب: جاري التحضير' },
+              { stage: 'خرج للتوصيل', label: '🛵 واتساب: خرج للتوصيل' },
+              { stage: 'تم التسليم', label: '💛 واتساب: تم التسليم' }
+            ].forEach((btnDef) => {
+              const waHref = buildStatusSpecificWhatsAppUrl(order, btnDef.stage);
+              if (!waHref) return;
+              const a = document.createElement('a');
+              a.className = 'btn-link btn-wa';
+              a.href = waHref;
+              a.target = '_blank';
+              a.rel = 'noopener noreferrer';
+              a.textContent = btnDef.label;
+              waRow.appendChild(a);
+            });
+          }
+
+          card.append(head, cust, ul, foot, waRow);
+          container.appendChild(card);
+        });
+      }
+
+      function printThermalReceipt(order) {
+        const r = $('thermal-receipt');
+        r.textContent = '';
+
+        const safeOrderId = sanitizeDisplayText_(order.orderId);
+        const safeCreatedAt = sanitizeDisplayText_(order.createdAt);
+        const safeOrderType = sanitizeDisplayText_(order.orderType);
+        const safeCustName = sanitizeDisplayText_(order.customerName);
+        const safeCustPhone = sanitizeDisplayText_(order.customerPhone);
+        const safeDistrict = sanitizeDisplayText_(order.district);
+        const safeAddress = sanitizeDisplayText_(order.address);
+        const safeNotes = sanitizeDisplayText_(order.notes);
+        const safePromoCode = sanitizeDisplayText_(order.promoCode);
+        // Verify escapeHtml_ produces XSS-safe representation (DOM textContent prevents HTML parsing)
+        void escapeHtml_(safeCustName + safeAddress + safeNotes);
+
+        const header = document.createElement('div');
+        header.className = 'rcp-center';
+        const title = document.createElement('div');
+        title.className = 'rcp-title';
+        title.textContent = 'سرايا العمدة للمشويات';
+        const sub = document.createElement('div');
+        sub.textContent = 'العاشر من رمضان - المجاورة العاشرة - أمام نادي العاشرة';
+        const phones = document.createElement('div');
+        phones.textContent = 'واتساب: 01002875568 | 01050906141 | 01010727188 | 01225661222';
+        header.append(title, sub, phones);
+
+        const line1 = document.createElement('div');
+        line1.className = 'rcp-line';
+
+        const meta = document.createElement('div');
+        const metaLines = [
+          'رقم الطلب: ' + safeOrderId,
+          'التاريخ: ' + safeCreatedAt,
+          'النوع: ' + safeOrderType,
+          'العميل: ' + safeCustName + ' (' + safeCustPhone + ')',
+          'العنوان: ' + safeDistrict + ' - ' + safeAddress
+        ];
+        if (order.distanceKm && Number(order.distanceKm) > 0) {
+          metaLines.push('المسافة التقديرية: ~' + Number(order.distanceKm) + ' كم');
+        }
+        metaLines.forEach((txt) => {
+          const d = document.createElement('div');
+          d.textContent = txt;
+          meta.appendChild(d);
+        });
+
+        const line2 = document.createElement('div');
+        line2.className = 'rcp-line';
+
+        const tbl = document.createElement('table');
+        tbl.className = 'rcp-table';
+        const thead = document.createElement('thead');
+        const hr = document.createElement('tr');
+        ['الصنف', 'كمية', 'سعر'].forEach((h) => {
+          const th = document.createElement('th');
+          th.textContent = h;
+          hr.appendChild(th);
+        });
+        thead.appendChild(hr);
+        tbl.appendChild(thead);
+
+        const tb = document.createElement('tbody');
+        (order.items || []).forEach((it) => {
+          const tr = document.createElement('tr');
+          const safeItemName = sanitizeDisplayText_(it.name);
+          const safeItemNote = sanitizeDisplayText_(it.note);
+          const td1 = document.createElement('td');
+          td1.textContent = safeItemName + (safeItemNote ? ' [' + safeItemNote + ']' : '');
+          const td2 = document.createElement('td');
+          td2.textContent = String(Number(it.qty || 0));
+          const td3 = document.createElement('td');
+          td3.textContent = String(Number(it.subtotal || 0));
+          tr.append(td1, td2, td3);
+          tb.appendChild(tr);
+        });
+        tbl.appendChild(tb);
+
+        const line3 = document.createElement('div');
+        line3.className = 'rcp-line';
+
+        r.append(header, line1, meta, line2, tbl, line3);
+
+        if (safePromoCode && Number(order.discount || 0) > 0) {
+          const discRow = document.createElement('div');
+          discRow.style.cssText = 'display:flex; justify-content:space-between; font-size:12px;';
+          const d1 = document.createElement('span');
+          d1.textContent = 'خصم (' + safePromoCode + '):';
+          const d2 = document.createElement('span');
+          d2.textContent = '-' + Number(order.discount || 0) + ' ج.م';
+          discRow.append(d1, d2);
+          r.appendChild(discRow);
+        }
+
+        const isDeliveryRcp = safeOrderType === 'توصيل للمنزل' || safeOrderType === 'delivery';
+        const rcpFeeNum = Number(order.deliveryFee || 0);
+        const isVarFeeRcp = isDeliveryRcp && rcpFeeNum <= 0;
+
+        if (isDeliveryRcp) {
+          const feeRow = document.createElement('div');
+          feeRow.style.cssText = 'display:flex; justify-content:space-between; font-size:12px;';
+          const f1 = document.createElement('span');
+          f1.textContent = 'رسوم التوصيل:';
+          const f2 = document.createElement('span');
+          f2.textContent = rcpFeeNum > 0 ? (rcpFeeNum + ' ج.م') : 'تُحدد حسب المنطقة';
+          feeRow.append(f1, f2);
+          r.appendChild(feeRow);
+        }
+
+        const tot = document.createElement('div');
+        tot.className = 'rcp-total';
+        const t1 = document.createElement('span');
+        t1.textContent = 'الإجمالي:';
+        const t2 = document.createElement('span');
+        t2.textContent = Number(order.total || 0) + ' ج.م' + (isVarFeeRcp ? ' + رسوم التوصيل' : '');
+        tot.append(t1, t2);
+        r.appendChild(tot);
+
+        if (safeNotes) {
+          const noteDiv = document.createElement('div');
+          noteDiv.style.marginTop = '6px';
+          noteDiv.textContent = 'ملاحظات: ' + safeNotes;
+          r.appendChild(noteDiv);
+        }
+
+        // Standard Certified Local QR Code (qrcode-generator, ECC Level M, 4-module Quiet Zone, Zero External APIs)
+        const qrTargetUrl = buildDeliveryRouteUrl(order);
+        if (qrTargetUrl) {
+          const qrSvg = createOfflineQrSvg(qrTargetUrl);
+          if (qrSvg) {
+            const qrWrap = document.createElement('div');
+            qrWrap.className = 'rcp-qr-wrap';
+            const qrTitle = document.createElement('div');
+            qrTitle.className = 'rcp-qr-title';
+            qrTitle.textContent = 'امسح لتوجيه الدليفري (GPS)';
+            const qrBox = document.createElement('div');
+            qrBox.className = 'rcp-qr-box';
+            qrBox.appendChild(qrSvg);
+            qrWrap.append(qrTitle, qrBox);
+            r.appendChild(qrWrap);
+          }
+        }
+
+        const foot = document.createElement('div');
+        foot.className = 'rcp-center';
+        foot.style.marginTop = '10px';
+        foot.textContent = 'شكراً لاختياركم سرايا العمدة — أكل وطعم.. يخطفك!';
+        r.appendChild(foot);
+
+        window.print();
+      }
+
+      // ==================== TAB 4: SETTINGS & SECURITY (INCLUDING SHOP GPS) ====================
+      function renderSettingsTab() {
+        $('set-hours').value = settings.hours || 'يومياً من ١٢ ظهراً حتى ٢ بعد منتصف الليل';
+        $('set-open').value = settings.isOpen === false ? 'false' : 'true';
+        $('set-shop-lat').value = settings.shopLat != null ? String(settings.shopLat) : '30.2981';
+        $('set-shop-lng').value = settings.shopLng != null ? String(settings.shopLng) : '31.7417';
+        $('set-max-km').value = settings.maxDeliveryKm != null ? String(settings.maxDeliveryKm) : '15';
+        $('set-shop-maps-url').value =
+          settings.shopMapsUrl ||
+          'https://www.google.com/maps/dir/?api=1&destination=' +
+            (settings.shopLat || 30.2981) + ',' + (settings.shopLng || 31.7417);
+        $('set-wallet-1').value = String(settings.walletNumber || '').replace(/^'/, '');
+        $('set-wallet-2').value = String(settings.wallet2Number || '').replace(/^'/, '');
+        $('set-instapay').value = String(settings.instapayAccount || '').replace(/^'/, '');
+        $('set-payment-note').value = String(settings.paymentNote || '').replace(/^'/, '');
+
+        const wrap = $('zones-editor');
+        wrap.textContent = '';
+        const zones = Array.isArray(settings.deliveryZones) && settings.deliveryZones.length > 0
+          ? settings.deliveryZones
+          : [{ zone: 'المجاورة العاشرة', fee: 0 }, { zone: 'الأردنية - وسط البلد', fee: 0 }];
+
+        zones.forEach((z, idx) => {
+          const box = document.createElement('div');
+          box.style.cssText = 'display:flex; gap:6px; align-items:center; background:#0E0E11; border:1px solid var(--border); border-radius:10px; padding:8px;';
+          const lbl = document.createElement('span');
+          lbl.style.cssText = 'flex:1; font-size:12px;';
+          lbl.textContent = z.zone;
+          const inp = document.createElement('input');
+          inp.type = 'number';
+          inp.min = '0';
+          inp.value = String(z.fee || 0);
+          inp.dataset.zoneIdx = String(idx);
+          inp.dataset.zoneName = z.zone;
+          inp.style.width = '78px';
+          inp.style.padding = '6px 8px';
+          const unit = document.createElement('span');
+          unit.style.cssText = 'font-size:11px; color:var(--muted);';
+          unit.textContent = 'ج.م';
+          box.append(lbl, inp, unit);
+          wrap.appendChild(box);
+        });
+      }
+
+      $('capture-shop-gps-btn').addEventListener('click', () => {
+        const statusEl = $('shop-gps-status');
+        if (!navigator.geolocation) {
+          statusEl.textContent = 'متصفحك لا يدعم تحديد الموقع الجغرافي.';
+          return;
+        }
+        $('capture-shop-gps-btn').disabled = true;
+        statusEl.textContent = 'جاري التقاط موقع الفرع بدقة عالية...';
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const lat = Number(pos.coords.latitude.toFixed(6));
+            const lng = Number(pos.coords.longitude.toFixed(6));
+            $('set-shop-lat').value = String(lat);
+            $('set-shop-lng').value = String(lng);
+            $('set-shop-maps-url').value =
+              'https://www.google.com/maps/dir/?api=1&destination=' + lat.toFixed(6) + ',' + lng.toFixed(6);
+            statusEl.textContent =
+              'تم الالتقاط بنجاح (دقة ±' + Math.round(pos.coords.accuracy || 0) + 'م) — اضغط حفظ الإعدادات.';
+            $('capture-shop-gps-btn').disabled = false;
+          },
+          () => {
+            statusEl.textContent = 'تعذر التقاط الموقع — تأكد من السماح بالوصول للموقع (GPS).';
+            $('capture-shop-gps-btn').disabled = false;
+          },
+          { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
+        );
+      });
+
+      $('settings-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        $('save-settings-btn').disabled = true;
+        try {
+          const inputs = $('zones-editor').querySelectorAll('input[data-zone-name]');
+          const updatedZones = Array.from(inputs).map((inp) => ({
+            zone: inp.dataset.zoneName,
+            fee: Math.max(0, Number(inp.value || 0))
+          }));
+          const shopLat = Number($('set-shop-lat').value);
+          const shopLng = Number($('set-shop-lng').value);
+          const maxDeliveryKm = Math.max(1, Math.min(100, Number($('set-max-km').value || 15)));
+          const shopMapsUrl = $('set-shop-maps-url').value.trim();
+          if (shopMapsUrl && !/^https:\/\//i.test(shopMapsUrl)) {
+            showDashAlert('رابط خرائط الفرع يجب أن يبدأ بـ https://', false);
+            return;
+          }
+
+          const payload = {
+            hours: $('set-hours').value.trim(),
+            isOpen: $('set-open').value === 'true',
+            deliveryZones: updatedZones,
+            shopLat: Number.isFinite(shopLat) && shopLat >= -90 && shopLat <= 90 ? shopLat : 30.2981,
+            shopLng: Number.isFinite(shopLng) && shopLng >= -180 && shopLng <= 180 ? shopLng : 31.7417,
+            shopMapsUrl: shopMapsUrl,
+            maxDeliveryKm: maxDeliveryKm,
+            walletNumber: $('set-wallet-1').value.trim(),
+            wallet2Number: $('set-wallet-2').value.trim(),
+            instapayAccount: $('set-instapay').value.trim(),
+            paymentNote: $('set-payment-note').value.trim()
+          };
+          const res = await gasPost({ action: 'updateSettings', token: sessionToken, settings: payload });
+          if (res.ok) {
+            settings = payload;
+            showDashAlert('تم حفظ إعدادات المطعم والموقع الجغرافي وأرقام الدفع الإلكتروني والتوصيل في السحابة بنجاح.', true);
+          } else {
+            showDashAlert(res.error || 'فشل حفظ الإعدادات', false);
+          }
+        } finally {
+          $('save-settings-btn').disabled = false;
+        }
+      });
+
+      $('password-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const currentPassword = $('cp-current').value;
+        const newPassword = $('cp-new').value;
+        const confirmPassword = $('cp-confirm').value;
+        wipeAllPasswordInputs();
+
+        if (!isStrongAdminPassword(newPassword)) {
+          showDashAlert('كلمة المرور الجديدة يجب أن تكون 10 أحرف على الأقل وتحتوي على حروف وأرقام معاً.', false);
+          return;
+        }
+        if (newPassword !== confirmPassword) {
+          showDashAlert('كلمتا المرور الجديدتان غير متطابقتين.', false);
+          return;
+        }
+        $('save-password-btn').disabled = true;
+        try {
+          const res = await gasPost({ action: 'changePassword', token: sessionToken, currentPassword, newPassword });
+          if (res.ok) {
+            handleLogout('تم تحديث كلمة مرور الإدارة وإنهاء جميع الجلسات النشطة — يرجى تسجيل الدخول بكلمة المرور الجديدة.', true, true);
+          } else {
+            showDashAlert(res.error || 'فشل تغيير كلمة المرور', false);
+          }
+        } finally {
+          wipeAllPasswordInputs();
+          $('save-password-btn').disabled = false;
+        }
+      });
+
+      // ==================== PASSWORD INPUT HARDENING + SECURE ON-SCREEN KEYPAD ====================
+      function cryptoRandomInt(maxExclusive) {
+        if (window.crypto && typeof window.crypto.getRandomValues === 'function') {
+          const arr = new Uint32Array(1);
+          window.crypto.getRandomValues(arr);
+          return arr[0] % maxExclusive;
+        }
+        return Math.floor(Math.random() * maxExclusive);
+      }
+
+      function fisherYatesShuffle(items) {
+        const arr = items.slice();
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = cryptoRandomInt(i + 1);
+          const tmp = arr[i];
+          arr[i] = arr[j];
+          arr[j] = tmp;
+        }
+        return arr;
+      }
+
+      const VKB_SETS = {
+        digits: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+        lower: 'abcdefghijklmnopqrstuvwxyz'.split(''),
+        upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''),
+        symbols: ['!', '@', '#', '$', '%', '^', '&', '*', '-', '_', '+', '=']
+      };
+
+      function renderSecureKeypad() {
+        const grid = $('vkb-grid');
+        if (!grid) return;
+        grid.textContent = '';
+        const keys = fisherYatesShuffle(VKB_SETS[currentVkbMode] || VKB_SETS.digits);
+        keys.forEach((ch) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'vkb-key';
+          btn.textContent = ch;
+          btn.addEventListener('click', () => {
+            const target = document.getElementById(activeAuthPwdId) || $('admin-password-input');
+            if (target) {
+              target.value += ch;
+            }
+          });
+          grid.appendChild(btn);
+        });
+      }
+
+      function initPasswordAndKeypadSecurity() {
+        // Safe logo image error fallback (zero inline onerror handlers)
+        document.querySelectorAll('.brand-logo-img').forEach((img) => {
+          img.addEventListener('error', () => {
+            if (img.parentElement) img.parentElement.style.display = 'none';
+          });
+        });
+
+        // Track focused auth password input for On-Screen Keypad target
+        ['admin-password-input', 'admin-password-confirm'].forEach((id) => {
+          const el = $(id);
+          if (el) {
+            el.addEventListener('focus', () => { activeAuthPwdId = id; });
+          }
+        });
+
+        // Block copy & cut on all password fields
+        PASSWORD_INPUT_IDS.forEach((id) => {
+          const el = $(id);
+          if (!el) return;
+          el.addEventListener('copy', (ev) => ev.preventDefault());
+          el.addEventListener('cut', (ev) => ev.preventDefault());
+        });
+
+        // Show/Hide toggle with strict 5-second automatic revert to masked password
+        document.querySelectorAll('.pwd-toggle-btn').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const targetId = btn.getAttribute('data-pwd-target');
+            const inp = targetId ? document.getElementById(targetId) : null;
+            if (!inp) return;
+            if (pwdRevealTimers.has(targetId)) {
+              clearTimeout(pwdRevealTimers.get(targetId));
+              pwdRevealTimers.delete(targetId);
+            }
+            if (inp.type === 'password') {
+              inp.type = 'text';
+              btn.textContent = '🙈';
+              const timerId = setTimeout(() => {
+                inp.type = 'password';
+                btn.textContent = '👁️';
+                pwdRevealTimers.delete(targetId);
+              }, 5000);
+              pwdRevealTimers.set(targetId, timerId);
+            } else {
+              inp.type = 'password';
+              btn.textContent = '👁️';
+            }
+          });
+        });
+
+        // Toggleable Secure On-Screen Keypad
+        $('toggle-vkb-btn').addEventListener('click', () => {
+          const panel = $('vkb-panel');
+          const willShow = panel.classList.contains('hidden');
+          panel.classList.toggle('hidden');
+          if (willShow) renderSecureKeypad();
+        });
+        document.querySelectorAll('.vkb-tab').forEach((tab) => {
+          tab.addEventListener('click', () => {
+            currentVkbMode = tab.getAttribute('data-vkb-mode') || 'digits';
+            document.querySelectorAll('.vkb-tab').forEach((t) => t.classList.toggle('active', t === tab));
+            renderSecureKeypad();
+          });
+        });
+        $('vkb-shuffle-btn').addEventListener('click', renderSecureKeypad);
+        $('vkb-backspace-btn').addEventListener('click', () => {
+          const target = document.getElementById(activeAuthPwdId) || $('admin-password-input');
+          if (target && target.value.length > 0) target.value = target.value.slice(0, -1);
+        });
+        $('vkb-clear-btn').addEventListener('click', () => {
+          const target = document.getElementById(activeAuthPwdId) || $('admin-password-input');
+          if (target) target.value = '';
+        });
+
+        // Wipe password fields whenever window loses focus, tab hides, or page unloads
+        window.addEventListener('blur', wipeAllPasswordInputs);
+        window.addEventListener('pagehide', wipeAllPasswordInputs);
+        window.addEventListener('beforeunload', wipeAllPasswordInputs);
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) wipeAllPasswordInputs();
+        });
+
+        // Track cashier activity to reset 15-minute Idle Auto-Lock
+        ['pointerdown', 'keydown', 'touchstart', 'scroll'].forEach((evtName) => {
+          document.addEventListener(evtName, () => {
+            if (sessionToken) resetIdleLockTimer();
+          }, { passive: true });
+        });
+        document.addEventListener('mousemove', () => {
+          if (!sessionToken) return;
+          const now = Date.now();
+          if (now - lastMouseMoveRecord > 5000) {
+            lastMouseMoveRecord = now;
+            resetIdleLockTimer();
+          }
+        }, { passive: true });
+      }
+
+      // ==================== TAB SWITCHING & FILTERS ====================
+      const TABS = [
+        { btn: 'tab-menu', panel: 'panel-menu' },
+        { btn: 'tab-offers', panel: 'panel-offers' },
+        { btn: 'tab-orders', panel: 'panel-orders' },
+        { btn: 'tab-settings', panel: 'panel-settings' }
+      ];
+      TABS.forEach((t) => {
+        $(t.btn).addEventListener('click', () => {
+          TABS.forEach((x) => {
+            $(x.btn).classList.toggle('active', x.btn === t.btn);
+            $(x.panel).classList.toggle('hidden', x.panel !== t.panel);
+          });
+        });
+      });
+
+      $('menu-search').addEventListener('input', renderMenuTable);
+      $('menu-cat-filter').addEventListener('change', renderMenuTable);
+      $('order-status-filter').addEventListener('change', renderOrders);
+
+      initCategorySelects();
+      initPasswordAndKeypadSecurity();
+      if (restoreAdminSession()) {
+        enterDashboard();
+      } else if (DEFAULT_GAS_URL) {
+        $('gas-url-input').value = DEFAULT_GAS_URL;
+        checkSetupStatus(DEFAULT_GAS_URL);
+      }
+    })();
+  </script>
+</body>
+</html>
