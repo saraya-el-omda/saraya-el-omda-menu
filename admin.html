@@ -459,13 +459,13 @@
           <div style="font-size:12px; color:var(--champagne);">لوحة تحكم معزولة وآمنة</div>
         </div>
       </div>
-      <p id="auth-subtitle">أدخل رابط Google Apps Script وكلمة مرور المدير للدخول الآمن.</p>
+      <p id="auth-subtitle">أدخل كلمة مرور المدير للدخول الآمن.</p>
       <div id="auth-alert" class="alert alert-err hidden"></div>
 
       <form id="auth-form" autocomplete="off">
-        <div class="form-group">
+        <div class="form-group hidden" aria-hidden="true">
           <label for="gas-url-input">رابط Web App الخاص بـ Google Apps Script</label>
-          <input id="gas-url-input" type="url" dir="ltr" required spellcheck="false" autocapitalize="off" autocorrect="off" placeholder="https://script.google.com/macros/s/.../exec" />
+          <input id="gas-url-input" type="hidden" value="https://script.google.com/macros/s/AKfycbxrSjg1Bwqiiu3D2cVML8QIU18BnKXXMBPnfz9MYD-GKWniZhcZGonBQEcOoSXBWIfG/exec" />
         </div>
 
         <div class="form-group">
@@ -956,8 +956,8 @@
         return;
       }
 
-      // Set your deployed Google Apps Script Web App URL here to pre-fill login
-      const DEFAULT_GAS_URL = '';
+      // Hardcoded official Google Apps Script Web App URL (hidden from UI)
+      const DEFAULT_GAS_URL = 'https://script.google.com/macros/s/AKfycbxrSjg1Bwqiiu3D2cVML8QIU18BnKXXMBPnfz9MYD-GKWniZhcZGonBQEcOoSXBWIfG/exec';
 
       const CATEGORIES = [
         'وجبات فردية', 'مشويات العمدة', 'عروض العمدة المميزة', 'صواني العمدة المميزة',
@@ -1128,7 +1128,7 @@
             isSafeHttpsUrl_(parsed.gasApiUrl, true) &&
             Number(parsed.expiresAt) > Date.now()
           ) {
-            gasApiUrl = parsed.gasApiUrl;
+            gasApiUrl = DEFAULT_GAS_URL || parsed.gasApiUrl;
             sessionToken = parsed.token;
             sessionExpiresAt = Number(parsed.expiresAt);
             $('gas-url-input').value = gasApiUrl;
@@ -1228,12 +1228,13 @@
             $('confirm-wrap').classList.add('hidden');
             $('password-label').textContent = 'كلمة مرور المدير';
             $('auth-submit-btn').textContent = 'تسجيل الدخول الآمن';
+            $('auth-subtitle').textContent = 'أدخل كلمة مرور المدير للدخول الآمن.';
           }
         } catch (_) {}
       }
 
       $('gas-url-input').addEventListener('blur', () => {
-        const val = $('gas-url-input').value.trim();
+        const val = ($('gas-url-input').value || DEFAULT_GAS_URL).trim();
         if (isSafeHttpsUrl_(val, true)) checkSetupStatus(val);
       });
 
@@ -1241,7 +1242,7 @@
         e.preventDefault();
         $('auth-alert').classList.add('hidden');
 
-        const urlVal = $('gas-url-input').value.trim();
+        const urlVal = ($('gas-url-input').value || DEFAULT_GAS_URL).trim();
         const password = $('admin-password-input').value;
         const confirmPass = $('admin-password-confirm').value;
 
@@ -1249,7 +1250,7 @@
         wipeAllPasswordInputs();
 
         if (!isSafeHttpsUrl_(urlVal, true)) {
-          showAuthAlert('يرجى إدخال رابط Google Apps Script Web App صحيح بصيغة https://script.google.com/macros/s/.../exec', false);
+          showAuthAlert('تعذر التحقق من رابط الاتصال بالخادم، يرجى مراجعة إعدادات النظام.', false);
           return;
         }
         gasApiUrl = urlVal;
@@ -2812,12 +2813,11 @@
           if (target) target.value = '';
         });
 
-        // Wipe password fields whenever window loses focus, tab hides, or page unloads
-        window.addEventListener('blur', wipeAllPasswordInputs);
+        // Wipe password fields on page unload (and when tab hides after login, without breaking mobile keyboard/clipboard paste)
         window.addEventListener('pagehide', wipeAllPasswordInputs);
         window.addEventListener('beforeunload', wipeAllPasswordInputs);
         document.addEventListener('visibilitychange', () => {
-          if (document.hidden) wipeAllPasswordInputs();
+          if (document.hidden && sessionToken) wipeAllPasswordInputs();
         });
 
         // Track cashier activity to reset 15-minute Idle Auto-Lock
