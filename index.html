@@ -16,13 +16,14 @@
   <meta name="twitter:title" content="سرايا العمدة للمشويات — أكل وطعم يخطفك!" />
   <meta name="twitter:description" content="المنيو الإلكتروني الرسمي لمطعم سرايا العمدة للمشويات بالعاشر من رمضان." />
   <meta name="twitter:image" content="./assets/aistudio/FB_IMG_1795500140672_d0b8149e.jpg" />
-  <meta name="theme-color" content="#0A0A0C" />
+  <meta name="theme-color" content="#111111" />
   <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="سرايا العمدة" />
   <link rel="manifest" href="./manifest.json" />
-  <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
-  <link rel="icon" type="image/svg+xml" href="./icon.svg" />
+  <link rel="icon" type="image/png" href="./icon-512.png" />
+  <link rel="apple-touch-icon" href="./icon-512.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -48,15 +49,18 @@
   </script>
   <style>
     :root {
-      --bg: #0A0A0C;
-      --surface: #141418;
-      --surface-2: #1C1C22;
-      --border: rgba(212,175,55,0.25);
-      --text: #FFFFFF;
-      --muted: #B8B8C0;
+      --bg: #0B0B0C;
+      --surface: #141416;
+      --surface-2: #18181B;
+      --border: rgba(255,255,255,0.1);
+      --gold-border: rgba(212,175,55,0.35);
+      --text: #F8F6F0;
+      --muted: #A1A1AA;
       --gold: #D4AF37;
+      --amber: #F59E0B;
       --champagne: #F3E5AB;
-      --gold-grad: linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%);
+      --gold-grad: linear-gradient(135deg, #D4AF37 0%, #F59E0B 52%, #B8860B 100%);
+      --card-grad: linear-gradient(180deg, #1B1B1F 0%, #141416 100%);
     }
     * { box-sizing: border-box; }
     html, body { scroll-behavior: smooth; overflow-x: clip; }
@@ -64,148 +68,213 @@
     h1, h2, h3, h4, .display { font-family: 'Cairo', sans-serif; margin: 0; }
     .tabular { font-variant-numeric: tabular-nums; }
     .hidden { display: none !important; }
-    button { font-family: 'Cairo', sans-serif; cursor: pointer; border: none; border-radius: 10px; font-weight: 700; transition: all 0.15s ease; }
+    button { font-family: 'Cairo', sans-serif; cursor: pointer; border: none; border-radius: 12px; font-weight: 700; transition: all 0.15s ease; }
+
+    @keyframes shimmerSlide { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    .skeleton-shimmer { background: linear-gradient(90deg, #18181B 25%, #25252B 50%, #18181B 75%); background-size: 200% 100%; animation: shimmerSlide 1.5s ease-in-out infinite; }
+    @keyframes sheetUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    .sheet-up { animation: sheetUp 0.22s cubic-bezier(0.22, 1, 0.36, 1) both; }
 
     /* Slim Dismissible Top PWA Bar (only on beforeinstallprompt) */
-    .pwa-top-bar { background: var(--surface); border-bottom: 1px solid rgba(212,175,55,0.3); padding: 7px 12px; }
+    .pwa-top-bar { background: var(--surface); border-bottom: 1px solid var(--gold-border); padding: 7px 12px; }
     .pwa-top-in { max-width: 1240px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--champagne); font-weight: 700; }
 
-    /* Slim Sticky Header */
-    .header { position: sticky; top: 0; z-index: 40; height: 56px; background: rgba(10,10,12,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+    /* Compact Floating Glass Bar */
+    .header { position: sticky; top: 0; z-index: 40; height: 56px; background: rgba(11,11,12,0.8); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.1); }
     .header-in { max-width: 1240px; margin: 0 auto; height: 100%; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .brand-group { display: flex; align-items: center; gap: 8px; min-width: 0; }
-    .brand-logo-wrap { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; min-width: 0; }
-    .brand-logo-box { width: 32px; height: 32px; border-radius: 8px; background: #0E0E11; border: 1px solid rgba(212,175,55,0.45); padding: 2px; display: inline-flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
-    .brand-logo-box img { width: 100%; height: 100%; object-fit: contain; border-radius: 5px; }
-    .brand-title { font-family: 'Cairo', sans-serif; font-size: 14px; font-weight: 900; color: var(--champagne); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    @media (min-width: 640px) { .brand-title { font-size: 17px; } }
-    .live-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; }
-    .live-badge.open { background: rgba(6,78,59,0.55); border: 1px solid rgba(16,185,129,0.35); color: #6EE7B7; }
-    .live-badge.closed { background: rgba(127,29,29,0.55); border: 1px solid rgba(239,68,68,0.4); color: #FCA5A5; }
-    .live-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-    .live-badge.open .live-dot { background: #34D399; animation: pulseDot 1.8s infinite; }
-    .live-badge.closed .live-dot { background: #EF4444; }
-    @keyframes pulseDot { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+    .brand-logo-wrap { display: inline-flex; align-items: center; gap: 7px; text-decoration: none; min-width: 0; flex-shrink: 0; }
+    .brand-logo-box { width: 32px; height: 32px; border-radius: 9px; background: var(--surface); border: 1px solid rgba(212,175,55,0.5); padding: 2px; display: inline-flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+    .brand-logo-box img { width: 100%; height: 100%; object-fit: contain; border-radius: 6px; }
+    .brand-title { font-family: 'Cairo', sans-serif; font-size: 14px; font-weight: 900; color: var(--text); white-space: nowrap; }
+    @media (min-width: 640px) { .brand-title { font-size: 16px; } }
+    .live-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 700; padding: 4px 8px; border-radius: 7px; white-space: nowrap; line-height: 1; max-width: 136px; overflow: hidden; text-overflow: ellipsis; }
+    @media (min-width: 640px) { .live-badge { font-size: 11px; max-width: none; } }
+    .live-badge.open { background: rgba(6,78,59,0.65); border: 1px solid rgba(16,185,129,0.35); color: #6EE7B7; }
+    .live-badge.preorder { background: rgba(120,53,15,0.65); border: 1px solid rgba(212,175,55,0.45); color: #F3E5AB; }
+    .live-badge.closed { background: rgba(127,29,29,0.65); border: 1px solid rgba(239,68,68,0.4); color: #FCA5A5; }
+    .live-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .live-badge.open .live-dot { background: #34D399; }
+    .live-badge.preorder .live-dot { background: #F59E0B; }
+    .live-badge.closed .live-dot { background: #F87171; }
     .header-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-    .track-btn { min-height: 36px; padding: 0 10px; border-radius: 9px; background: var(--surface); border: 1px solid var(--border); color: var(--champagne); font-size: 12px; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
-    .track-btn:hover { border-color: var(--gold); }
-    .cart-trigger { background: var(--gold-grad); color: #0A0A0C; min-height: 36px; padding: 6px 12px; font-size: 13px; font-weight: 800; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
-    .cart-pill { background: rgba(10,10,12,0.2); padding: 1px 6px; border-radius: 5px; font-size: 12px; font-weight: 900; }
-    .closed-strip { display: flex; align-items: center; justify-content: center; gap: 6px; background: rgba(120,53,15,0.72); border-bottom: 1px solid rgba(212,175,55,0.45); color: var(--champagne); font-size: 12px; font-weight: 700; padding: 7px 12px; text-align: center; line-height: 1.5; }
-    .closed-strip.manual { background: rgba(127,29,29,0.75); border-bottom-color: rgba(239,68,68,0.45); color: #FECACA; }
+    .track-btn { min-height: 38px; padding: 0 10px; border-radius: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text); font-size: 12px; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+    .track-btn:hover { border-color: rgba(212,175,55,0.55); }
+    .cart-trigger { background: var(--gold-grad); color: #0B0B0C; min-height: 38px; padding: 6px 12px; font-size: 13px; font-weight: 800; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+    .cart-pill { background: rgba(11,11,12,0.2); padding: 1px 6px; border-radius: 6px; font-size: 12px; font-weight: 900; }
 
-    /* Top Interactive Location Bar (Above-the-Fold) */
-    .location-bar { background: rgba(16,16,21,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(212,175,55,0.3); padding: 9px 12px; }
-    .location-bar-in { max-width: 1240px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
-    .location-addr { display: flex; align-items: flex-start; gap: 6px; font-size: 12px; font-weight: 700; color: var(--champagne); line-height: 1.5; }
-    .location-btns { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; flex-shrink: 0; }
-    .loc-link { display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-height: 34px; padding: 6px 10px; border-radius: 9px; background: #16161D; border: 1px solid rgba(212,175,55,0.35); color: var(--champagne); font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 700; text-decoration: none; white-space: nowrap; line-height: 1; }
-    .loc-gps-btn { display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-height: 34px; padding: 6px 11px; border-radius: 9px; background: var(--gold-grad); color: #0A0A0C; font-size: 12px; font-weight: 800; white-space: nowrap; line-height: 1; }
+    /* Cinematic Storefront Cover + Overlapping Brand Crest + 1-Row Quick Action Dock */
+    .hero { border-bottom: 1px solid rgba(255,255,255,0.08); background: #09090B; }
+    .hero-banner { position: relative; width: 100%; height: 192px; overflow: hidden; background: #121215; }
+    @media (min-width: 640px) { .hero-banner { height: 240px; } }
+    .hero-banner img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    .hero-banner-grad { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(9,9,11,0.08) 0%, rgba(9,9,11,0.55) 60%, #09090B 100%); pointer-events: none; }
+    .iso-strip { position: absolute; top: 12px; right: 12px; z-index: 2; display: inline-flex; align-items: center; gap: 5px; padding: 5px 11px; border-radius: 999px; background: rgba(9,9,11,0.75); backdrop-filter: blur(10px); border: 1px solid rgba(212,175,55,0.45); color: var(--champagne); font-size: 10.5px; font-weight: 700; line-height: 1.3; max-width: calc(100% - 24px); }
+    @media (min-width: 640px) { .iso-strip { top: 16px; right: 24px; font-size: 12px; } }
+    .hero-in { max-width: 1240px; margin: 0 auto; padding: 0 14px 18px; position: relative; z-index: 3; display: flex; flex-direction: column; gap: 12px; }
+    @media (min-width: 640px) { .hero-in { padding: 0 20px 20px; } }
+    .hero-crest-row { margin-top: -48px; display: flex; align-items: flex-end; gap: 12px; }
+    .hero-emblem { width: 80px; height: 80px; border-radius: 16px; background: #141416; border: 2px solid rgba(212,175,55,0.6); padding: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; box-shadow: 0 18px 36px rgba(0,0,0,0.85); }
+    @media (min-width: 640px) { .hero-emblem { width: 96px; height: 96px; } }
+    .hero-emblem img { width: 100%; height: 100%; object-fit: contain; border-radius: 11px; }
+    .hero-copy { display: flex; flex-direction: column; gap: 3px; min-width: 0; padding-bottom: 4px; }
+    .hero h1 { font-size: clamp(18px, 3vw, 28px); line-height: 1.25; font-weight: 900; color: var(--text); }
+    .hero-subtitle { font-size: 11.5px; color: #D4D4D8; line-height: 1.45; }
+    @media (min-width: 640px) { .hero-subtitle { font-size: 13.5px; } }
+    .hero-subtitle strong { color: var(--gold); font-weight: 800; }
+
+    /* 1-Row 4-Button Glass Quick Action Dock */
+    .quick-dock { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+    .dock-btn { min-height: 46px; padding: 7px 6px; border-radius: 12px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: var(--text); text-decoration: none; font-family: 'Cairo', sans-serif; font-size: 11px; font-weight: 700; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; transition: border-color 0.15s ease, background 0.15s ease, transform 0.12s ease; white-space: nowrap; }
+    @media (min-width: 640px) { .dock-btn { flex-direction: row; gap: 6px; font-size: 12px; } }
+    .dock-btn:hover { border-color: rgba(212,175,55,0.45); background: rgba(255,255,255,0.08); }
+    .dock-btn:active { transform: scale(0.98); }
+    .dock-btn.wa:hover { border-color: rgba(37,211,102,0.5); background: rgba(37,211,102,0.12); }
+    .dock-btn.active { border-color: rgba(212,175,55,0.65); background: rgba(212,175,55,0.15); color: var(--champagne); }
+
+    /* Expandable Hotlines Tray */
+    .hotlines-tray { border-radius: 12px; background: #131316; border: 1px solid rgba(212,175,55,0.35); padding: 10px 12px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+    .hotlines-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .hotline-link { display: inline-flex; align-items: center; gap: 5px; min-height: 38px; padding: 6px 11px; border-radius: 9px; background: #0B0B0C; border: 1px solid rgba(255,255,255,0.1); color: var(--text); text-decoration: none; font-size: 12px; font-weight: 800; white-space: nowrap; }
+    .hotline-link:hover { border-color: rgba(212,175,55,0.6); color: var(--champagne); }
+
+    /* Integrated Compact Address + GPS + Browse Strip */
+    .addr-strip { border-radius: 12px; background: #131316; border: 1px solid rgba(255,255,255,0.08); padding: 10px 12px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+    .addr-text { display: flex; align-items: flex-start; gap: 6px; font-size: 12px; color: #E4E4E7; line-height: 1.5; min-width: 0; }
+    .addr-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; width: 100%; }
+    @media (min-width: 768px) { .addr-actions { width: auto; } }
+    .loc-gps-btn { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-height: 40px; padding: 6px 12px; border-radius: 11px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.14); color: var(--text); font-size: 12px; font-weight: 700; white-space: nowrap; line-height: 1; }
+    .loc-gps-btn:hover { border-color: rgba(212,175,55,0.5); }
     .loc-gps-btn.located { background: rgba(6,78,59,0.75); color: #A7F3D0; border: 1px solid rgba(52,211,153,0.5); }
+    .btn-primary { background: var(--gold-grad); color: #0B0B0C; min-height: 40px; padding: 8px 14px; border-radius: 11px; font-size: 12.5px; font-weight: 800; white-space: nowrap; flex: 1; }
+    @media (min-width: 768px) { .loc-gps-btn, .btn-primary { flex: initial; } }
+    .btn-outline { background: var(--surface-2); color: var(--text); border: 1px solid rgba(255,255,255,0.14); min-height: 42px; padding: 9px 14px; font-size: 13px; white-space: nowrap; }
+    .btn-outline:hover { border-color: var(--gold); }
+    .hero-gps-err { font-size: 11px; color: #FCD34D; font-weight: 700; background: rgba(120,53,15,0.35); border: 1px solid rgba(212,175,55,0.3); border-radius: 10px; padding: 7px 11px; }
 
-    /* Compact Above-the-Fold Hero */
-    .hero { border-bottom: 1px solid rgba(212,175,55,0.2); padding: 18px 14px; background: linear-gradient(180deg, #121116 0%, #0A0A0C 100%); }
-    .hero-in { max-width: 1240px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
-    .hero-copy { max-width: 680px; display: flex; flex-direction: column; gap: 6px; }
-    .hero-loc { font-size: 12px; color: var(--gold); font-weight: 700; text-decoration: none; }
-    .hero h1 { font-size: clamp(20px, 3.2vw, 32px); line-height: 1.25; font-weight: 900; }
-    .hero h1 span { color: var(--gold); }
-    .hero p { color: var(--muted); line-height: 1.6; margin: 0; font-size: 13px; }
-    .hero-actions { display: flex; gap: 8px; flex-shrink: 0; }
-    @media (max-width: 640px) { .hero-actions { width: 100%; } .hero-actions button { flex: 1; } }
-    .btn-primary { background: var(--gold-grad); color: #0A0A0C; padding: 10px 18px; font-size: 14px; font-weight: 800; white-space: nowrap; }
-    .btn-outline { background: var(--surface); color: var(--champagne); border: 1px solid rgba(212,175,55,0.45); padding: 10px 16px; font-size: 14px; white-space: nowrap; }
-
-    /* Sticky Search & Categories with Scroll Fade */
-    .sticky-controls { position: sticky; top: 56px; z-index: 30; background: rgba(10,10,12,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(212,175,55,0.2); padding: 10px 12px; }
-    .sticky-controls-in { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
-    .search-input { width: 100%; padding: 10px 14px; border-radius: 12px; background: #16161C; border: 1px solid rgba(82,82,91,0.8); color: #F4F4F5; font-family: 'Tajawal', sans-serif; font-size: 14px; }
-    .search-input::placeholder { color: #D4D4D8; }
-    .search-input:focus { outline: none; border-color: var(--gold); }
+    /* Sticky Glass Search & Glowing Category Pills */
+    .sticky-controls { position: sticky; top: 56px; z-index: 30; background: rgba(9,9,11,0.9); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 10px 12px; }
+    .sticky-controls-in { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 9px; }
+    .search-input { width: 100%; min-height: 42px; padding: 9px 14px; border-radius: 12px; background: #131316; border: 1px solid rgba(255,255,255,0.09); color: var(--text); font-family: 'Tajawal', sans-serif; font-size: 14px; }
+    .search-input::placeholder { color: #A1A1AA; }
+    .search-input:focus { outline: none; border-color: rgba(212,175,55,0.7); }
     .cats-wrap { position: relative; }
-    .cats-bar { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; padding-left: 32px; scrollbar-width: none; }
+    .cats-bar { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; padding-left: 34px; scrollbar-width: none; scroll-behavior: smooth; }
     .cats-bar::-webkit-scrollbar { display: none; }
-    .cats-fade { pointer-events: none; position: absolute; top: 0; bottom: 0; left: 0; width: 38px; background: linear-gradient(90deg, #0A0A0C 0%, rgba(10,10,12,0.75) 55%, transparent 100%); }
-    .cat-btn { background: #16161C; color: #E4E4E7; border: 1px solid var(--border); padding: 7px 12px; font-size: 13px; white-space: nowrap; flex-shrink: 0; line-height: 1.4; }
-    .cat-btn.active { background: var(--gold-grad); color: #0A0A0C; border-color: var(--gold); font-weight: 800; }
+    .cats-fade { pointer-events: none; position: absolute; top: 0; bottom: 0; left: 0; width: 38px; background: linear-gradient(90deg, #09090B 0%, rgba(9,9,11,0.78) 55%, transparent 100%); }
+    .cat-btn { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; border-radius: 999px; background: #131316; color: #E4E4E7; border: 1px solid rgba(255,255,255,0.08); padding: 6px 13px; font-size: 12.5px; white-space: nowrap; flex-shrink: 0; line-height: 1.3; }
+    .cat-btn:hover { border-color: rgba(212,175,55,0.5); }
+    .cat-btn.active { background: var(--gold-grad); color: #0B0B0C; border-color: var(--gold); font-weight: 800; box-shadow: 0 0 16px rgba(212,175,55,0.32); }
+    .cat-count { font-size: 11px; font-weight: 900; padding: 1px 6px; border-radius: 999px; background: rgba(255,255,255,0.06); color: #A1A1AA; }
+    .cat-btn.active .cat-count { background: rgba(11,11,12,0.2); color: #0B0B0C; }
+    .sync-shimmer-bar { height: 2px; width: 100%; margin-top: 6px; border-radius: 2px; }
 
-    /* Catalog, Daily Offers Carousel & Dense 2-Col Mobile Grid */
-    .catalog { max-width: 1240px; margin: 0 auto; padding: 16px 12px 112px; }
-    .banner-strip { background: linear-gradient(270deg, #1E190D 0%, #15151A 100%); border: 1px solid rgba(212,175,55,0.55); border-radius: 12px; padding: 10px 14px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; color: #F4F4F5; font-size: 13px; font-weight: 700; }
-    .carousel-wrap { position: relative; margin-bottom: 22px; }
+    /* Catalog, Luxury 4:3 Daily Offers Carousel & Upgraded #131316 Cards */
+    .catalog { max-width: 1240px; margin: 0 auto; padding: 16px 12px 116px; }
+    .carousel-wrap { position: relative; margin-bottom: 24px; scroll-margin-top: 150px; }
     .offers-carousel { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; padding-left: 24px; scrollbar-width: none; }
     .offers-carousel::-webkit-scrollbar { display: none; }
-    .offer-slide { width: 248px; flex-shrink: 0; scroll-snap-align: start; background: #141418; border: 1px solid rgba(212,175,55,0.35); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+    .offer-slide { width: 258px; flex-shrink: 0; scroll-snap-align: start; background: #131316; border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 10px 24px rgba(0,0,0,0.45); }
+    .offer-slide:hover { border-color: rgba(212,175,55,0.5); }
+    .offer-img-box { position: relative; aspect-ratio: 4 / 3; width: 100%; background: #0E0E11; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .offer-img-box img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    .offer-img-scrim { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgba(19,19,22,0.88) 100%); pointer-events: none; }
+    .offer-badge { position: absolute; top: 9px; right: 9px; z-index: 5; background: var(--gold-grad); color: #0B0B0C; font-family: 'Cairo', sans-serif; font-size: 10px; font-weight: 900; padding: 2px 8px; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.6); }
     .catalog-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 16px; line-height: 1.5; }
-    .count-pill { display: inline-flex; align-items: center; line-height: 1; font-size: 12px; color: var(--champagne); background: var(--surface); border: 1px solid rgba(212,175,55,0.28); padding: 6px 10px; border-radius: 8px; white-space: nowrap; flex-shrink: 0; font-weight: 700; }
+    .count-pill { font-size: 12px; color: var(--champagne); white-space: nowrap; flex-shrink: 0; font-weight: 700; }
     .cat-section { margin-bottom: 28px; }
-    .cat-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 12px; }
+    .cat-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 9px; margin-bottom: 12px; }
     .cat-head h3 { font-size: 17px; color: var(--gold); font-weight: 900; line-height: 1.4; }
     .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
     @media (min-width: 768px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; } }
     @media (min-width: 1024px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; } }
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
-    .card:hover { border-color: rgba(212,175,55,0.7); }
-    .card-body { padding: 10px; display: flex; flex-direction: column; justify-content: space-between; gap: 8px; flex: 1; }
-    .card-img-frame { background: #0B0B0E; border-bottom: 1px solid rgba(212,175,55,0.2); padding: 4px; aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; }
-    .card-img-frame img { width: 100%; height: 100%; object-fit: contain; border-radius: 8px; }
-    .discount-badge { position: absolute; top: 8px; left: 8px; z-index: 5; background: var(--gold-grad); color: #0A0A0C; font-family: 'Cairo', sans-serif; font-size: 10px; font-weight: 900; padding: 2px 7px; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.6); }
-    .old-price { font-size: 11px; color: #A1A1AA; text-decoration: line-through; }
+    .card { background: #131316; border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; position: relative; transition: border-color 0.15s ease, transform 0.12s ease; }
+    .card:hover { border-color: rgba(212,175,55,0.45); }
+    .card:active { transform: scale(0.99); }
+    .card-body { padding: 11px; display: flex; flex-direction: column; justify-content: space-between; gap: 8px; flex: 1; }
+    .card-img-frame { position: relative; background: #0E0E11; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 5px; aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; }
+    .card-img-frame::after { content: ''; position: absolute; inset: auto 0 0 0; height: 36px; background: linear-gradient(180deg, transparent, rgba(19,19,22,0.85)); pointer-events: none; }
+    .card-img-frame img { width: 100%; height: 100%; object-fit: contain; border-radius: 10px; }
+    .discount-badge { position: absolute; top: 8px; left: 8px; z-index: 5; background: var(--gold-grad); color: #0B0B0C; font-family: 'Cairo', sans-serif; font-size: 10px; font-weight: 900; padding: 2px 7px; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.6); }
+    .old-price { font-size: 11px; color: #71717A; text-decoration: line-through; }
     .card-meta { font-size: 11px; color: #D4AF37; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .card-title { font-size: 13px; font-weight: 800; color: #FFFFFF; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .card-title { font-size: 13px; font-weight: 800; color: var(--text); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     .card-desc { font-size: 11px; color: #A1A1AA; line-height: 1.45; margin: 2px 0 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     .card-foot { display: flex; flex-direction: column; gap: 7px; padding-top: 4px; }
     .price-row { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
     .price { font-family: 'Cairo', sans-serif; font-size: 15px; font-weight: 900; color: var(--gold); }
-    .add-btn { width: 100%; background: var(--gold-grad); color: #0A0A0C; min-height: 36px; padding: 6px 10px; font-size: 12px; font-weight: 800; white-space: nowrap; }
-    .inline-qty { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 6px; background: var(--bg); border: 1px solid rgba(212,175,55,0.4); border-radius: 9px; padding: 3px; }
-    .inline-qty button { width: 28px; height: 28px; border-radius: 7px; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; }
+    .add-btn { width: 100%; background: var(--gold-grad); color: #0B0B0C; min-height: 38px; padding: 6px 10px; font-size: 12px; font-weight: 800; white-space: nowrap; }
+    .add-btn:active { transform: scale(0.98); }
+    .inline-qty { width: 100%; min-height: 38px; display: flex; align-items: center; justify-content: space-between; gap: 6px; background: #09090B; border: 1px solid rgba(212,175,55,0.35); border-radius: 10px; padding: 3px; }
+    .inline-qty button { width: 30px; height: 30px; border-radius: 8px; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; }
 
-    /* Floating Checkout Bar & Desktop-Only WhatsApp Circle (Zero Card Overlap on Mobile) */
+    /* Floating Checkout Bar, Anti-Overlap Chef Concierge FAB & Desktop WhatsApp */
     .floating-cart { position: fixed; bottom: 12px; left: 12px; right: 12px; max-width: 400px; z-index: 35; }
-    .floating-cart button { width: 100%; background: var(--gold-grad); color: #0A0A0C; padding: 13px 16px; font-size: 14px; font-weight: 900; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 12px 30px rgba(0,0,0,0.75); }
-    .float-wa { display: none; position: fixed; left: 20px; bottom: 20px; z-index: 34; width: 44px; height: 44px; border-radius: 50%; background: rgba(37,211,102,0.9); color: #052110; align-items: center; justify-content: center; text-decoration: none; font-size: 20px; box-shadow: 0 8px 22px rgba(0,0,0,0.5); }
+    .floating-cart button { width: 100%; min-height: 54px; border-radius: 16px; background: var(--gold-grad); color: #0B0B0C; padding: 13px 16px; font-size: 14px; font-weight: 900; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 12px 30px rgba(0,0,0,0.8); }
+    .concierge-fab { position: fixed; right: 16px; bottom: 20px; z-index: 38; min-height: 48px; padding: 6px 8px 6px 14px; border-radius: 999px; background: linear-gradient(270deg, #1C1912 0%, #151519 55%, #111114 100%); border: 1px solid rgba(212,175,55,0.65); color: var(--text); display: inline-flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 800; box-shadow: 0 12px 30px rgba(0,0,0,0.85); transition: bottom 0.2s ease, transform 0.15s ease, border-color 0.15s ease; }
+    .concierge-fab:hover { border-color: var(--amber); }
+    .concierge-fab.lifted { bottom: 94px; }
+    .chef-avatar-wrap { position: relative; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .chef-online-dot { position: absolute; bottom: -1px; left: -1px; width: 10px; height: 10px; border-radius: 50%; background: #34D399; border: 2px solid #0B0B0C; box-shadow: 0 0 0 0 rgba(52,211,153,0.7); animation: onlinePulse 1.8s infinite; }
+    @keyframes onlinePulse { 0% { box-shadow: 0 0 0 0 rgba(52,211,153,0.65); } 70% { box-shadow: 0 0 0 7px rgba(52,211,153,0); } 100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); } }
+    .float-wa { display: none; position: fixed; left: 20px; bottom: 20px; z-index: 34; width: 44px; height: 44px; border-radius: 50%; background: rgba(37,211,102,0.9); color: #052110; align-items: center; justify-content: center; text-decoration: none; font-size: 20px; box-shadow: 0 8px 22px rgba(0,0,0,0.5); transition: bottom 0.2s ease; }
     @media (min-width: 768px) { .float-wa { display: flex; } }
-    .float-wa.lifted { bottom: 78px; }
-    .toast { position: fixed; top: 64px; left: 50%; transform: translateX(-50%); z-index: 60; background: var(--surface); border: 1px solid var(--gold); color: var(--champagne); padding: 10px 16px; border-radius: 12px; font-size: 13px; font-weight: 700; box-shadow: 0 12px 30px rgba(0,0,0,0.8); max-width: 92vw; text-align: center; }
+    .float-wa.lifted { bottom: 94px; }
+    .toast { position: fixed; top: 64px; left: 50%; transform: translateX(-50%); z-index: 60; background: var(--surface-2); border: 1px solid var(--gold); color: var(--champagne); padding: 10px 16px; border-radius: 12px; font-size: 13px; font-weight: 700; box-shadow: 0 12px 30px rgba(0,0,0,0.85); max-width: 92vw; text-align: center; }
+
+    /* Concierge Bottom Sheet */
+    .concierge-wrap { align-items: flex-end; padding: 0; }
+    @media (min-width: 640px) { .concierge-wrap { align-items: center; padding: 16px; } }
+    .concierge-sheet { width: 100%; max-width: 500px; height: 86dvh; max-height: 92dvh; background: var(--surface); border: 1px solid var(--border); border-radius: 24px 24px 0 0; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 20px 50px rgba(0,0,0,0.9); }
+    @media (min-width: 640px) { .concierge-sheet { height: 640px; border-radius: 18px; } }
+    .concierge-chips { display: flex; gap: 7px; overflow-x: auto; padding: 10px 14px; background: rgba(11,11,12,0.7); border-bottom: 1px solid var(--border); scrollbar-width: none; flex-shrink: 0; }
+    .concierge-chips::-webkit-scrollbar { display: none; }
+    .chip-btn { min-height: 36px; padding: 6px 11px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); font-size: 12px; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
+    .chip-btn:hover { border-color: var(--gold); background: rgba(212,175,55,0.14); }
+    .concierge-msgs { flex: 1; min-height: 0; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+    .c-bubble { max-width: 90%; padding: 10px 13px; border-radius: 16px; font-size: 13px; line-height: 1.6; white-space: pre-line; }
+    .c-bubble.bot { background: var(--surface-2); border: 1px solid var(--border); color: var(--text); align-self: stretch; }
+    .c-bubble.user { background: var(--gold-grad); color: #0B0B0C; font-weight: 800; align-self: flex-start; }
+    .c-rec-card { background: var(--card-grad); border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .c-rec-card:hover { border-color: rgba(212,175,55,0.45); }
+    .c-input-bar { padding: 10px 12px; border-top: 1px solid var(--border); background: var(--bg); display: flex; gap: 8px; flex-shrink: 0; }
+    .c-input-bar input { flex: 1; min-height: 44px; padding: 9px 12px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); font-family: 'Tajawal', sans-serif; font-size: 13px; }
+    .c-input-bar input:focus { outline: none; border-color: var(--gold); }
 
     /* Modal & Drawer */
-    .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.78); backdrop-filter: blur(4px); z-index: 50; display: flex; align-items: center; justify-content: center; padding: 16px; }
-    .modal { width: 100%; max-width: 440px; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 20px; max-height: 90vh; overflow-y: auto; }
+    .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 50; display: flex; align-items: center; justify-content: center; padding: 16px; }
+    .modal { width: 100%; max-width: 440px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 20px; max-height: 90dvh; overflow-y: auto; }
     .drawer-wrap { justify-content: flex-end; align-items: flex-end; padding: 0; }
-    .drawer { width: 100%; max-width: 480px; height: auto; max-height: 96dvh; border-radius: 16px 16px 0 0; overflow: hidden; background: var(--bg); border-right: 1px solid var(--border); border-top: 1px solid var(--border); display: flex; flex-direction: column; }
+    .drawer { width: 100%; max-width: 480px; height: auto; max-height: 96dvh; border-radius: 18px 18px 0 0; overflow: hidden; background: var(--bg); border-right: 1px solid var(--border); border-top: 1px solid var(--border); display: flex; flex-direction: column; }
     @media (min-width: 640px) { .drawer-wrap { align-items: flex-start; } .drawer { max-height: 100dvh; border-radius: 0 0 0 16px; border-top: none; border-bottom: 1px solid var(--border); } }
     .drawer-head { padding: 13px 16px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
     .drawer-body { flex: 1; min-height: 0; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
     .drawer-foot { padding: 13px 16px; background: var(--surface); border-top: 1px solid var(--border); flex-shrink: 0; }
     .w-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
-    .w-opt { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 12px; text-align: right; display: flex; flex-direction: column; gap: 4px; }
+    .w-opt { background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 12px; text-align: right; display: flex; flex-direction: column; gap: 4px; }
     .w-opt.active { border-color: var(--gold); background: rgba(212,175,55,0.16); }
     .field { margin-bottom: 10px; }
     .field:last-of-type { margin-bottom: 0; }
     .field label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; font-weight: 700; }
-    .field input, .field select, .field textarea { display: block; width: 100%; padding: 9px 12px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: 'Tajawal', sans-serif; font-size: 14px; }
+    .field input, .field select, .field textarea { display: block; width: 100%; padding: 9px 12px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); font-family: 'Tajawal', sans-serif; font-size: 14px; }
     .toggle-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
-    .toggle-btn { padding: 10px; background: var(--surface); color: var(--muted); border: 1px solid var(--border); }
-    .toggle-btn.active { background: var(--gold-grad); color: #0A0A0C; border-color: var(--gold); font-weight: 800; }
+    .toggle-btn { padding: 10px; background: var(--surface-2); color: var(--muted); border: 1px solid var(--border); }
+    .toggle-btn.active { background: var(--gold-grad); color: #0B0B0C; border-color: var(--gold); font-weight: 800; }
     .cart-row { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
     .qty-bar { display: flex; align-items: center; gap: 8px; }
     .qty-bar button { width: 32px; height: 32px; background: var(--surface-2); color: #fff; }
-    .promo-box { background: var(--surface); border: 1px solid rgba(212,175,55,0.35); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+    .promo-box { background: var(--surface); border: 1px solid var(--gold-border); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
     .promo-row { display: flex; gap: 8px; }
     .promo-row input { flex: 1; padding: 8px 10px; border-radius: 8px; background: var(--bg); border: 1px solid var(--border); color: #fff; font-size: 13px; text-transform: uppercase; }
     .wa-btn { display: block; text-align: center; text-decoration: none; background: #25D366; color: #052110; font-family: 'Cairo', sans-serif; font-weight: 900; padding: 13px; border-radius: 12px; margin-top: 10px; }
-    .offline-bar { position: fixed; bottom: 16px; right: 16px; z-index: 60; background: var(--gold-grad); color: #0A0A0C; padding: 10px 14px; border-radius: 10px; font-size: 12px; font-weight: 800; }
+    .offline-bar { position: fixed; bottom: 16px; right: 16px; z-index: 60; background: var(--gold-grad); color: #0B0B0C; padding: 10px 14px; border-radius: 10px; font-size: 12px; font-weight: 800; }
     .tracker-step { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; background: var(--bg); border: 1px solid var(--border); font-size: 13px; font-weight: 700; color: #7E7E8A; }
     .tracker-step.done { color: #fff; border-color: rgba(212,175,55,0.55); }
     .tracker-step.current { background: rgba(212,175,55,0.16); color: var(--champagne); border-color: var(--gold); }
 
-    /* Structured Footer */
-    footer { border-top: 1px solid var(--border); background: #08080A; padding: 32px 16px 24px; color: var(--muted); font-size: 13px; }
-    .footer-grid { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; text-align: right; }
-    .footer-pill { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); color: var(--champagne); text-decoration: none; font-size: 12px; font-weight: 700; white-space: nowrap; }
-    .branch-box { display: block; margin-top: 10px; background: #0E0E11; border: 1px solid var(--border); border-radius: 12px; padding: 6px; }
-    .branch-box img { width: 100%; aspect-ratio: 16/9; object-fit: contain; border-radius: 8px; display: block; }
+    /* Slim 2-Line Closing Footer */
+    footer { border-top: 1px solid var(--border); background: #08080A; padding: 18px 16px 24px; color: var(--muted); font-size: 12px; text-align: center; }
+    .footer-slim { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 5px; line-height: 1.6; }
   </style>
 </head>
 <body>
@@ -220,13 +289,13 @@
     </div>
   </div>
 
-  <!-- Slim Sticky Header -->
+  <!-- Compact Floating Glass Header -->
   <header class="header">
     <div class="header-in">
       <div class="brand-group">
         <a class="brand-logo-wrap" href="#top">
-          <span class="brand-logo-box"><img src="./assets/aistudio/FB_IMG_1795500140672_d0b8149e.jpg" alt="شعار سرايا العمدة" decoding="async" /></span>
-          <span class="brand-title">سرايا العمدة للمشويات</span>
+          <span class="brand-logo-box"><img src="./assets/aistudio/FB_IMG_1795500140672_d0b8149e.jpg" alt="شعار سرايا العمدة" decoding="async" onerror="this.onerror=null;this.src='./icon-512.png';" /></span>
+          <span class="brand-title">سرايا العمدة</span>
         </a>
         <span id="open-status-badge" class="live-badge open">
           <span class="live-dot"></span>
@@ -245,37 +314,76 @@
       </div>
     </div>
   </header>
-  <div id="closed-notice-strip" class="closed-strip hidden"></div>
 
-  <!-- Top Interactive Location Bar (Above-the-Fold, directly beneath Header) -->
-  <div id="top-location-bar" class="location-bar">
-    <div class="location-bar-in">
-      <div class="location-addr">
-        <span>📍</span>
-        <span>العاشر من رمضان - المجاورة العاشرة - أمام نادي العاشرة</span>
-      </div>
-      <div class="location-btns">
-        <a id="top-branch-map-link" class="loc-link" href="https://www.google.com/maps/dir/?api=1&destination=30.2981,31.7417" target="_blank" rel="noopener noreferrer">🗺️ خريطة الفرع</a>
-        <button id="top-gps-btn" type="button" class="loc-gps-btn">🎯 تحديد موقع التوصيل</button>
+  <!-- Cinematic Storefront Cover + Overlapping Brand Crest + 1-Row Quick Action Dock -->
+  <section id="top" class="hero">
+    <div class="hero-banner">
+      <img src="./assets/aistudio/FB_IMG_1795497985414_f19805a7.jpg" alt="واجهة مطعم سرايا العمدة للمشويات بالعاشر من رمضان" decoding="async" />
+      <div class="hero-banner-grad" aria-hidden="true"></div>
+      <div class="iso-strip">
+        <span>✓</span>
+        <span>معتمد دولياً • ISO 9001 • ISO 22000</span>
       </div>
     </div>
-  </div>
 
-  <!-- Compact Above-the-Fold Hero -->
-  <section id="top" class="hero">
     <div class="hero-in">
-      <div class="hero-copy">
-        <h1>سرايا العمدة للمشويات — <span>أكل وطعم يخطفك!</span></h1>
-        <p>مشويات بلدي على الفحم بالوزن، صواني العمدة، طواجن فرن، وعروض المندي — ساخنة حتى باب بيتك في العاشر من رمضان.</p>
+      <div class="hero-crest-row">
+        <span class="hero-emblem">
+          <img src="./assets/aistudio/FB_IMG_1795500140672_d0b8149e.jpg" alt="شعار سرايا العمدة للمشويات المعتمد ISO 9001 و ISO 22000" decoding="async" onerror="this.onerror=null;this.src='./icon-512.png';" />
+        </span>
+        <div class="hero-copy">
+          <h1>سرايا العمدة للمشويات</h1>
+          <div class="hero-subtitle"><strong>أكل وطعم.. يخطفك!</strong> • مشويات على الفحم وطواجن وصواني</div>
+        </div>
       </div>
-      <div class="hero-actions">
-        <button id="hero-menu-btn" type="button" class="btn-primary">تصفح المنيو ↓</button>
-        <button id="hero-offers-btn" type="button" class="btn-outline">🔥 عروض اليوم</button>
+
+      <!-- 1-Row Quick Action Dock (4 Equal Glass Buttons) -->
+      <div id="contact-us" class="quick-dock">
+        <a class="dock-btn wa" href="https://wa.me/201002875568" target="_blank" rel="noopener noreferrer" aria-label="تواصل عبر واتساب 01002875568">
+          <span style="color:#25D366; font-size:15px;">💬</span>
+          <span>واتساب</span>
+        </a>
+        <button id="hotlines-toggle-btn" type="button" class="dock-btn" aria-expanded="false" aria-controls="hero-hotlines-drawer">
+          <span style="color:var(--gold); font-size:15px;">📞</span>
+          <span>الخط الساخن</span>
+        </button>
+        <a id="top-branch-map-link" class="dock-btn" href="https://www.google.com/maps/search/?api=1&query=7PWH%2B6HR%20%D9%85%D8%B7%D8%B9%D9%85%20%D8%B3%D8%B1%D8%A7%D9%8A%D8%A7%20%D8%A7%D9%84%D8%B9%D9%85%D8%AF%D9%87%20%D8%A7%D9%84%D8%B9%D8%A7%D8%B4%D8%B1%20%D9%85%D9%86%20%D8%B1%D9%85%D8%B6%D8%A7%D9%86" target="_blank" rel="noopener noreferrer">
+          <span style="color:var(--gold); font-size:15px;">🗺️</span>
+          <span>خريطة الفرع</span>
+        </a>
+        <a class="dock-btn" href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+          <span style="color:var(--gold); font-size:15px;">f</span>
+          <span>فيسبوك</span>
+        </a>
       </div>
+
+      <!-- Expandable Hotlines Tray -->
+      <div id="hero-hotlines-drawer" class="hotlines-tray sheet-up hidden">
+        <span style="font-size:11px; color:var(--gold); font-weight:800;">اضغط للاتصال المباشر:</span>
+        <div class="hotlines-list tabular">
+          <a class="hotline-link" href="tel:01050906141" dir="ltr">📞 01050906141</a>
+          <a class="hotline-link" href="tel:01010727188" dir="ltr">📞 01010727188</a>
+          <a class="hotline-link" href="tel:01225661222" dir="ltr">📞 01225661222</a>
+        </div>
+      </div>
+
+      <!-- Compact Integrated Address, Hours, Delivery GPS & Browse Menu Strip -->
+      <div class="addr-strip">
+        <div class="addr-text">
+          <span>📍</span>
+          <span><strong>العاشر من رمضان - المجاورة العاشرة - أمام نادي العاشرة</strong> • <span style="color:var(--champagne); font-weight:700; white-space:nowrap;">12 ظ – 2 ص</span></span>
+        </div>
+        <div class="addr-actions">
+          <button id="top-gps-btn" type="button" class="loc-gps-btn">🎯 تحديد موقع التوصيل</button>
+          <button id="hero-menu-btn" type="button" class="btn-primary">تصفح المنيو ↓</button>
+        </div>
+      </div>
+
+      <div id="hero-gps-error" class="hero-gps-err hidden"></div>
     </div>
   </section>
 
-  <!-- Sticky Search & Categories with Scroll Fade -->
+  <!-- Sticky Glassmorphism Search & Glowing Category Pills -->
   <div id="menu" class="sticky-controls">
     <div class="sticky-controls-in">
       <input id="search-input" class="search-input" type="search" placeholder="ابحث في 153 صنف (كباب، كفتة، صينية، طاجن، مندي...)" />
@@ -284,10 +392,10 @@
         <div class="cats-fade" aria-hidden="true"></div>
       </div>
     </div>
+    <div id="sync-shimmer-bar" class="sync-shimmer-bar skeleton-shimmer hidden" aria-hidden="true"></div>
   </div>
 
   <main class="catalog">
-    <div id="banners-box"></div>
     <div id="daily-offers-box"></div>
     <div class="catalog-head">
       <h2>المنيو الكامل</h2>
@@ -296,56 +404,110 @@
     <div id="menu-list"></div>
   </main>
 
-  <!-- Structured Contact Us Footer -->
-  <footer id="contact-us">
-    <div class="footer-grid">
-      <div>
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-          <span class="brand-logo-box" style="width:54px; height:54px;"><img src="./assets/aistudio/FB_IMG_1795500140672_d0b8149e.jpg" alt="شعار سرايا العمدة المعتمد ISO 9001 و ISO 22000" loading="lazy" decoding="async" /></span>
-          <div>
-            <h3 style="color:var(--gold); font-size:18px;">سرايا العمدة للمشويات</h3>
-            <div style="color:var(--champagne); font-weight:700;">أكل وطعم.. يخطفك!</div>
-          </div>
-        </div>
-        <p style="margin:0; line-height:1.7;">أجود أنواع اللحوم والدجاج البلدي المشوي على الفحم، حاصلون على شهادتي الجودة وسلامة الغذاء ISO 9001 و ISO 22000.</p>
-      </div>
-
-      <div>
-        <h3 style="color:#fff; font-size:16px; margin-bottom:10px;">تواصل معنا</h3>
-        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-          <a class="footer-pill" href="https://wa.me/201002875568" target="_blank" rel="noopener noreferrer" style="border-color:rgba(37,211,102,0.45);">واتساب: <strong class="tabular" dir="ltr" style="color:#25D366;">01002875568</strong></a>
-          <a class="footer-pill" href="https://facebook.com" target="_blank" rel="noopener noreferrer">صفحة فيسبوك</a>
-        </div>
-        <div style="font-size:12px; color:var(--gold); font-weight:700; margin-bottom:6px;">الخطوط الساخنة للتوصيل:</div>
-        <div class="tabular" style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:8px;">
-          <a href="tel:01050906141" style="color:#fff; text-decoration:none; font-weight:700;" dir="ltr">01050906141</a>
-          <a href="tel:01010727188" style="color:#fff; text-decoration:none; font-weight:700;" dir="ltr">01010727188</a>
-          <a href="tel:01225661222" style="color:#fff; text-decoration:none; font-weight:700;" dir="ltr">01225661222</a>
-        </div>
-        <div id="footer-hours" style="font-size:12px;">يومياً من ١٢ ظهراً حتى ٢ بعد منتصف الليل</div>
-      </div>
-
-      <div>
-        <h3 style="color:#fff; font-size:16px; margin-bottom:10px;">عنوان الفرع بالعاشر</h3>
-        <a id="footer-branch-map-link" href="https://www.google.com/maps/dir/?api=1&destination=30.2981,31.7417" target="_blank" rel="noopener noreferrer" style="color:var(--champagne); text-decoration:none; font-weight:700; display:block;">📍 العاشر من رمضان - المجاورة العاشرة - أمام نادي العاشرة ↗</a>
-        <a id="footer-branch-photo-link" class="branch-box" href="https://www.google.com/maps/dir/?api=1&destination=30.2981,31.7417" target="_blank" rel="noopener noreferrer">
-          <img src="./assets/aistudio/FB_IMG_1795497985414_f19805a7.jpg" alt="فرع مطعم سرايا العمدة للمشويات" loading="lazy" decoding="async" />
-        </a>
-      </div>
+  <!-- Ultra-Clean 2-Line Closing Footer -->
+  <footer>
+    <div class="footer-slim">
+      <div style="color:var(--text); font-weight:700;">© <span id="footer-year">2026</span> سرايا العمدة للمشويات — العاشر من رمضان</div>
+      <div style="color:var(--champagne); font-size:11px; font-weight:700;">معتمد دولياً ISO 9001 &amp; ISO 22000</div>
     </div>
-    <div style="text-align:center; margin-top:20px; padding-top:14px; border-top:1px solid rgba(212,175,55,0.2); font-size:12px;">© سرايا العمدة للمشويات — جميع الحقوق محفوظة.</div>
   </footer>
 
   <div id="toast-box" class="toast hidden" role="status" aria-live="polite"></div>
 
   <a id="float-wa" class="float-wa" href="https://wa.me/201002875568" target="_blank" rel="noopener noreferrer" aria-label="تواصل عبر واتساب 01002875568" title="واتساب 01002875568">💬</a>
 
+  <!-- Anti-Overlap Floating Concierge Button («اسأل العمدة») with Custom Inline SVG Chef Avatar + Online Pulse -->
+  <button id="concierge-fab" type="button" class="concierge-fab" aria-label="افتح مساعد الشيف العمدة الذكي">
+    <span class="chef-avatar-wrap" style="width:34px; height:34px;">
+      <svg viewBox="0 0 64 64" width="34" height="34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="border-radius:50%; display:block;">
+        <defs>
+          <radialGradient id="chefBgFab" cx="50%" cy="38%" r="65%"><stop offset="0%" stop-color="#2A241A"/><stop offset="65%" stop-color="#171513"/><stop offset="100%" stop-color="#0E0E11"/></radialGradient>
+          <linearGradient id="chefGoldFab" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F3E5AB"/><stop offset="50%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#A67C1E"/></linearGradient>
+          <linearGradient id="chefHatFab" x1="50%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#FFFDF7"/><stop offset="100%" stop-color="#E6DEC8"/></linearGradient>
+          <clipPath id="chefClipFab"><circle cx="32" cy="32" r="30"/></clipPath>
+        </defs>
+        <circle cx="32" cy="32" r="30.5" fill="url(#chefBgFab)" stroke="url(#chefGoldFab)" stroke-width="2"/>
+        <g clip-path="url(#chefClipFab)">
+          <path d="M12 63 C13 52 21 47 32 47 C43 47 51 52 52 63 Z" fill="#1D1D22" stroke="#2E2E36" stroke-width="1"/>
+          <path d="M24 48 L32 56 L40 48 L37 46 L32 51 L27 46 Z" fill="#F6F1E3"/>
+          <path d="M25.5 47.5 Q32 52.5 38.5 47.5 L35.5 53.5 Q32 55.5 28.5 53.5 Z" fill="url(#chefGoldFab)"/>
+          <path d="M30 53.5 L28 60 L32 58.2 L36 60 L34 53.5 Z" fill="#C99E2C"/>
+          <rect x="28" y="42.5" width="8" height="6.5" rx="3" fill="#D8A377"/>
+          <circle cx="20.5" cy="34.5" r="2.6" fill="#DDA97E"/><circle cx="43.5" cy="34.5" r="2.6" fill="#DDA97E"/>
+          <path d="M21.5 28.5 C21.5 24 25.5 22 32 22 C38.5 22 42.5 24 42.5 28.5 L42.2 35.5 C42 41.2 37.6 45.2 32 45.2 C26.4 45.2 22 41.2 21.8 35.5 Z" fill="#E7B58B"/>
+          <path d="M25.2 30.2 Q27.5 28.8 29.8 29.8" stroke="#1E1814" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M34.2 29.8 Q36.5 28.8 38.8 30.2" stroke="#1E1814" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="27.6" cy="32.8" r="1.65" fill="#181412"/><circle cx="36.4" cy="32.8" r="1.65" fill="#181412"/>
+          <circle cx="28.1" cy="32.3" r="0.55" fill="#FFFFFF"/><circle cx="36.9" cy="32.3" r="0.55" fill="#FFFFFF"/>
+          <path d="M32 32.8 Q33.2 35.2 31.6 36.2" stroke="#B9825A" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="M28.6 40.3 Q32 42.6 35.4 40.3" stroke="#8C4834" stroke-width="1.45" stroke-linecap="round"/>
+          <path d="M32 37.8 C29.8 36.2 26.2 36.7 23.6 38.7 C25.6 39.8 28.9 39.8 32 38.7 C35.1 39.8 38.4 39.8 40.4 38.7 C37.8 36.7 34.2 36.2 32 37.8 Z" fill="#1A1512"/>
+          <path d="M21 24.5 C16.5 22.8 16.2 15.8 21.4 14.2 C22.8 10 27.2 8.2 32 8.8 C36.8 8.2 41.2 10 42.6 14.2 C47.8 15.8 47.5 22.8 43 24.5 Z" fill="url(#chefHatFab)" stroke="#D6CCB4" stroke-width="0.9"/>
+          <rect x="20.6" y="22.4" width="22.8" height="4.4" rx="1.6" fill="#F8F4E8" stroke="#D4AF37" stroke-width="0.85"/>
+        </g>
+      </svg>
+      <span class="chef-online-dot" aria-hidden="true"></span>
+    </span>
+    <span>اسأل العمدة</span>
+  </button>
+
   <!-- Sticky Bottom Checkout Bar -->
-  <div id="floating-cart" class="floating-cart hidden">
+  <div id="floating-cart" class="floating-cart sheet-up hidden">
     <button id="open-cart-float" type="button">
       <span id="float-cart-summary" class="tabular">1 صنف • 0 ج.م</span>
       <span>إتمام الطلب ←</span>
     </button>
+  </div>
+
+  <!-- Zero-API Live-Data Smart Concierge («مساعد العمدة الذكي») -->
+  <div id="concierge-backdrop" class="backdrop concierge-wrap hidden" role="dialog" aria-modal="true" aria-labelledby="concierge-title">
+    <div class="concierge-sheet sheet-up">
+      <div class="drawer-head">
+        <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+          <span class="chef-avatar-wrap" style="width:42px; height:42px;">
+            <svg viewBox="0 0 64 64" width="42" height="42" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="border-radius:50%; display:block;">
+              <defs>
+                <radialGradient id="chefBgHdr" cx="50%" cy="38%" r="65%"><stop offset="0%" stop-color="#2A241A"/><stop offset="65%" stop-color="#171513"/><stop offset="100%" stop-color="#0E0E11"/></radialGradient>
+                <linearGradient id="chefGoldHdr" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F3E5AB"/><stop offset="50%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#A67C1E"/></linearGradient>
+                <linearGradient id="chefHatHdr" x1="50%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#FFFDF7"/><stop offset="100%" stop-color="#E6DEC8"/></linearGradient>
+                <clipPath id="chefClipHdr"><circle cx="32" cy="32" r="30"/></clipPath>
+              </defs>
+              <circle cx="32" cy="32" r="30.5" fill="url(#chefBgHdr)" stroke="url(#chefGoldHdr)" stroke-width="2"/>
+              <g clip-path="url(#chefClipHdr)">
+                <path d="M12 63 C13 52 21 47 32 47 C43 47 51 52 52 63 Z" fill="#1D1D22" stroke="#2E2E36" stroke-width="1"/>
+                <path d="M24 48 L32 56 L40 48 L37 46 L32 51 L27 46 Z" fill="#F6F1E3"/>
+                <path d="M25.5 47.5 Q32 52.5 38.5 47.5 L35.5 53.5 Q32 55.5 28.5 53.5 Z" fill="url(#chefGoldHdr)"/>
+                <path d="M30 53.5 L28 60 L32 58.2 L36 60 L34 53.5 Z" fill="#C99E2C"/>
+                <rect x="28" y="42.5" width="8" height="6.5" rx="3" fill="#D8A377"/>
+                <circle cx="20.5" cy="34.5" r="2.6" fill="#DDA97E"/><circle cx="43.5" cy="34.5" r="2.6" fill="#DDA97E"/>
+                <path d="M21.5 28.5 C21.5 24 25.5 22 32 22 C38.5 22 42.5 24 42.5 28.5 L42.2 35.5 C42 41.2 37.6 45.2 32 45.2 C26.4 45.2 22 41.2 21.8 35.5 Z" fill="#E7B58B"/>
+                <path d="M25.2 30.2 Q27.5 28.8 29.8 29.8" stroke="#1E1814" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M34.2 29.8 Q36.5 28.8 38.8 30.2" stroke="#1E1814" stroke-width="1.6" stroke-linecap="round"/>
+                <circle cx="27.6" cy="32.8" r="1.65" fill="#181412"/><circle cx="36.4" cy="32.8" r="1.65" fill="#181412"/>
+                <circle cx="28.1" cy="32.3" r="0.55" fill="#FFFFFF"/><circle cx="36.9" cy="32.3" r="0.55" fill="#FFFFFF"/>
+                <path d="M32 32.8 Q33.2 35.2 31.6 36.2" stroke="#B9825A" stroke-width="1.2" stroke-linecap="round"/>
+                <path d="M28.6 40.3 Q32 42.6 35.4 40.3" stroke="#8C4834" stroke-width="1.45" stroke-linecap="round"/>
+                <path d="M32 37.8 C29.8 36.2 26.2 36.7 23.6 38.7 C25.6 39.8 28.9 39.8 32 38.7 C35.1 39.8 38.4 39.8 40.4 38.7 C37.8 36.7 34.2 36.2 32 37.8 Z" fill="#1A1512"/>
+                <path d="M21 24.5 C16.5 22.8 16.2 15.8 21.4 14.2 C22.8 10 27.2 8.2 32 8.8 C36.8 8.2 41.2 10 42.6 14.2 C47.8 15.8 47.5 22.8 43 24.5 Z" fill="url(#chefHatHdr)" stroke="#D6CCB4" stroke-width="0.9"/>
+                <rect x="20.6" y="22.4" width="22.8" height="4.4" rx="1.6" fill="#F8F4E8" stroke="#D4AF37" stroke-width="0.85"/>
+              </g>
+            </svg>
+            <span class="chef-online-dot" aria-hidden="true"></span>
+          </span>
+          <div style="min-width:0;">
+            <h3 id="concierge-title" style="font-size:15px; color:var(--text);">مساعد العمدة الذكي</h3>
+            <div style="font-size:11px; color:var(--gold); font-weight:700;">الشيف العمدة • ترشيحات فورية بأسعار المنيو الحقيقية</div>
+          </div>
+        </div>
+        <button id="concierge-close" type="button" class="cat-btn" style="min-height:36px;">إغلاق</button>
+      </div>
+      <div id="concierge-chips" class="concierge-chips"></div>
+      <div id="concierge-msgs" class="concierge-msgs"></div>
+      <form id="concierge-form" class="c-input-bar">
+        <input id="concierge-input" type="text" placeholder="مثال: معايا 200 جنيه، كفتة بالوزن، ترشيح لعيلة..." aria-label="اكتب سؤالك لمساعد العمدة" />
+        <button type="submit" class="btn-primary" style="min-height:44px; padding:0 16px;">إرسال</button>
+      </form>
+    </div>
   </div>
 
   <!-- Weight Modal -->
@@ -405,7 +567,7 @@
       'use strict';
 
       // ضع رابط Google Apps Script Web App هنا بعد النشر
-      const GAS_API_URL = '';
+      const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbxrSjg1Bwqiiu3D2cVML8QIU18BnKXXMBPnfz9MYD-GKWniZhcZGonBQEcOoSXBWIfG/exec';
       const WHATSAPP_NUMBER = '201002875568';
 
       const DISTRICTS = [
@@ -424,7 +586,6 @@
       ];
 
       let promos = [];
-      let banners = [];
       let deliveryZoneFees = {};
       let appliedPromoCode = '';
       let promoFeedbackMsg = '';
@@ -665,25 +826,39 @@
       function syncOpenStatus() {
         const st = getScheduleStatus();
         const badge = $('open-status-badge');
-        badge.className = 'live-badge ' + (st.isOpen ? 'open' : 'closed');
-        badge.title = st.isOpen ? settingsState.hours : st.nextOpenText;
-        $('open-status-text').textContent = st.isOpen ? 'مفتوح' : 'مغلق';
-        $('footer-hours').textContent = settingsState.hours;
-        const strip = $('closed-notice-strip');
-        if (st.isOpen) {
-          strip.classList.add('hidden');
-        } else {
-          strip.className = 'closed-strip' + (st.reason === 'manual_closed' ? ' manual' : '');
-          strip.textContent = st.reason === 'manual_closed'
-            ? '⏰ ' + st.nextOpenText
-            : '⏰ المطعم مغلق حالياً — ' + st.nextOpenText + ' • يمكنك إرسال طلبك كـ «طلب مسبق» وسيتم تجهيزه فور الفتح';
+        const cls = st.isOpen ? 'open' : (st.reason === 'manual_closed' ? 'closed' : 'preorder');
+        const lbl = st.isOpen ? 'مفتوح الآن' : (st.reason === 'manual_closed' ? 'مغلق مؤقتاً' : 'طلب مسبق قبل 12 ظ');
+        if (badge) {
+          badge.className = 'live-badge ' + cls;
+          badge.title = st.isOpen ? settingsState.hours : st.nextOpenText;
         }
+        const txt = $('open-status-text');
+        if (txt) txt.textContent = lbl;
       }
 
-      // Register Service Worker
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
-      }
+      // Environment-Aware Service Worker Guard:
+      // Register ./sw.js ONLY on production GitHub Pages (*.github.io); unregister & clear caches in preview/dev.
+      try {
+        if ('serviceWorker' in navigator) {
+          const isGitHubPages = window.location.hostname.toLowerCase().endsWith('github.io');
+          window.addEventListener('load', () => {
+            try {
+              if (isGitHubPages) {
+                navigator.serviceWorker.register('./sw.js').catch(() => {});
+              } else {
+                navigator.serviceWorker.getRegistrations().then((regs) => {
+                  regs.forEach((r) => { r.unregister().catch(() => {}); });
+                }).catch(() => {});
+                if ('caches' in window) {
+                  caches.keys().then((keys) => {
+                    keys.forEach((k) => { caches.delete(k).catch(() => {}); });
+                  }).catch(() => {});
+                }
+              }
+            } catch (_) {}
+          });
+        }
+      } catch (_) {}
 
       // Slim Dismissible PWA Top Bar (strictly on beforeinstallprompt)
       const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
@@ -723,10 +898,28 @@
         return m ? 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w800' : '';
       }
 
+      function isLiveActiveCoupon(p) {
+        if (!p || typeof p !== 'object') return false;
+        if (p.type !== undefined && p.type !== null && String(p.type).trim() !== '') {
+          if (String(p.type).trim().toUpperCase() !== 'COUPON') return false;
+        }
+        const code = typeof p.code === 'string' ? p.code.trim() : '';
+        if (!code) return false;
+        if (p.active !== true) return false;
+        const val = Number(p.value);
+        if (!Number.isFinite(val) || val <= 0) return false;
+        const rawExp = p.expiresAt || p.endDate;
+        if (rawExp && String(rawExp).trim()) {
+          const expMs = Date.parse(String(rawExp).trim());
+          if (Number.isFinite(expMs) && expMs < Date.now()) return false;
+        }
+        return true;
+      }
+
       function evaluatePromo(codeStr, subtotal) {
         const c = String(codeStr || '').trim().toUpperCase();
         if (!c) return { valid: false, discount: 0, msg: 'يرجى إدخال كود الخصم' };
-        const p = promos.find((x) => x.active !== false && String(x.code || '').toUpperCase() === c);
+        const p = promos.find((x) => isLiveActiveCoupon(x) && String(x.code || '').trim().toUpperCase() === c);
         if (!p) return { valid: false, discount: 0, msg: 'كود الخصم غير صحيح أو منتهي' };
         if (p.minOrder > 0 && subtotal < p.minOrder) {
           return { valid: false, discount: 0, msg: 'الحد الأدنى لهذا الكود هو ' + p.minOrder + ' ج.م' };
@@ -734,29 +927,6 @@
         const raw = p.discountType === 'PERCENT' ? Math.round((subtotal * Number(p.value || 0)) / 100) : Math.round(Number(p.value || 0));
         const disc = Math.max(0, Math.min(subtotal, raw));
         return { valid: true, promo: p, discount: disc, msg: 'تم تطبيق كود ' + p.code + ' (-' + disc + ' ج.م)' };
-      }
-
-      function renderBanners() {
-        const box = $('banners-box');
-        box.textContent = '';
-        const activeBanners = banners.filter((b) => b && b.active !== false && String(b.title || '').trim().length > 0);
-        activeBanners.forEach((banner) => {
-          const strip = document.createElement('div');
-          strip.className = 'banner-strip';
-          const sp = document.createElement('span');
-          sp.textContent = banner.title;
-          const btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'add-btn';
-          btn.textContent = 'عرض التفاصيل';
-          btn.addEventListener('click', () => {
-            activeCat = OFFERS_CAT;
-            renderTabs();
-            renderCatalog();
-          });
-          strip.append(sp, btn);
-          box.appendChild(strip);
-        });
       }
 
       // Customer Smart Memory & Zero-Cost GPS Engine
@@ -794,22 +964,20 @@
         return Math.round(straight * 1.25 * 10) / 10;
       }
 
+      const BRANCH_MAPS_URL = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('7PWH+6HR مطعم سرايا العمده العاشر من رمضان');
+
       function getShopCoords() {
-        const lat = Number(settingsState.shopLat || 30.2981);
-        const lng = Number(settingsState.shopLng || 31.7417);
+        const lat = Number(settingsState.shopLat || 30.295613);
+        const lng = Number(settingsState.shopLng || 31.728891);
         return {
-          lat: isValidCoord(lat, lng) ? lat : 30.2981,
-          lng: isValidCoord(lat, lng) ? lng : 31.7417,
+          lat: isValidCoord(lat, lng) ? lat : 30.295613,
+          lng: isValidCoord(lat, lng) ? lng : 31.728891,
           maxDeliveryKm: Number(settingsState.maxDeliveryKm || 15)
         };
       }
 
       function buildBranchMapHref() {
-        if (settingsState.shopMapsUrl && /^https:\/\/(www\.)?google\.com\/maps/i.test(settingsState.shopMapsUrl)) {
-          return settingsState.shopMapsUrl;
-        }
-        const sc = getShopCoords();
-        return 'https://www.google.com/maps/dir/?api=1&destination=' + sc.lat.toFixed(6) + ',' + sc.lng.toFixed(6);
+        return BRANCH_MAPS_URL;
       }
 
       function buildSafeEmbedUrl(lat, lng) {
@@ -821,10 +989,15 @@
 
       function syncTopLocationBar() {
         const href = buildBranchMapHref();
-        ['top-branch-map-link', 'footer-branch-map-link', 'footer-branch-photo-link'].forEach((id) => {
+        ['top-branch-map-link', 'hero-addr-map-link'].forEach((id) => {
           const el = $(id);
           if (el) el.href = href;
         });
+        const errBox = $('hero-gps-error');
+        if (errBox) {
+          errBox.textContent = gpsError || '';
+          errBox.classList.toggle('hidden', !gpsError);
+        }
         const btn = $('top-gps-btn');
         if (!btn) return;
         btn.disabled = gpsLoading;
@@ -892,14 +1065,12 @@
         }
       })();
 
-      // Synchronous SWR hydration from cache (< 5ms)
+      // Synchronous SWR hydration from cache (< 5ms) — promos/banners remain [] until live Sheets responds
       try {
         const cachedRaw = localStorage.getItem(CACHE_KEY);
         if (cachedRaw) {
           const c = JSON.parse(cachedRaw);
           if (c && Array.isArray(c.items) && c.items.length > 0) menuItems = c.items;
-          if (Array.isArray(c.promos)) promos = c.promos;
-          if (Array.isArray(c.banners)) banners = c.banners;
           if (c.settings) settingsState = Object.assign({}, settingsState, c.settings);
         }
       } catch (_) {}
@@ -907,24 +1078,29 @@
       // Background live revalidation from Google Sheets
       async function loadLiveMenu() {
         if (!GAS_API_URL) return;
+        const bar = $('sync-shimmer-bar');
+        if (bar) bar.classList.remove('hidden');
         try {
           const res = await fetch(GAS_API_URL + '?action=getMenu', { cache: 'no-store' });
           const data = await res.json();
           if (data && data.ok) {
             if (Array.isArray(data.items) && data.items.length > 0) {
+              const fallbackImgMap = {};
+              FALLBACK_MENU.forEach((f) => { if (f.image) fallbackImgMap[f.id] = f.image; });
               menuItems = data.items
                 .filter((i) => i && i.available !== false)
-                .map((i) => Object.assign({}, i, { image: isSafeImageUrl(i.image) ? i.image : undefined }));
+                .map((i) => Object.assign({}, i, {
+                  image: isSafeImageUrl(i.image) ? i.image : fallbackImgMap[i.id]
+                }));
             }
-            if (Array.isArray(data.promos)) promos = data.promos.filter((p) => p.active !== false);
-            if (Array.isArray(data.banners)) banners = data.banners.filter((b) => b.active !== false);
+            promos = Array.isArray(data.promos) ? data.promos.filter(isLiveActiveCoupon) : [];
             if (data.settings) {
               settingsState = Object.assign({}, settingsState, {
                 isOpen: data.settings.isOpen !== false,
                 hours: data.settings.hours || settingsState.hours,
-                shopLat: Number(data.settings.shopLat) || settingsState.shopLat || 30.2981,
-                shopLng: Number(data.settings.shopLng) || settingsState.shopLng || 31.7417,
-                shopMapsUrl: data.settings.shopMapsUrl || settingsState.shopMapsUrl || '',
+                shopLat: Number(data.settings.shopLat) || settingsState.shopLat || 30.295613,
+                shopLng: Number(data.settings.shopLng) || settingsState.shopLng || 31.728891,
+                shopMapsUrl: BRANCH_MAPS_URL,
                 maxDeliveryKm: Number(data.settings.maxDeliveryKm) || settingsState.maxDeliveryKm || 15,
                 walletNumber: String(data.settings.walletNumber || '').replace(/^'/, '').trim(),
                 wallet2Number: String(data.settings.wallet2Number || '').replace(/^'/, '').trim(),
@@ -936,13 +1112,23 @@
                 data.settings.deliveryZones.forEach((z) => { deliveryZoneFees[z.zone] = Number(z.fee || 0); });
               }
             }
-            try { localStorage.setItem(CACHE_KEY, JSON.stringify({ items: menuItems, promos, banners, settings: settingsState })); } catch (_) {}
+            try { localStorage.setItem(CACHE_KEY, JSON.stringify({ items: menuItems, settings: settingsState })); } catch (_) {}
             syncOpenStatus();
             syncTopLocationBar();
-            renderBanners();
+            renderCats();
             renderMenu();
           }
         } catch (_) {}
+        finally {
+          if (bar) bar.classList.add('hidden');
+        }
+      }
+
+      function getCategoryCount(cat) {
+        const avail = menuItems.filter((it) => it && it.available !== false);
+        if (cat === 'الكل') return avail.length;
+        if (cat === OFFERS_CAT) return avail.filter((it) => it.category === 'عروض العمدة المميزة' || getDiscountPct(it) > 0).length;
+        return avail.filter((it) => it.category === cat).length;
       }
 
       function renderCats() {
@@ -952,7 +1138,12 @@
           const b = document.createElement('button');
           b.type = 'button';
           b.className = 'cat-btn' + (activeCat === cat ? ' active' : '');
-          b.textContent = cat;
+          const lbl = document.createElement('span');
+          lbl.textContent = cat;
+          const cnt = document.createElement('span');
+          cnt.className = 'cat-count tabular';
+          cnt.textContent = String(getCategoryCount(cat));
+          b.append(lbl, cnt);
           b.addEventListener('click', () => { activeCat = cat; renderCats(); renderMenu(); });
           bar.appendChild(b);
         });
@@ -993,7 +1184,7 @@
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'add-btn';
-        btn.textContent = hasW ? 'اختر الوزن' : '+ إضافة';
+        btn.textContent = hasW ? 'اختر الوزن' : '+ أضف';
         btn.addEventListener('click', () => {
           if (hasW) openWeightModal(it);
           else { addToCart(it, null, it.price || 0, ''); renderMenu(); }
@@ -1019,13 +1210,24 @@
         const box = $('daily-offers-box');
         box.textContent = '';
         if (query.trim() || activeCat !== 'الكل') return;
-        // Strictly ONLY genuine Offers & Discounts — NEVER duplicate individual meals ("وجبات فردية")
+        // Strictly ONLY genuine Offers & Discounts, deduplicated by id and normalized Arabic name
+        const seenIds = new Set();
+        const seenNames = new Set();
         const offers = menuItems
-          .filter((it) => it.available !== false && (it.category === 'عروض العمدة المميزة' || (getDiscountPct(it) > 0 && it.category !== 'وجبات فردية')))
-          .sort((a, b) => (getDiscountPct(b) - getDiscountPct(a)) || (Number(Boolean(b.image)) - Number(Boolean(a.image))));
+          .filter((it) => it && it.available !== false && (it.category === 'عروض العمدة المميزة' || (getDiscountPct(it) > 0 && it.category !== 'وجبات فردية')))
+          .sort((a, b) => (getDiscountPct(b) - getDiscountPct(a)) || (Number(Boolean(b.image)) - Number(Boolean(a.image))))
+          .filter((it) => {
+            const idKey = String(it.id || '').trim().toLowerCase();
+            const nameKey = normAr(it.name);
+            if ((idKey && seenIds.has(idKey)) || (nameKey && seenNames.has(nameKey))) return false;
+            if (idKey) seenIds.add(idKey);
+            if (nameKey) seenNames.add(nameKey);
+            return true;
+          });
         if (offers.length === 0) return;
 
-        const wrap = document.createElement('div');
+        const wrap = document.createElement('section');
+        wrap.id = 'daily-offers-section';
         wrap.className = 'carousel-wrap';
         const head = document.createElement('div');
         head.className = 'catalog-head';
@@ -1036,7 +1238,7 @@
         const allBtn = document.createElement('button');
         allBtn.type = 'button';
         allBtn.style.cssText = 'background:none;color:var(--champagne);font-size:12px;padding:4px;';
-        allBtn.textContent = 'عرض كل العروض (' + offers.length + ')';
+        allBtn.textContent = 'عرض الكل (' + offers.length + ')';
         allBtn.addEventListener('click', () => { activeCat = OFFERS_CAT; renderCats(); renderMenu(); });
         head.append(h2, allBtn);
 
@@ -1046,36 +1248,52 @@
           const pct = getDiscountPct(it);
           const slide = document.createElement('article');
           slide.className = 'offer-slide';
-          if (pct > 0) {
-            const badge = document.createElement('span');
-            badge.className = 'discount-badge tabular';
-            badge.textContent = 'خصم ' + pct + '%';
-            slide.appendChild(badge);
-          }
+
+          const mediaBox = document.createElement('div');
+          mediaBox.className = 'offer-img-box';
+          const ob = document.createElement('span');
+          ob.className = 'offer-badge tabular';
+          ob.textContent = pct > 0 ? ('خصم ' + pct + '%') : 'عرض مميز';
+          mediaBox.appendChild(ob);
+
           if (isSafeImageUrl(it.image)) {
-            const imgFrame = document.createElement('div');
-            imgFrame.className = 'card-img-frame';
             const img = document.createElement('img');
             img.src = it.image;
             img.alt = it.name;
             attachImageFallback(img, it.image);
-            imgFrame.appendChild(img);
-            slide.appendChild(imgFrame);
+            const scrim = document.createElement('div');
+            scrim.className = 'offer-img-scrim';
+            mediaBox.append(img, scrim);
           } else if (it.description) {
             const descTop = document.createElement('div');
-            descTop.style.cssText = 'padding:12px; background:linear-gradient(180deg,#1B1810,#141418); border-bottom:1px solid rgba(212,175,55,0.2); font-size:11px; color:#D4D4D8; line-height:1.6;';
+            descTop.style.cssText = 'padding:34px 12px 12px; height:100%; background:linear-gradient(135deg,#1C1810,#141418,#0E0E11); font-size:11.5px; color:#E4E4E7; line-height:1.6; display:flex; align-items:flex-end;';
             descTop.textContent = it.description;
-            slide.appendChild(descTop);
+            mediaBox.appendChild(descTop);
           }
+          slide.appendChild(mediaBox);
+
           const body = document.createElement('div');
           body.className = 'card-body';
           const t = document.createElement('h4');
           t.className = 'card-title';
           t.textContent = it.name;
+          body.appendChild(t);
+          if (it.description && isSafeImageUrl(it.image)) {
+            const d = document.createElement('p');
+            d.className = 'card-desc';
+            d.textContent = it.description;
+            body.appendChild(d);
+          }
+          const footRow = document.createElement('div');
+          footRow.style.cssText = 'display:flex; align-items:center; justify-content:space-between; gap:8px; padding-top:4px;';
           const pr = document.createElement('span');
           pr.className = 'price tabular';
           pr.textContent = (it.price || 0) + ' ج.م';
-          body.append(t, pr, buildQtyOrAdd(it, false));
+          const actWrap = document.createElement('div');
+          actWrap.style.minWidth = '92px';
+          actWrap.appendChild(buildQtyOrAdd(it, false));
+          footRow.append(pr, actWrap);
+          body.appendChild(footRow);
           slide.appendChild(body);
           track.appendChild(slide);
         });
@@ -1164,7 +1382,7 @@
             if (it.subCategory || hasW) {
               const meta = document.createElement('div');
               meta.className = 'card-meta';
-              meta.textContent = hasW ? (it.subCategory ? it.subCategory + ' · بالأوزان' : 'متوفر بالأوزان') : it.subCategory;
+              meta.textContent = hasW ? (it.subCategory ? it.subCategory + ' · متعدد الأوزان' : 'متعدد الأوزان') : it.subCategory;
               top.appendChild(meta);
             }
             const title = document.createElement('h4');
@@ -1187,7 +1405,7 @@
             pr.className = 'price tabular';
             if (hasW) {
               const minP = Math.min(...Object.values(it.weights));
-              pr.textContent = 'من ' + minP + ' ج.م';
+              pr.textContent = 'يبدأ من ' + minP + ' ج.م';
             } else {
               pr.textContent = (it.price || 0) + ' ج.م';
             }
@@ -1267,13 +1485,20 @@
         syncCartBadges();
       }
 
+      let isCartOpenState = false;
+      let isConciergeOpenState = false;
+
       function syncCartBadges() {
         const count = cart.reduce((s, c) => s + c.qty, 0);
         const subtotal = cart.reduce((s, c) => s + c.qty * c.unitPrice, 0);
         const ev = appliedPromoCode ? evaluatePromo(appliedPromoCode, subtotal) : { valid: false, discount: 0 };
         const afterDisc = Math.max(0, subtotal - (ev.valid ? ev.discount : 0));
         $('top-cart-count').textContent = String(count);
-        $('floating-cart').classList.toggle('hidden', count === 0);
+        const hideFloating = isCartOpenState || isConciergeOpenState;
+        $('floating-cart').classList.toggle('hidden', count === 0 || hideFloating);
+        $('concierge-fab').classList.toggle('hidden', hideFloating);
+        $('concierge-fab').classList.toggle('lifted', count > 0);
+        $('float-wa').classList.toggle('hidden', hideFloating);
         $('float-wa').classList.toggle('lifted', count > 0);
         $('float-cart-summary').textContent = count + (count === 1 ? ' صنف • ' : ' أصناف • ') + afterDisc + ' ج.م';
       }
@@ -1341,12 +1566,12 @@
         });
 
         const subtotal = cart.reduce((s, c) => s + c.qty * c.unitPrice, 0);
-        const hasActivePromos = promos.some((p) => p && p.active !== false && String(p.code || '').trim().length > 0);
+        const hasActivePromos = promos.some(isLiveActiveCoupon);
         const promoEval = hasActivePromos && appliedPromoCode ? evaluatePromo(appliedPromoCode, subtotal) : { valid: false, discount: 0 };
         const discountAmt = promoEval.valid ? promoEval.discount : 0;
         const activeCode = promoEval.valid ? promoEval.promo.code : '';
 
-        // Promo Code / Coupon Box — rendered ONLY when at least one active promo exists
+        // Promo Code / Coupon Box — rendered ONLY when at least one active live Sheet coupon exists
         if (hasActivePromos) {
           const pBox = document.createElement('div');
           pBox.className = 'promo-box';
@@ -1373,7 +1598,7 @@
             const pInp = document.createElement('input');
             pInp.type = 'text';
             pInp.dir = 'ltr';
-            pInp.placeholder = 'أدخل الكود';
+            pInp.placeholder = 'أدخل كود الخصم إن وُجد';
             const pBtn = document.createElement('button');
             pBtn.type = 'button';
             pBtn.className = 'add-btn';
@@ -1924,7 +2149,6 @@
           isSubmittingOrder = false;
           syncCartBadges();
           renderMenu();
-          renderBanners();
 
           // Royal Post-Order Thank-You & 3-Second Smart WhatsApp Handoff
           body.textContent = '';
@@ -2116,33 +2340,311 @@
         resBox.appendChild(wrap);
       });
 
+      // ========== Zero-API Live-Data Smart Concierge («مساعد العمدة الذكي») ==========
+      const CONCIERGE_CHIPS = [
+        { label: '🔥 أقوى العروض', q: 'أقوى العروض' },
+        { label: '👨‍👩‍👧‍👦 ترشيح لعيلة', q: 'ترشيح لعيلة' },
+        { label: '💰 معايا 200 جنيه', q: 'معايا 200 جنيه' },
+        { label: '🍖 مشويات بالوزن', q: 'مشويات بالوزن' },
+        { label: '👶 وجبات أطفال', q: 'وجبات أطفال' },
+        { label: '📍 العنوان والمواعيد', q: 'العنوان والمواعيد' }
+      ];
+
+      function normConcierge(str) {
+        return String(str || '')
+          .replace(/[٠-٩]/g, (ch) => String(ch.charCodeAt(0) - 0x0660))
+          .replace(/[۰-۹]/g, (ch) => String(ch.charCodeAt(0) - 0x06F0))
+          .toLowerCase()
+          .replace(/[\u064B-\u065F\u0670\u0640]/g, '')
+          .replace(/[أإآٱ]/g, 'ا')
+          .replace(/ة/g, 'ه')
+          .replace(/ى/g, 'ي')
+          .replace(/[؟?!.,،؛:()\[\]{}«»"'`~@#$%^&*_+=\\/|<>-]/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+      }
+
+      function itemMinPrice(it) {
+        if (it && it.weights && Object.keys(it.weights).length > 0) {
+          const vals = Object.values(it.weights).map(Number).filter((n) => n > 0);
+          if (vals.length > 0) return Math.min(...vals);
+        }
+        return Number(it && it.price) || 0;
+      }
+
+      function parseBudgetEGP(raw) {
+        const t = normConcierge(raw);
+        const pats = [
+          /(?:معايا|معي|ميزانيه|ميزانيتي|في حدود|بحدود|حدود|اقل من|تحت|حوالي|بـ|ب\s|سعر|بسعر|مبلغ|لحد|اخري)\s*(\d{2,5})/,
+          /(\d{2,5})\s*(?:جنيه|جنيها|ج\.م|جم|ج|egp|le)\b/,
+          /^\s*(\d{2,5})\s*$/
+        ];
+        for (let i = 0; i < pats.length; i++) {
+          const m = t.match(pats[i]);
+          if (m && m[1]) {
+            const v = Number(m[1]);
+            if (Number.isFinite(v) && v >= 15 && v <= 25000) return v;
+          }
+        }
+        return null;
+      }
+
+      function rankBudgetItems(pool, budget) {
+        const within = pool.filter((it) => { const p = itemMinPrice(it); return p > 0 && p <= budget; });
+        if (!within.length) return [];
+        const sub = budget >= 75 ? within.filter((it) => it.category !== 'السلطات') : within;
+        const use = sub.length >= 2 ? sub : within;
+        return use.slice().sort((a, b) => {
+          const dd = getDiscountPct(b) - getDiscountPct(a);
+          if (dd !== 0) return dd;
+          return itemMinPrice(b) - itemMinPrice(a);
+        }).slice(0, 4);
+      }
+
+      function runConciergeEngine(rawQ) {
+        const avail = menuItems.filter((it) => it && it.available !== false);
+        const q = normConcierge(rawQ);
+        const budget = parseBudgetEGP(rawQ);
+        const hasAny = (kws) => kws.some((k) => q.includes(k));
+        const activePromo = promos.find(isLiveActiveCoupon);
+        const promoHint = activePromo
+          ? 'كود خصم متاح الآن في السلة: ' + String(activePromo.code).trim().toUpperCase() + ' (خصم ' + (activePromo.discountType === 'PERCENT' ? activePromo.value + '%' : activePromo.value + ' ج.م') + (activePromo.minOrder > 0 ? ' للطلبات من ' + activePromo.minOrder + ' ج.م' : '') + ')'
+          : '';
+
+        if (hasAny(['عنوان', 'فين', 'مكان', 'موقع', 'خريطه', 'الفرع', 'مواعيد', 'شغالين', 'فاتح', 'قافل', 'تليفون', 'رقم', 'واتساب'])) {
+          const mapHref = BRANCH_MAPS_URL;
+          return {
+            reply: 'عنوان الفرع: العاشر من رمضان - المجاورة العاشرة - أمام نادي العاشرة.\nنستقبلكم يومياً من 12:00 ظهراً — ' + (settingsState.hours || 'يومياً من ١٢ ظهراً حتى ٢ بعد منتصف الليل') + '\nالخط الساخن: 01050906141',
+            items: [],
+            links: [
+              { label: '🗺️ افتح خريطة الفرع', href: mapHref, external: true, primary: true },
+              { label: '📞 اتصل بالفرع (01050906141)', href: 'tel:01050906141', external: false, primary: false }
+            ]
+          };
+        }
+
+        if (hasAny(['عرض', 'عروض', 'خصم', 'خصومات', 'توفير', 'اقوي'])) {
+          let pool = avail.filter((it) => getDiscountPct(it) > 0 || it.category === 'عروض العمدة المميزة')
+            .sort((a, b) => (getDiscountPct(b) - getDiscountPct(a)) || (Number(Boolean(b.featured)) - Number(Boolean(a.featured))));
+          if (budget !== null) {
+            const bPool = rankBudgetItems(pool, budget);
+            if (bPool.length) pool = bPool;
+          }
+          return {
+            reply: budget !== null ? 'أقوى عروض سرايا العمدة في حدود ' + budget + ' ج.م:' : 'دي أقوى عروض سرايا العمدة المتاحة الآن بالأسعار المباشرة:',
+            items: pool.slice(0, 4),
+            promoHint
+          };
+        }
+
+        if (hasAny(['عيله', 'عايله', 'عائله', 'عائليه', 'عزومه', 'صينيه', 'صواني', 'افراد', 'اسره'])) {
+          const fam = avail.filter((it) => it.category === 'صواني العمدة المميزة' || it.category === 'وجبات عائلية');
+          const picked = budget !== null ? rankBudgetItems(fam, budget) : fam.slice(0, 4);
+          if (picked.length) return { reply: 'أقوى ترشيحات العمدة للعيلة واللمّة الحلوة:', items: picked, promoHint };
+        }
+
+        if (hasAny(['اطفال', 'طفل', 'عيال', 'اولاد', 'كيدز'])) {
+          const kids = avail.filter((it) => it.category === 'وجبات أطفال');
+          return { reply: 'أحلى وجبات الأطفال الطازجة في سرايا العمدة:', items: kids.slice(0, 4) };
+        }
+
+        if (hasAny(['بالوزن', 'وزن', 'كيلو', 'مشويات', 'فحم'])) {
+          const grills = avail.filter((it) => it.category === 'مشويات العمدة' || (it.weights && Object.keys(it.weights).length > 0));
+          const picked = budget !== null ? rankBudgetItems(grills, budget) : grills.slice(0, 4);
+          return { reply: 'أشهر مشويات العمدة على الفحم بالوزن — اضغط «اختر الوزن» لتحديد ربع/ثلث/نصف/كيلو:', items: picked };
+        }
+
+        const catRules = [
+          { kws: ['طاجن', 'طواجن', 'عكاوي', 'موزه'], cat: 'الطواجن', lbl: 'أطعم طواجن الفرن:' },
+          { kws: ['مندي', 'حضرمي'], cat: 'عروض المندي', lbl: 'أقوى عروض المندي:' },
+          { kws: ['بروست', 'مقرمش', 'استربس'], cat: 'وجبات البروست', lbl: 'وجبات البروست المقرمشة:' },
+          { kws: ['سندوتش', 'حواوشي', 'كريب'], cat: 'السندوتشات', lbl: 'أشهى السندوتشات والحواوشي:' },
+          { kws: ['محشي', 'ورق عنب', 'ممبار', 'ملوخيه', 'ارز', 'رز', 'مطبخ'], cat: 'مطبخ العمدة', lbl: 'أصناف مطبخ العمدة:' },
+          { kws: ['سلطه', 'سلطات', 'طحينه', 'مخلل'], cat: 'السلطات', lbl: 'السلطات والمقبلات الطازجة:' }
+        ];
+        for (let i = 0; i < catRules.length; i++) {
+          if (hasAny(catRules[i].kws)) {
+            const cPool = avail.filter((it) => it.category === catRules[i].cat);
+            const picked = budget !== null ? rankBudgetItems(cPool, budget) : cPool.slice(0, 4);
+            if (picked.length) return { reply: catRules[i].lbl, items: picked };
+          }
+        }
+
+        if (budget !== null) {
+          const picked = rankBudgetItems(avail, budget);
+          if (picked.length) return { reply: 'بميزانية ' + budget + ' ج.م، رشّحت لك أفضل ' + picked.length + ' اختيارات حقيقية من المنيو:', items: picked, promoHint };
+        }
+
+        const tokens = q.split(' ').filter((w) => w.length >= 2 && !['عايز', 'عاوز', 'محتاج', 'هات', 'رشح', 'افضل', 'احسن', 'عندكم', 'سعر', 'بكام', 'في', 'من', 'علي', 'مع', 'يا'].includes(w));
+        if (tokens.length) {
+          const matched = avail.filter((it) => {
+            const hay = normConcierge(it.name + ' ' + it.category + ' ' + (it.subCategory || '') + ' ' + (it.description || ''));
+            return tokens.some((t) => hay.includes(t));
+          }).slice(0, 4);
+          if (matched.length) return { reply: 'لقيت لك الأصناف دي بالأسعار الحقيقية في المنيو:', items: matched };
+        }
+
+        return {
+          reply: 'جرب تكتب اسم أكلة (مثل: كفتة، كباب، طاجن، مندي) أو ميزانيتك (مثل: معايا 200 جنيه) — ودي أشهر ترشيحات العمدة:',
+          items: avail.filter((i) => i.featured || i.category === 'عروض العمدة المميزة').slice(0, 4),
+          promoHint
+        };
+      }
+
+      function appendConciergeMessage(role, text, recItems, links, promoHint) {
+        const box = $('concierge-msgs');
+        const bubble = document.createElement('div');
+        bubble.className = 'c-bubble ' + role;
+        bubble.textContent = text;
+        box.appendChild(bubble);
+
+        if (promoHint) {
+          const ph = document.createElement('div');
+          ph.style.cssText = 'padding:8px 10px;border-radius:10px;background:#1C1810;border:1px solid rgba(212,175,55,0.4);color:var(--champagne);font-size:12px;font-weight:700;';
+          ph.textContent = '🏷️ ' + promoHint;
+          box.appendChild(ph);
+        }
+
+        if (Array.isArray(links) && links.length) {
+          const row = document.createElement('div');
+          row.style.cssText = 'display:flex;flex-wrap:wrap;gap:8px;';
+          links.forEach((lk) => {
+            const a = document.createElement('a');
+            a.href = lk.href;
+            if (lk.external) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+            a.className = lk.primary ? 'btn-primary' : 'btn-outline';
+            a.style.cssText = 'display:inline-flex;align-items:center;text-decoration:none;font-size:12px;min-height:40px;padding:8px 12px;border-radius:10px;';
+            a.textContent = lk.label;
+            row.appendChild(a);
+          });
+          box.appendChild(row);
+        }
+
+        if (Array.isArray(recItems) && recItems.length) {
+          recItems.forEach((it) => {
+            const hasW = Boolean(it.weights && Object.keys(it.weights).length > 0);
+            const minP = itemMinPrice(it);
+            const card = document.createElement('div');
+            card.className = 'c-rec-card';
+            const info = document.createElement('div');
+            info.style.minWidth = '0';
+            const nm = document.createElement('div');
+            nm.style.cssText = 'font-family:Cairo,sans-serif;font-size:13px;font-weight:800;color:var(--text);';
+            nm.textContent = it.name;
+            info.appendChild(nm);
+            if (it.description) {
+              const ds = document.createElement('div');
+              ds.style.cssText = 'font-size:11px;color:#A1A1AA;margin-top:2px;';
+              ds.textContent = it.description;
+              info.appendChild(ds);
+            }
+            const pr = document.createElement('div');
+            pr.className = 'tabular';
+            pr.style.cssText = 'font-family:Cairo,sans-serif;font-size:13px;font-weight:900;color:var(--gold);margin-top:4px;';
+            pr.textContent = (hasW ? 'يبدأ من ' : '') + minP + ' ج.م';
+            info.appendChild(pr);
+
+            const buyBtn = document.createElement('button');
+            buyBtn.type = 'button';
+            buyBtn.className = 'btn-primary';
+            buyBtn.style.cssText = 'min-height:38px;padding:6px 11px;font-size:12px;flex-shrink:0;';
+            buyBtn.textContent = hasW ? 'اختر الوزن' : '+ أضف للسلة';
+            buyBtn.addEventListener('click', () => {
+              if (hasW) {
+                closeConcierge();
+                openWeightModal(it);
+              } else {
+                addToCart(it, null, it.price || 0, '');
+                renderMenu();
+                showToast('تمت إضافة «' + it.name + '» إلى السلة');
+              }
+            });
+            card.append(info, buyBtn);
+            box.appendChild(card);
+          });
+        }
+        box.scrollTop = box.scrollHeight;
+      }
+
+      function initConcierge() {
+        const chipsBox = $('concierge-chips');
+        chipsBox.textContent = '';
+        CONCIERGE_CHIPS.forEach((c) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'chip-btn';
+          b.textContent = c.label;
+          b.addEventListener('click', () => handleConciergeAsk(c.q));
+          chipsBox.appendChild(b);
+        });
+        appendConciergeMessage('bot', 'أهلاً بك في سرايا العمدة للمشويات! اكتب لي ميزانيتك (مثل: معايا 200 جنيه) أو الأكلة اللي في بالك، وهارشّح لك فوراً بالأسعار الحقيقية من المنيو.');
+      }
+
+      function handleConciergeAsk(qText) {
+        const clean = String(qText || '').trim();
+        if (!clean) return;
+        appendConciergeMessage('user', clean);
+        const res = runConciergeEngine(clean);
+        appendConciergeMessage('bot', res.reply, res.items, res.links, res.promoHint);
+      }
+
+      function openConcierge() {
+        isConciergeOpenState = true;
+        $('concierge-backdrop').classList.remove('hidden');
+        syncCartBadges();
+      }
+      function closeConcierge() {
+        isConciergeOpenState = false;
+        $('concierge-backdrop').classList.add('hidden');
+        syncCartBadges();
+      }
+
+      $('concierge-fab').addEventListener('click', openConcierge);
+      $('concierge-close').addEventListener('click', closeConcierge);
+      $('concierge-backdrop').addEventListener('click', (e) => { if (e.target === $('concierge-backdrop')) closeConcierge(); });
+      $('concierge-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const inp = $('concierge-input');
+        handleConciergeAsk(inp.value);
+        inp.value = '';
+      });
+
+      const hotlinesBtn = $('hotlines-toggle-btn');
+      const hotlinesDrawer = $('hero-hotlines-drawer');
+      if (hotlinesBtn && hotlinesDrawer) {
+        hotlinesBtn.addEventListener('click', () => {
+          const open = hotlinesDrawer.classList.toggle('hidden') === false;
+          hotlinesBtn.classList.toggle('active', open);
+          hotlinesBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      }
+
       $('hero-menu-btn').addEventListener('click', () => {
         activeCat = 'الكل';
         renderCats();
         renderMenu();
         $('menu').scrollIntoView({ behavior: 'smooth' });
       });
-      $('hero-offers-btn').addEventListener('click', () => {
-        activeCat = OFFERS_CAT;
-        renderCats();
-        renderMenu();
-        $('menu').scrollIntoView({ behavior: 'smooth' });
-      });
 
       $('search-input').addEventListener('input', (e) => { query = e.target.value; renderMenu(); });
-      $('open-cart-top').addEventListener('click', () => { renderCartDrawer(); $('cart-backdrop').classList.remove('hidden'); });
-      $('open-cart-float').addEventListener('click', () => { renderCartDrawer(); $('cart-backdrop').classList.remove('hidden'); });
+      $('open-cart-top').addEventListener('click', () => { isCartOpenState = true; renderCartDrawer(); $('cart-backdrop').classList.remove('hidden'); syncCartBadges(); });
+      $('open-cart-float').addEventListener('click', () => { isCartOpenState = true; renderCartDrawer(); $('cart-backdrop').classList.remove('hidden'); syncCartBadges(); });
       $('close-cart').addEventListener('click', () => {
         if (activeCountdownTimer) { clearInterval(activeCountdownTimer); activeCountdownTimer = null; }
+        isCartOpenState = false;
         $('cart-backdrop').classList.add('hidden');
+        syncCartBadges();
       });
 
+      const fy = $('footer-year');
+      if (fy) fy.textContent = String(new Date().getFullYear());
       $('top-gps-btn').addEventListener('click', () => captureGPS());
+      initConcierge();
       syncOpenStatus();
       syncTopLocationBar();
-      renderBanners();
       renderCats();
       renderMenu();
+      syncCartBadges();
       loadLiveMenu();
     })();
   </script>
